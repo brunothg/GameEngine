@@ -9,7 +9,7 @@ public interface ClockListener extends EventListener {
 	 * @param frames
 	 *            Full frames covered by this tick
 	 * @param coveredTime
-	 *            Time covered by the full frames
+	 *            Time covered by the full frames (nanoseconds)
 	 */
 	public void tick(long frames, long coveredTime);
 }

@@ -46,9 +46,11 @@ public class Clock extends Thread {
 	@Override
 	public void run() {
 
+		state = STATE_RUNNING;
+		elapsedTime = 0;
 		setTime(System.nanoTime());
 
-		while (!isInterrupted()) {
+		while (true) {
 			int state = getStatus();
 
 			if (state == STATE_PAUSED) {
@@ -64,6 +66,9 @@ public class Clock extends Thread {
 			} else if (state == STATE_RUNNING) {
 
 				running();
+			} else if (state == STATE_TERMINATED) {
+
+				break;
 			}
 		}
 
@@ -72,18 +77,31 @@ public class Clock extends Thread {
 
 	private void running() {
 
+		double framesPerSecond;
 		long nanosecondsPerFrame;
 		long time;
 
 		// Fetch all synchronized values
 		synchronized (this) {
+			framesPerSecond = getFramesPerSecond();
 			nanosecondsPerFrame = getNanosecondsPerFrame();
 			time = getTime();
 		}
 
 		// Calculate time values
-		elapsedTime += System.nanoTime() - time;
+		long nanoSystemTime = System.nanoTime();
+		elapsedTime += nanoSystemTime - time;
 
+		// As fast as possible
+		if (framesPerSecond < 0) {
+			runAsFastAsPossible(nanoSystemTime);
+		} else {
+
+			runNormalFps(nanosecondsPerFrame, nanoSystemTime);
+		}
+	}
+
+	private void runNormalFps(long nanosecondsPerFrame, long nanoSystemTime) {
 		long frames = elapsedTime / nanosecondsPerFrame;
 		long coveredTime = frames * nanosecondsPerFrame;
 
@@ -93,7 +111,26 @@ public class Clock extends Thread {
 
 		// Prepare for next round
 		elapsedTime -= coveredTime;
-		setTime(System.nanoTime());
+		setTime(nanoSystemTime);
+
+		long waitTime = nanosecondsPerFrame - elapsedTime;
+		long waitTimeMillis = (long) TimeUtils.Milliseconds(waitTime);
+		int waitTimeNanos = (int) (waitTime - TimeUtils
+				.NanosecondsOfMilliseconds(waitTimeMillis));
+
+		try {
+			sleep(waitTimeMillis, waitTimeNanos);
+		} catch (InterruptedException e) {
+			interrupt();
+		}
+	}
+
+	private void runAsFastAsPossible(long nanoSystemTime) {
+		tick(1, elapsedTime);
+
+		// Prepare for next round
+		elapsedTime = 0;
+		setTime(nanoSystemTime);
 	}
 
 	/**
@@ -144,7 +181,7 @@ public class Clock extends Thread {
 	 * @param framesPerSecond
 	 *            FPS or negative(as fast as possible)
 	 */
-	public synchronized void setFramesPerSecond(double framesPerSecond) {
+	public synchronized void setFramesPerSecond(int framesPerSecond) {
 		if (framesPerSecond == 0) {
 			throw new IllegalArgumentException("0 fps rate not allowed");
 		}
@@ -170,6 +207,7 @@ public class Clock extends Thread {
 		if (pause && getStatus() != STATE_PAUSED) {
 
 			setStatus(STATE_PAUSED);
+			interrupt();
 		} else if (getStatus() != STATE_RUNNING) {
 
 			setStatus(STATE_RUNNING);
@@ -179,7 +217,6 @@ public class Clock extends Thread {
 				pauseLock.notifyAll();
 			}
 
-			elapsedTime = 0;
 			setTime(System.nanoTime());
 		}
 	}
