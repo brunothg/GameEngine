@@ -1,8 +1,11 @@
 package game.engine.time;
 
+import org.junit.Test;
+
 public class ClockTest {
 
-	public static void main(String[] args) {
+	@Test
+	public void clockTest() throws Exception {
 
 		final Timer timer = new Timer();
 
@@ -25,17 +28,17 @@ public class ClockTest {
 		timer.reset();
 		clk.start();
 
-		new Thread(new Runnable() {
+		final Thread pauseT = new Thread(new Runnable() {
 
 			@Override
 			public void run() {
 
 				boolean pause = true;
-				while (true) {
+				while (!Thread.interrupted()) {
 					try {
-						Thread.sleep(10000);
+						Thread.sleep(3000);
 					} catch (InterruptedException e) {
-						e.printStackTrace();
+						Thread.currentThread().interrupt();
 					}
 
 					System.out.println("pause " + pause);
@@ -47,6 +50,29 @@ public class ClockTest {
 					}
 				}
 			}
-		}).start();
+		});
+
+		Thread destroyT = new Thread(new Runnable() {
+
+			@Override
+			public void run() {
+
+				try {
+					Thread.sleep(10000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+
+				System.out.println("destroy");
+				clk.destroy();
+				pauseT.interrupt();
+			}
+		});
+
+		pauseT.start();
+		destroyT.start();
+
+		pauseT.join();
+		destroyT.join();
 	}
 }

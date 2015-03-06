@@ -18,6 +18,7 @@ public class Clock extends Thread {
 	public static final int FPS_FAST = 60;
 	public static final int FPS_AS_FAST_AS_POSSIBLE = -1;
 
+	// Different States of this clock's thread
 	private static final int STATE_RUNNING = 0x1;
 	private static final int STATE_PAUSED = 0x2;
 	private static final int STATE_TERMINATED = 0x3;
@@ -219,6 +220,16 @@ public class Clock extends Thread {
 
 			setTime(System.nanoTime());
 		}
+	}
+
+	/**
+	 * Stop the clock and terminate the thread. It makes the clock unusable. A
+	 * clock can not be restarted.
+	 */
+	public synchronized void destroy() {
+
+		setStatus(STATE_TERMINATED);
+		interrupt();
 	}
 
 	private synchronized void setTime(long nanoTime) {
