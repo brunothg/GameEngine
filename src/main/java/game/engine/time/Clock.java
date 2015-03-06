@@ -69,7 +69,7 @@ public class Clock extends Thread
 
 		long time = System.nanoTime();
 		long elapsedTime = time - lastTime;
-		int timeForOneFrame = (int) (Time.NANOSECONDS_PER_SECOND / fps);
+		int timeForOneFrame = (int) (Timer.NANOSECONDS_PER_SECOND / fps);
 
 		if (elapsedTime >= timeForOneFrame)
 		{
@@ -88,8 +88,8 @@ public class Clock extends Thread
 
 			try
 			{
-				Thread.sleep(timeToTick / Time.NANOSECONDS_PER_MILLISECOND,
-					(int) (timeToTick % Time.NANOSECONDS_PER_MILLISECOND));
+				Thread.sleep(timeToTick / Timer.NANOSECONDS_PER_MILLISECOND,
+					(int) (timeToTick % Timer.NANOSECONDS_PER_MILLISECOND));
 			}
 			catch (InterruptedException e)
 			{

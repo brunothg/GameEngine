@@ -1,22 +1,18 @@
 package game.engine.time;
 
 /**
- * Central time class for measuring elapsed time in nano time.
+ * Central timer class for measuring elapsed time in nano time.
  * 
  * @author Marvin Bruns
  *
  */
-public class Time
+public class Timer
 {
-
-	public static final long NANOSECONDS_PER_SECOND = 1_000_000_000;
-	public static final long MILLISECONDS_PER_SECOND = 1_000;
-	public static final int NANOSECONDS_PER_MILLISECOND = 1_000_000;
 
 	private long lastTime;
 	private long elapsedTime;
 
-	public Time()
+	public Timer()
 	{
 		reset();
 	}
@@ -52,17 +48,6 @@ public class Time
 	public long elapsedTime()
 	{
 		return elapsedTime;
-	}
-
-	/**
-	 * Convert nanoseconds to seconds
-	 * 
-	 * @param nano nanoseconds
-	 * @return seconds
-	 */
-	public static double Seconds(long nano)
-	{
-		return nano / (double) NANOSECONDS_PER_SECOND;
 	}
 
 }
