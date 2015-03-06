@@ -6,22 +6,19 @@ package game.engine.time;
  * @author Marvin Bruns
  *
  */
-public class Timer
-{
+public class Timer {
 
 	private long lastTime;
 	private long elapsedTime;
 
-	public Timer()
-	{
+	public Timer() {
 		reset();
 	}
 
 	/**
 	 * Reset time. Elapsed time is set to 0.
 	 */
-	public void reset()
-	{
+	public void reset() {
 		lastTime = System.nanoTime();
 		elapsedTime = 0;
 	}
@@ -29,8 +26,7 @@ public class Timer
 	/**
 	 * Calculate the elapsed time since the last update or reset.
 	 */
-	public long update()
-	{
+	public long update() {
 		long time = System.nanoTime();
 		elapsedTime = time - lastTime;
 		lastTime = time;
@@ -45,8 +41,7 @@ public class Timer
 	 * 
 	 * @return elapsed time
 	 */
-	public long elapsedTime()
-	{
+	public long elapsedTime() {
 		return elapsedTime;
 	}
 
