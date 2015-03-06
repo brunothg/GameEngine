@@ -1,10 +1,11 @@
 package game.engine.image;
 
+import java.awt.Color;
 import java.awt.image.BufferedImage;
 
 /**
  * 
- * Empty(alpha) BufferedImage(1x1)
+ * BufferedImage(1x1) with a width and height of one. The color of the only pixel can be set.
  * 
  * @author Marvin Bruns
  *
@@ -12,10 +13,20 @@ import java.awt.image.BufferedImage;
 public class EmptyImage extends BufferedImage
 {
 
-	public EmptyImage()
+	public EmptyImage(Color c)
 	{
 		super(1, 1, BufferedImage.TYPE_INT_ARGB);
-		setRGB(0, 0, 0);
+
+		setRGB(0, 0, c.getRGB());
 	}
 
+	public static class AlphaImage extends EmptyImage
+	{
+
+		public AlphaImage()
+		{
+			super(new Color(0, 0, 0, 0));
+		}
+
+	}
 }
