@@ -183,4 +183,17 @@ public class InternalImage
 	{
 		loadedImages.remove(img);
 	}
+
+	/**
+	 * Manually insert a image
+	 * 
+	 * @param p path of the image (Identifier)
+	 * @param img the image that was stored previously at this position
+	 * @return
+	 */
+	public static Image storeImage(String p, Image img)
+	{
+
+		return loadedImages.put(p, img);
+	}
 }
