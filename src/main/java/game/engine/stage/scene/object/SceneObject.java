@@ -27,16 +27,17 @@ public abstract class SceneObject {
 	}
 
 	/**
-	 * Paint this SceneObject
+	 * Paint this SceneObject. This method maybe called for collision testing
+	 * with an elapsed time of zero. For correct collision the
+	 * {@link SceneObject} it is important, that the object is drawn in it's
+	 * actual state.
 	 * 
 	 * @param g
 	 *            Graphics Object for painting
-	 * @param onScreen
-	 *            true wenn diese Methode aufgerufen wird um das SceneObject auf
-	 *            dem Bildschirm zu zeichnen. False otherwise - Zum Beispiel
-	 *            wenn die Kollision geprueft wird.
+	 * @param elapsedTime
+	 *            Elapsed time since the last call to this method
 	 */
-	protected abstract void paint(Graphics2D g, boolean onScreen);
+	protected abstract void paint(Graphics2D g, long elapsedTime);
 
 	/**
 	 * Paints this SceneObject.
@@ -57,7 +58,7 @@ public abstract class SceneObject {
 
 		Graphics2D g2d = (Graphics2D) g.create(x_topLeft, y_topLeft, width,
 				height);
-		paint(g2d, true);
+		paint(g2d, elapsedTime);
 
 		if (isDrawBoundingBox()) {
 
@@ -254,6 +255,10 @@ public abstract class SceneObject {
 	/**
 	 * Check exactly if a collision is present. The result may only be correct
 	 * if {@link #collidesBoundingBox(SceneObject)} returns a non empty region.
+	 * The default implementation tests every pixel drawn by this object. If
+	 * there's a pixel set (alpha != 0) in both objects they collide. Depending
+	 * on the object there maybe a better collision handling. Feel free to
+	 * override this method for better performance.
 	 * 
 	 * @param obj
 	 *            The second {@link SceneObject} for testing
@@ -268,13 +273,13 @@ public abstract class SceneObject {
 		BufferedImage img1 = new BufferedImage(getWidth(), getHeight(),
 				BufferedImage.TYPE_INT_ARGB);
 		Graphics2D g1 = img1.createGraphics();
-		paint(g1, false);
+		paint(g1, 0);
 		g1.finalize();
 
 		BufferedImage img2 = new BufferedImage(obj.getWidth(), obj.getHeight(),
 				BufferedImage.TYPE_INT_ARGB);
 		Graphics2D g2 = img2.createGraphics();
-		obj.paint(g2, false);
+		obj.paint(g2, 0);
 		g2.finalize();
 
 		Point topLeftPosition1 = getTopLeftPosition();
