@@ -41,6 +41,8 @@ public class Clock extends Thread {
 
 	public Clock(int framesPerSecond) {
 
+		super("ClockThread - " + System.nanoTime());
+
 		setFramesPerSecond(framesPerSecond);
 	}
 

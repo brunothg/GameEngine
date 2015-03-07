@@ -38,7 +38,9 @@ public class FPSScene implements Scene {
 
 		timer.update();
 
-		scene.paintScene(g, width, height, elapsedTime);
+		if (scene != null) {
+			scene.paintScene(g, width, height, elapsedTime);
+		}
 		paintFPS(g);
 	}
 

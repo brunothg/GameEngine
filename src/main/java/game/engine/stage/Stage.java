@@ -3,6 +3,7 @@ package game.engine.stage;
 import game.engine.stage.scene.Scene;
 import game.engine.time.ClockListener;
 
+import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -28,6 +29,8 @@ import javax.swing.SwingUtilities;
  * @author Marvin Bruns
  */
 public class Stage extends JPanel implements ClockListener {
+
+	private static final Color COLOR_CLEAR = new Color(0, 0, 0, 0);
 
 	private static final long serialVersionUID = 1L;
 
@@ -93,6 +96,10 @@ public class Stage extends JPanel implements ClockListener {
 	private void registerEventListeners() {
 
 		sceneListener = getScene().getEventListeners();
+
+		if (sceneListener == null) {
+			return;
+		}
 
 		for (int i = 0; i < sceneListener.length; i++) {
 
@@ -166,6 +173,11 @@ public class Stage extends JPanel implements ClockListener {
 		}
 		synchronized (offScreenLock) {
 
+			// Recreate if check dimensions
+			if (recreateOffScreen(getWidth(), getHeight())) {
+				drawOffScreen(0);
+			}
+
 			g.drawImage(offScreen, 0, 0, getWidth(), getHeight(), 0, 0,
 					offScreen.getWidth(), offScreen.getHeight(), null);
 		}
@@ -192,8 +204,12 @@ public class Stage extends JPanel implements ClockListener {
 						BufferedImage.TYPE_INT_ARGB_PRE);
 			}
 
-			// Paint scene
+			// Clear stage and paint scene
 			Graphics2D offGraphics = offScreen.createGraphics();
+			offGraphics.setComposite(AlphaComposite.Src);
+			offGraphics.setColor(COLOR_CLEAR);
+			offGraphics.fillRect(0, 0, width, height);
+			offGraphics.setComposite(AlphaComposite.SrcOver);
 			getScene().paintScene(offGraphics, width, height, elapedTime);
 		}
 	}
