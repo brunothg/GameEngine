@@ -1,4 +1,4 @@
-package game.engine.stage;
+package game.engine.stage.scene;
 
 import java.awt.Graphics2D;
 import java.util.EventListener;

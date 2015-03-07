@@ -1,5 +1,6 @@
 package game.engine.stage;
 
+import game.engine.stage.scene.Scene;
 import game.engine.time.ClockListener;
 
 import java.awt.Color;
