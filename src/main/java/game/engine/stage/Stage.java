@@ -1,9 +1,9 @@
 package game.engine.stage;
 
+import game.engine.image.ImageUtils;
 import game.engine.stage.scene.Scene;
 import game.engine.time.ClockListener;
 
-import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -30,9 +30,9 @@ import javax.swing.SwingUtilities;
  */
 public class Stage extends JPanel implements ClockListener {
 
-	private static final Color COLOR_CLEAR = new Color(0, 0, 0, 0);
-
 	private static final long serialVersionUID = 1L;
+
+	private static final Color COLOR_CLEAR = new Color(0, 0, 0, 0);
 
 	private Scene scene;
 	private EventListener[] sceneListener;
@@ -206,10 +206,8 @@ public class Stage extends JPanel implements ClockListener {
 
 			// Clear stage and paint scene
 			Graphics2D offGraphics = offScreen.createGraphics();
-			offGraphics.setComposite(AlphaComposite.Src);
-			offGraphics.setColor(COLOR_CLEAR);
-			offGraphics.fillRect(0, 0, width, height);
-			offGraphics.setComposite(AlphaComposite.SrcOver);
+			ImageUtils.clearImage(offGraphics, width, height, COLOR_CLEAR);
+
 			getScene().paintScene(offGraphics, width, height, elapedTime);
 		}
 	}

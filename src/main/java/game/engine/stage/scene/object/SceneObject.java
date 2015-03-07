@@ -314,7 +314,8 @@ public abstract class SceneObject {
 	 * 
 	 * @param obj
 	 *            The second {@link SceneObject} for testing
-	 * @return The overlapping region or null if none
+	 * @return The overlapping region or null if none. Coordinates (0,0) is
+	 *         located in the top-left corner.
 	 */
 	public Rectangle collidesBoundingBox(SceneObject obj) {
 

@@ -1,10 +1,18 @@
 package game.engine.image;
 
+import java.awt.AlphaComposite;
+import java.awt.Color;
+import java.awt.Composite;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.Rectangle;
 import java.awt.RenderingHints;
+import java.awt.Shape;
+import java.awt.geom.Area;
 import java.awt.image.BufferedImage;
+import java.awt.image.ColorModel;
 import java.awt.image.ImageObserver;
+import java.awt.image.WritableRaster;
 
 /**
  * Utility class for images.
@@ -12,16 +20,16 @@ import java.awt.image.ImageObserver;
  * @author Marvin Bruns
  *
  */
-public class ImageUtils
-{
+public class ImageUtils {
+
+	private static final Color COLOR_TRANSPARENT = new Color(0, 0, 0, 0);
 
 	/**
 	 * Uses {@link BufferedImage#TYPE_INT_ARGB}
 	 * 
 	 * @see #BufferedImage(Image, int)
 	 */
-	public static BufferedImage BufferedImage(Image img)
-	{
+	public static BufferedImage BufferedImage(Image img) {
 
 		return BufferedImage(img, BufferedImage.TYPE_INT_ARGB);
 	}
@@ -31,8 +39,7 @@ public class ImageUtils
 	 * 
 	 * @see #BufferedImage(Image, ImageObserver, int)
 	 */
-	public static BufferedImage BufferedImage(Image img, int type)
-	{
+	public static BufferedImage BufferedImage(Image img, int type) {
 
 		return BufferedImage(img, null, type);
 	}
@@ -40,16 +47,18 @@ public class ImageUtils
 	/**
 	 * Convert a {@link Image} in a {@link BufferedImage}
 	 * 
-	 * @param img Image to convert
-	 * @param observer {@link ImageObserver}
-	 * @param type {@link BufferedImage#TYPE_INT_ARGB} etc.
+	 * @param img
+	 *            Image to convert
+	 * @param observer
+	 *            {@link ImageObserver}
+	 * @param type
+	 *            {@link BufferedImage#TYPE_INT_ARGB} etc.
 	 * @return the img as BufferedImage
 	 */
-	public static BufferedImage BufferedImage(Image img, ImageObserver observer, int type)
-	{
+	public static BufferedImage BufferedImage(Image img,
+			ImageObserver observer, int type) {
 
-		if (img instanceof BufferedImage)
-		{
+		if (img instanceof BufferedImage) {
 			return (BufferedImage) img;
 		}
 
@@ -59,7 +68,8 @@ public class ImageUtils
 		BufferedImage bimg = new BufferedImage(width, height, type);
 
 		Graphics2D graphics = bimg.createGraphics();
-		graphics.drawImage(img, 0, 0, width, height, 0, 0, width, height, observer);
+		graphics.drawImage(img, 0, 0, width, height, 0, 0, width, height,
+				observer);
 
 		return bimg;
 	}
@@ -69,31 +79,215 @@ public class ImageUtils
 	 * 
 	 * @see #getScaledInstance(Image, int, int, int, ImageObserver)
 	 */
-	public static BufferedImage getScaledInstance(Image img, int width, int height, ImageObserver observer)
-	{
+	public static BufferedImage getScaledInstance(Image img, int width,
+			int height, ImageObserver observer) {
 
-		return getScaledInstance(img, width, height, BufferedImage.TYPE_INT_ARGB, observer);
+		return getScaledInstance(img, width, height,
+				BufferedImage.TYPE_INT_ARGB, observer);
 	}
 
 	/**
 	 * Get a scaled version of an image
 	 * 
-	 * @param img The image to scale
-	 * @param width New width
-	 * @param height New height
-	 * @param type The image type e.g. {@link BufferedImage#TYPE_INT_ARGB}
-	 * @param observer {@link ImageObserver}
+	 * @param img
+	 *            The image to scale
+	 * @param width
+	 *            New width
+	 * @param height
+	 *            New height
+	 * @param type
+	 *            The image type e.g. {@link BufferedImage#TYPE_INT_ARGB}
+	 * @param observer
+	 *            {@link ImageObserver}
 	 * @return
 	 */
-	public static BufferedImage getScaledInstance(Image img, int width, int height, int type, ImageObserver observer)
-	{
+	public static BufferedImage getScaledInstance(Image img, int width,
+			int height, int type, ImageObserver observer) {
 		BufferedImage bimg = new BufferedImage(width, height, type);
 
 		Graphics2D graphics = bimg.createGraphics();
-		graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		graphics.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC);
-		graphics.drawImage(img, 0, 0, width, height, 0, 0, img.getWidth(observer), img.getHeight(observer), observer);
+		graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+				RenderingHints.VALUE_ANTIALIAS_ON);
+		graphics.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
+				RenderingHints.VALUE_INTERPOLATION_BICUBIC);
+		graphics.drawImage(img, 0, 0, width, height, 0, 0,
+				img.getWidth(observer), img.getHeight(observer), observer);
 
 		return bimg;
+	}
+
+	/**
+	 * Clear a {@link BufferedImage} with the given color.
+	 * 
+	 * @see #clearImage(Graphics2D, int, int, Color)
+	 * 
+	 * @param img
+	 *            Image to be cleared
+	 * @param clear
+	 *            Color used for clearing this object. Only this color will be
+	 *            present
+	 */
+	public static void clearImage(BufferedImage img, Color clear) {
+
+		Graphics2D g2d = img.createGraphics();
+		clearImage(g2d, img.getWidth(), img.getHeight(), clear);
+	}
+
+	/**
+	 * Clears a {@link Graphics2D} object with the given Color. Alpha values
+	 * will replace the current alpha. The resulting {@link Graphics2D} object
+	 * will be transparent.
+	 * 
+	 * @param g2d
+	 *            {@link Graphics2D} object to be cleared
+	 * @param width
+	 *            Width of the area
+	 * @param height
+	 *            Height of the area
+	 * @param clear
+	 *            Color used for clearing this object. Only this color will be
+	 *            present
+	 */
+	public static void clearImage(Graphics2D g2d, int width, int height,
+			Color clear) {
+
+		Color beforeColor = g2d.getColor();
+		Composite beforeComposite = g2d.getComposite();
+
+		g2d.setComposite(AlphaComposite.Src);
+		g2d.setColor(clear);
+		g2d.fillRect(0, 0, width, height);
+
+		g2d.setComposite(beforeComposite);
+		g2d.setColor(beforeColor);
+	}
+
+	/**
+	 * Get the outlines of a {@link BufferedImage}. The {@link Area} will be
+	 * translated into global context, so that it will represent the object in
+	 * shape, size, and location.
+	 * 
+	 * @param img
+	 *            The image
+	 * @param x
+	 *            X-Coordinate for translating the image coordinates into global
+	 *            context
+	 * @param y
+	 *            y-Coordinate for translating the image coordinates into global
+	 *            context
+	 * @param read
+	 *            The area to be parsed
+	 * @param onlyOutline
+	 *            if true only one global shape is created which covers the
+	 *            whole image. Otherwise free spaces are cut out.
+	 * @return The {@link Area} object representing the {@link BufferedImage}'s
+	 *         outlines
+	 */
+	public static Area getOutlines(BufferedImage img, int x, int y,
+			Rectangle read, boolean onlyOutline) {
+
+		if (img == null) {
+			return null;
+		}
+
+		if (read == null) {
+			read = new Rectangle(0, 0, img.getWidth(), img.getHeight());
+		}
+
+		Area area;
+
+		if (!onlyOutline) {
+			area = outlinesWithInlines(img, x, y, read);
+		} else {
+			area = outlinesWithoutInlines(img, x, y, read);
+		}
+
+		return area;
+	}
+
+	private static Area outlinesWithoutInlines(BufferedImage img, int x, int y,
+			Rectangle read) {
+		// TODO outlinesWithoutInlines
+
+		int width = img.getWidth();
+		int height = img.getHeight();
+
+		throw new UnsupportedOperationException(
+				"outlinesWithoutInlines not implemented yet");
+	}
+
+	private static Area outlinesWithInlines(BufferedImage img, int x, int y,
+			Rectangle read) {
+
+		// TODO Improve -> Performance to bad
+
+		int width = Math.min(img.getWidth(), read.x + read.width);
+		int height = Math.min(img.getHeight(), read.y + read.height);
+
+		Area area = new Area();
+
+		ColorModel colorModel = img.getColorModel();
+		WritableRaster raster = img.getRaster();
+
+		for (int iy = read.y; iy < height; iy++) {
+			for (int ix = read.x; ix < width; ix++) {
+
+				int alpha = colorModel.getAlpha(raster.getDataElements(ix, iy,
+						null));
+				if (alpha != 0) {
+					area.add(new Area(new Rectangle(ix + x, iy + y, 1, 1)));
+				}
+			}
+		}
+
+		return area;
+	}
+
+	/**
+	 * Converts a {@link Shape} into a {@link BufferedImage}
+	 * 
+	 * @param shape
+	 *            Shape do be drawn
+	 * @param shapeColor
+	 *            Color in which the shape will be drawn
+	 * @param fill
+	 *            if true the shape will be filled in. Otherwise only the
+	 *            outlines will be painted.
+	 * @return The shape as image
+	 */
+	public static BufferedImage shapeToImage(Shape shape, Color shapeColor,
+			boolean fill) {
+
+		if (shape == null) {
+			return null;
+		}
+
+		Rectangle bounds = shape.getBounds();
+		int width = bounds.x + bounds.width;
+		int height = bounds.y + bounds.height;
+
+		if (width <= 0 || height <= 0) {
+			return null;
+		}
+
+		BufferedImage img = new BufferedImage(width, height,
+				BufferedImage.TYPE_INT_ARGB_PRE);
+
+		Graphics2D g2d = img.createGraphics();
+		clearImage(g2d, width, height, COLOR_TRANSPARENT);
+		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+				RenderingHints.VALUE_ANTIALIAS_ON);
+
+		g2d.setColor(shapeColor);
+
+		if (fill) {
+
+			g2d.fill(shape);
+		} else {
+
+			g2d.draw(shape);
+		}
+
+		return img;
 	}
 }
