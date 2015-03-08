@@ -47,6 +47,7 @@ public class Stage extends JPanel implements ClockListener {
 		setFocusable(true);
 		setRequestFocusEnabled(true);
 		setIgnoreRepaint(false);
+		setDoubleBuffered(false);
 	}
 
 	/**
