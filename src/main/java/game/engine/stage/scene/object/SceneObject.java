@@ -5,6 +5,8 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
+import java.awt.image.ColorModel;
+import java.awt.image.WritableRaster;
 
 /**
  * Helpful class for managing Objects in a scene. Provides methods for collision
@@ -227,6 +229,116 @@ public abstract class SceneObject {
 	}
 
 	/**
+	 * Check, if the given {@link SceneObject} is completely covered by this
+	 * {@link SceneObject}.<br>
+	 * First test with bounding box if there maybe a overlapping situation exact
+	 * calculations are made.
+	 * 
+	 * @param obj
+	 *            Other Object for testing
+	 * 
+	 * @return true if the given object is completely covered by this object
+	 */
+	public boolean consumes(SceneObject obj) {
+
+		if (consumesBoundingBox(obj)) {
+
+			return consumesExactly(obj);
+		}
+
+		return false;
+	}
+
+	/**
+	 * Exactly check overlapping. Uses alpha mask to detect geometry. If there's
+	 * a pixel in the given object, that has an alpha greater 0 and this object
+	 * is transparent (alpha = 0) at this position false is returned.
+	 * 
+	 * 
+	 * @param obj
+	 *            Other object for testing
+	 * @return true if the given {@link SceneObject} is consumed by this object
+	 */
+	public boolean consumesExactly(SceneObject obj) {
+
+		BufferedImage img1 = new BufferedImage(getWidth(), getHeight(),
+				BufferedImage.TYPE_INT_ARGB);
+		Graphics2D g1 = img1.createGraphics();
+		paint(g1, 0);
+
+		BufferedImage img2 = new BufferedImage(obj.getWidth(), obj.getHeight(),
+				BufferedImage.TYPE_INT_ARGB);
+		Graphics2D g2 = img2.createGraphics();
+		obj.paint(g2, 0);
+
+		ColorModel cm1 = img1.getColorModel();
+		WritableRaster raster1 = img1.getRaster();
+
+		ColorModel cm2 = img2.getColorModel();
+		WritableRaster raster2 = img2.getRaster();
+
+		Point topLeftPosition1 = getTopLeftPosition();
+		Point topLeftPosition2 = obj.getTopLeftPosition();
+
+		int offsetX = topLeftPosition2.getX() - topLeftPosition1.getX();
+		int offsetY = topLeftPosition2.getY() - topLeftPosition1.getY();
+
+		int width1 = img1.getWidth();
+		int height1 = img1.getHeight();
+
+		int width2 = img2.getWidth();
+		int height2 = img2.getHeight();
+
+		for (int x = 0; x < width2; x++) {
+			for (int y = 0; y < height2; y++) {
+
+				int alpha2 = cm2.getAlpha(raster2.getDataElements(x, y, null));
+
+				if (alpha2 == 0) {
+					continue;
+				}
+
+				int xt = x - offsetX;
+				int yt = y - offsetY;
+
+				// Collision not possible out of bounds
+				if (xt < 0 || yt < 0 || xt >= width1 || yt >= height1) {
+
+					return false;
+				}
+
+				int alpha1 = cm1
+						.getAlpha(raster1.getDataElements(xt, yt, null));
+
+				if (alpha1 == 0) {
+					return false;
+				}
+			}
+		}
+
+		return true;
+	}
+
+	/**
+	 * Tests overlapping with bounding box.
+	 * 
+	 * @param obj
+	 *            Other Object for testing
+	 * @return
+	 */
+	public boolean consumesBoundingBox(SceneObject obj) {
+
+		Rectangle rectangleT = getRectangle();
+		Rectangle rectangleO = obj.getRectangle();
+
+		if (rectangleT.contains(rectangleO)) {
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
 	 * Check, if both {@link SceneObject}s collide.<br>
 	 * In a first step bounding box collision will be tested. If a collision
 	 * maybe possible exact collision is checked.
@@ -268,19 +380,23 @@ public abstract class SceneObject {
 	 */
 	public boolean collidesExactly(SceneObject obj, Rectangle intersection) {
 
-		boolean ret = false;
+		boolean collides = false;
 
 		BufferedImage img1 = new BufferedImage(getWidth(), getHeight(),
 				BufferedImage.TYPE_INT_ARGB);
 		Graphics2D g1 = img1.createGraphics();
 		paint(g1, 0);
-		g1.finalize();
 
 		BufferedImage img2 = new BufferedImage(obj.getWidth(), obj.getHeight(),
 				BufferedImage.TYPE_INT_ARGB);
 		Graphics2D g2 = img2.createGraphics();
 		obj.paint(g2, 0);
-		g2.finalize();
+
+		ColorModel cm1 = img1.getColorModel();
+		WritableRaster raster1 = img1.getRaster();
+
+		ColorModel cm2 = img2.getColorModel();
+		WritableRaster raster2 = img2.getRaster();
 
 		Point topLeftPosition1 = getTopLeftPosition();
 		Point topLeftPosition2 = obj.getTopLeftPosition();
@@ -296,21 +412,31 @@ public abstract class SceneObject {
 			for (int x = (int) intersection.x; x < intersection.width
 					+ intersection.x; x++) {
 
-				int a1 = (img1.getRGB(x + xOffset1, y + yOffset1) >> 24) & 0xFF;
-				int a2 = (img2.getRGB(x + xOffset2, y + yOffset2) >> 24) & 0xFF;
+				int alpha1 = cm1.getAlpha(raster1.getDataElements(x + xOffset1,
+						y + yOffset1, null));
+				// (img1.getRGB(x + xOffset1, y + yOffset1) >> 24) & 0xFF;
 
-				if (a1 == a2 && a1 != 0) {
-					ret = true;
+				// Collision not possible
+				if (alpha1 == 0) {
+					continue;
+				}
+
+				int alpha2 = cm2.getAlpha(raster2.getDataElements(x + xOffset2,
+						y + yOffset2, null));
+				// (img2.getRGB(x + xOffset2, y + yOffset2) >> 24) & 0xFF;
+
+				if (alpha1 == alpha2) {
+					collides = true;
 					break loop;
 				}
 			}
 		}
 
-		return ret;
+		return collides;
 	}
 
 	/**
-	 * Check collision with bounding box algorithm
+	 * Check collision with bounding box algorithm.
 	 * 
 	 * @param obj
 	 *            The second {@link SceneObject} for testing
@@ -332,6 +458,11 @@ public abstract class SceneObject {
 		return ret;
 	}
 
+	/**
+	 * 
+	 * Get the {@link Rectangle} representing this object's bounds.
+	 *
+	 */
 	private Rectangle getRectangle() {
 
 		Point position = getTopLeftPosition();
