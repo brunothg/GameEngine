@@ -28,7 +28,6 @@ public class ImageSceneObject extends SceneObject {
 	public ImageSceneObject(BufferedImage image) {
 
 		setImage(image);
-		setSize(image.getWidth(), image.getHeight());
 	}
 
 	/**
@@ -68,6 +67,7 @@ public class ImageSceneObject extends SceneObject {
 		}
 
 		this.image = image;
+		setSize(this.image.getWidth(), this.image.getHeight());
 	}
 
 }
