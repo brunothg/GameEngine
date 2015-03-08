@@ -11,6 +11,8 @@ import java.awt.Shape;
 import java.awt.image.BufferedImage;
 import java.awt.image.ImageObserver;
 
+import javax.swing.ImageIcon;
+
 /**
  * Utility class for images.
  * 
@@ -32,13 +34,15 @@ public class ImageUtils {
 	}
 
 	/**
-	 * Uses null observer
+	 * Uses {@link ImageIcon} to ensure that the image is completely loaded.
 	 * 
 	 * @see #BufferedImage(Image, ImageObserver, int)
 	 */
 	public static BufferedImage BufferedImage(Image img, int type) {
 
-		return BufferedImage(img, null, type);
+		ImageIcon imgIc = new ImageIcon(img);
+
+		return BufferedImage(imgIc.getImage(), null, type);
 	}
 
 	/**
