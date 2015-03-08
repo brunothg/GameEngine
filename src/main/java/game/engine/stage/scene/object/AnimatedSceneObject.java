@@ -62,12 +62,15 @@ public class AnimatedSceneObject extends SceneObject {
 	}
 
 	/**
-	 * Change animation row
+	 * Change animation row.
 	 * 
 	 * @param row
 	 *            The row of the sprite used for animation
+	 * @param reset
+	 *            if true animation will be
+	 * @see #resetAnimation()
 	 */
-	public void setAnimationRow(int row) {
+	public void setAnimationRow(int row, boolean reset) {
 
 		if (row < 0 || row >= getAnimationCount()) {
 			throw new ArrayIndexOutOfBoundsException(
@@ -76,7 +79,23 @@ public class AnimatedSceneObject extends SceneObject {
 		}
 
 		animation = row;
-		resetAnimation();
+
+		if (reset) {
+
+			resetAnimation();
+		}
+	}
+
+	/**
+	 * Change animation row and reset the animation.
+	 * 
+	 * @param row
+	 *            The row of the sprite used for animation
+	 * @see #setAnimationRow(int, boolean)
+	 */
+	public void setAnimationRow(int row) {
+
+		setAnimationRow(row, true);
 	}
 
 	/**
