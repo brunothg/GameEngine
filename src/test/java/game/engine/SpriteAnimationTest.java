@@ -32,16 +32,26 @@ import javax.swing.JScrollPane;
 
 public class SpriteAnimationTest {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 
 		InternalImage.setRootFolder("/game/engine/images/");
 
-		final Sprite sprite = new WeakSprite(
-				ImageUtils.BufferedImage(InternalImage
-						.load("animatedSprite.png")), 32, 32);
+		final Sprite sprite;
+
+		sprite = new WeakSprite(ImageUtils.BufferedImage(InternalImage
+				.load("animatedSprite.png")), 32, 32);
+
+		// sprite = new WeakSprite(
+		// ImageIO.read(new URL(
+		// "https://highergroundz.files.wordpress.com/2012/07/spritesheetvolt_run.png")),
+		// 280, 385);
+
+		// sprite = new WeakSprite(ImageIO.read(new URL(
+		// "http://i.stack.imgur.com/i7oRv.png")), 64, 69);
 
 		final AnimatedSceneObject animation = new AnimatedSceneObject(sprite,
 				TimeUtils.NanosecondsOfMilliseconds(100));
+		animation.setDrawBoundingBox(true);
 
 		JFrame disp1 = new JFrame("Sprite");
 		disp1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
