@@ -41,6 +41,12 @@ public class Stage extends JPanel implements ClockListener {
 	private BufferedImage offScreen;
 	private Object offScreenLock = new Object();
 
+	/**
+	 * Used if the off screen could'n be drawn (e.g. size is zero). Will be
+	 * added to elapsedTime next not skipped drawing.
+	 */
+	private long skippedTime = 0;
+
 	public Stage() {
 
 		setOpaque(true);
@@ -198,6 +204,15 @@ public class Stage extends JPanel implements ClockListener {
 		// Get size
 		int width = getWidth();
 		int height = getHeight();
+
+		if (width <= 0 || height <= 0) {
+
+			skippedTime += elapedTime;
+			return;
+		}
+
+		elapedTime += skippedTime;
+		skippedTime = 0;
 
 		synchronized (offScreenLock) {
 

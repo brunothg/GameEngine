@@ -14,14 +14,21 @@ import game.engine.time.TimeUtils;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.EventListener;
 
+import javax.swing.BoxLayout;
+import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
 
 public class SpriteAnimationTest {
 
@@ -33,6 +40,9 @@ public class SpriteAnimationTest {
 				ImageUtils.BufferedImage(InternalImage
 						.load("animatedSprite.png")), 32, 32);
 
+		final AnimatedSceneObject animation = new AnimatedSceneObject(sprite,
+				TimeUtils.NanosecondsOfMilliseconds(100));
+
 		JFrame disp1 = new JFrame("Sprite");
 		disp1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		disp1.setLayout(new BorderLayout());
@@ -42,7 +52,7 @@ public class SpriteAnimationTest {
 		JPanel spriteP = new JPanel();
 		spriteP.setLayout(new GridLayout(sprite.getRows(), sprite.getColumns(),
 				10, 10));
-		disp1.add(spriteP, BorderLayout.NORTH);
+		disp1.add(new JScrollPane(spriteP), BorderLayout.CENTER);
 
 		for (int y = 0; y < sprite.getRows(); y++) {
 			for (int x = 0; x < sprite.getColumns(); x++) {
@@ -50,13 +60,47 @@ public class SpriteAnimationTest {
 			}
 		}
 
+		JPanel rowselect = new JPanel();
+		rowselect.setLayout(new BoxLayout(rowselect, BoxLayout.Y_AXIS));
+
+		ButtonGroup btngrp = new ButtonGroup();
+		for (int i = 0; i < animation.getAnimationCount(); i++) {
+
+			final JRadioButton rbtn = new JRadioButton("Animation " + (i + 1));
+			btngrp.add(rbtn);
+
+			if (i == 0) {
+				rbtn.setSelected(true);
+			}
+
+			final int row = i;
+
+			rbtn.addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+
+					if (rbtn.isSelected()) {
+
+						synchronized (animation) {
+							animation.setAnimationRow(row);
+						}
+					}
+				}
+			});
+
+			rowselect.add(rbtn);
+		}
+
+		disp1.add(new JScrollPane(rowselect), BorderLayout.EAST);
+
 		Stage stage = new Stage();
-		disp1.add(stage, BorderLayout.CENTER);
+		stage.setMinimumSize(new Dimension(sprite.getTileWidth() + 10, sprite
+				.getTileHeight() + 10));
+		stage.setPreferredSize(stage.getMinimumSize());
+		disp1.add(stage, BorderLayout.WEST);
 
 		stage.setScene(new FPSScene(new Scene() {
-
-			AnimatedSceneObject animation = new AnimatedSceneObject(sprite,
-					TimeUtils.NanosecondsOfMilliseconds(100));
 
 			@Override
 			public void paintScene(Graphics2D g, int width, int height,
@@ -65,10 +109,12 @@ public class SpriteAnimationTest {
 				g.setColor(Color.WHITE);
 				g.fillRect(0, 0, width, height);
 
-				animation.setTopLeftPosition(new Point((width / 2)
-						- (animation.getWidth() / 2), (height / 2)
-						- (animation.getHeight() / 2)));
-				animation.paintOnScene(g, elapsedTime);
+				synchronized (animation) {
+					animation.setTopLeftPosition(new Point((width / 2)
+							- (animation.getWidth() / 2), (height / 2)
+							- (animation.getHeight() / 2)));
+					animation.paintOnScene(g, elapsedTime);
+				}
 			}
 
 			@Override

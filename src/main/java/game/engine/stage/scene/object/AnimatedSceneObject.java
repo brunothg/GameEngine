@@ -76,6 +76,7 @@ public class AnimatedSceneObject extends SceneObject {
 		}
 
 		animation = row;
+		resetAnimation();
 	}
 
 	/**
@@ -91,6 +92,15 @@ public class AnimatedSceneObject extends SceneObject {
 	public int getAnimationCount() {
 
 		return sprite.getRows();
+	}
+
+	/**
+	 * Resets actual animation. The first frame will be painted next time.
+	 */
+	public void resetAnimation() {
+
+		frame = 0;
+		timeBase = 0;
 	}
 
 	@Override
