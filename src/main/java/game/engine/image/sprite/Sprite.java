@@ -1,4 +1,4 @@
-package game.engine.image;
+package game.engine.image.sprite;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -36,6 +36,9 @@ public class Sprite {
 		this.image = image;
 		this.width = width;
 		this.height = height;
+	}
+
+	protected Sprite() {
 	}
 
 /**

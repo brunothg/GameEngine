@@ -2,7 +2,8 @@ package game.engine;
 
 import game.engine.image.ImageUtils;
 import game.engine.image.InternalImage;
-import game.engine.image.Sprite;
+import game.engine.image.sprite.BufferedSprite;
+import game.engine.image.sprite.Sprite;
 
 import java.awt.GridLayout;
 
@@ -16,8 +17,9 @@ public class SpriteTileTest {
 
 		InternalImage.setRootFolder("/game/engine/images/");
 
-		Sprite sprite = new Sprite(ImageUtils.BufferedImage(InternalImage
-				.load("tile.png")), 32, 32);
+		Sprite sprite = new BufferedSprite(
+				ImageUtils.BufferedImage(InternalImage.load("tile.png")), 32,
+				32);
 
 		JFrame disp = new JFrame();
 		disp.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
