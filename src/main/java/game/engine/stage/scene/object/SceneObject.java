@@ -58,8 +58,8 @@ public abstract class SceneObject {
 		int width = getWidth();
 		int height = getHeight();
 
-		Graphics2D g2d = (Graphics2D) g.create(x_topLeft, y_topLeft, width,
-				height);
+		Graphics2D g2d = (Graphics2D) g.create(x_topLeft, y_topLeft, width + 1,
+				height + 1);
 		paint(g2d, elapsedTime);
 
 		if (isDrawBoundingBox()) {
