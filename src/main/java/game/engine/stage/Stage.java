@@ -214,6 +214,11 @@ public class Stage extends JPanel implements ClockListener {
 		elapedTime += skippedTime;
 		skippedTime = 0;
 
+		// Drawing not possible -> no scene to display
+		if (getScene() == null) {
+			return;
+		}
+
 		synchronized (offScreenLock) {
 
 			// Create if null or check dimensions
