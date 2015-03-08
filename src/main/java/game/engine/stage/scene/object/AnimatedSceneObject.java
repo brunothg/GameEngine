@@ -34,7 +34,8 @@ public class AnimatedSceneObject extends SceneObject {
 	 *            Nanosecond for animation used if no individual time is
 	 *            provided
 	 * @param time
-	 *            Time for every frame. Long[row][frame]
+	 *            Time for every frame. Long[row][frame]. Zero means stable
+	 *            image, it won't be animated.
 	 * @param frames
 	 *            An array containing the number of frames used for every row.
 	 *            If negative or too high the sprite's maximum frame number is
@@ -42,6 +43,11 @@ public class AnimatedSceneObject extends SceneObject {
 	 */
 	public AnimatedSceneObject(Sprite sprite, long defaultTime, long[][] time,
 			int[] frames) {
+
+		if (defaultTime < 0) {
+			throw new IllegalArgumentException(
+					"Negative default time is not allowed");
+		}
 
 		this.sprite = sprite;
 		this.defaultTime = defaultTime;
@@ -85,10 +91,10 @@ public class AnimatedSceneObject extends SceneObject {
 	 */
 	public void setAnimationRow(int row, boolean reset) {
 
-		if (row < 0 || row >= getAnimationCount()) {
+		if (row < 0 || row >= getAnimationRowCount()) {
 			throw new ArrayIndexOutOfBoundsException(
 					"animation out of bounds. Animations -> "
-							+ getAnimationCount());
+							+ getAnimationRowCount());
 		}
 
 		animation = row;
@@ -121,36 +127,85 @@ public class AnimatedSceneObject extends SceneObject {
 		return animation;
 	}
 
-	public int getAnimationCount() {
+	/**
+	 * Get the number of rows in this animation
+	 * 
+	 * @return Number of animation rows
+	 */
+	public int getAnimationRowCount() {
 
-		return sprite.getRows();
+		return getSprite().getRows();
 	}
 
 	/**
-	 * Resets actual animation. The first frame will be painted next time.
+	 * Get the frame of the current row in animation
+	 * 
+	 * @return Current animated frame in row
+	 */
+	public int getAnimationFrame() {
+
+		return frame;
+	}
+
+	/**
+	 * Set the frame of the current row in animation. If it is greater than the
+	 * available frames the next frame in animation is chosen. Remember, that
+	 * this will it will take affect when the animation is painted the next
+	 * time. So if the next frame is this which should be painted you might set
+	 * to the frame before.
+	 * 
+	 * @param frame
+	 *            The current animated frame in row
+	 */
+	public void setAnimationFrame(int frame) {
+
+		if (frame < 0) {
+			throw new IllegalArgumentException(
+					"Negative frame numbers not allowed");
+		}
+
+		this.frame = frame;
+	}
+
+	/**
+	 * Resets actual animation. The first frame in actual row will be painted
+	 * next time.
 	 */
 	public void resetAnimation() {
 
-		frame = 0;
+		setAnimationFrame(0);
 		timeBase = 0;
 	}
 
 	@Override
 	protected void paint(Graphics2D g, long elapsedTime) {
 
+		if (getTime(getAnimationRow(), frame) > 0) {
+			recalculateFrame(elapsedTime);
+		}
+
+		getSprite().drawTile(g, frame, getAnimationRow(), getWidth(),
+				getHeight());
+	}
+
+	/**
+	 * 
+	 * Recalculates the current visible frame depending on the elapsed time. Row
+	 * restarts if it reaches end an the last frame has a time > 0.
+	 */
+	protected void recalculateFrame(long elapsedTime) {
 		timeBase += elapsedTime;
 
 		long tempTime;
-		while (timeBase >= (tempTime = getTime(getAnimationRow(), frame))) {
+		while (timeBase >= (tempTime = getTime(getAnimationRow(),
+				getAnimationFrame())) && tempTime != 0) {
 
 			timeBase -= tempTime;
-			frame++;
-			if (frame >= getFrameCount(getAnimationRow())) {
-				frame = 0;
+			setAnimationFrame(getAnimationFrame() + 1);
+			if (getAnimationFrame() >= getFrameCount(getAnimationRow())) {
+				setAnimationFrame(0);
 			}
 		}
-
-		sprite.drawTile(g, frame, getAnimationRow(), getWidth(), getHeight());
 	}
 
 	/**
@@ -158,9 +213,14 @@ public class AnimatedSceneObject extends SceneObject {
 	 */
 	protected long getTime(int row, int frame) {
 
-		if (time != null && frame < time.length) {
+		if (time != null && row < time.length && frame < time[row].length) {
 
-			return time[row][frame];
+			long individuelTime = time[row][frame];
+
+			if (individuelTime >= 0) {
+
+				return individuelTime;
+			}
 		}
 
 		return defaultTime;
@@ -182,6 +242,11 @@ public class AnimatedSceneObject extends SceneObject {
 		}
 
 		return sprite.getColumns();
+	}
+
+	protected Sprite getSprite() {
+
+		return sprite;
 	}
 
 	@Override

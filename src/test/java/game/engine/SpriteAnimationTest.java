@@ -75,7 +75,7 @@ public class SpriteAnimationTest {
 		rowselect.setLayout(new BoxLayout(rowselect, BoxLayout.Y_AXIS));
 
 		ButtonGroup btngrp = new ButtonGroup();
-		for (int i = 0; i < animation.getAnimationCount(); i++) {
+		for (int i = 0; i < animation.getAnimationRowCount(); i++) {
 
 			final JRadioButton rbtn = new JRadioButton("Animation " + (i + 1));
 			btngrp.add(rbtn);
