@@ -1,5 +1,7 @@
 package game.engine.image.sprite;
 
+import game.engine.image.ImageUtils;
+
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
@@ -32,7 +34,7 @@ public class Sprite {
 			throw new IllegalArgumentException("Null value not allowed");
 		}
 
-		this.image = image;
+		this.image = ImageUtils.copy(image);
 		this.width = width;
 		this.height = height;
 	}
@@ -42,7 +44,6 @@ public class Sprite {
 	 */
 	protected Sprite() {
 
-		image = null;
 		width = 0;
 		height = 0;
 	}
@@ -131,5 +132,23 @@ public class Sprite {
 	public int getTileHeight() {
 
 		return height;
+	}
+
+	/**
+	 * Get sub-sprite with given dimension.
+	 * 
+	 * @param x
+	 *            X-Coordinate of first tile
+	 * @param y
+	 *            Y-Coordinate of first tile
+	 * @param width
+	 *            Width of the sub-sprite
+	 * @param height
+	 *            Height of the sub-sprite
+	 * @return The sub-sprite
+	 */
+	public Sprite getSubSprite(int x, int y, int width, int height) {
+
+		return new DerivedSprite(this, x, y, width, height);
 	}
 }
