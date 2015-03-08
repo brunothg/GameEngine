@@ -53,7 +53,7 @@ public class SpriteAnimationTest {
 				TimeUtils.NanosecondsOfMilliseconds(100));
 		animation.setDrawBoundingBox(true);
 
-		JFrame disp1 = new JFrame("Sprite");
+		JFrame disp1 = new JFrame("Sprite animation");
 		disp1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		disp1.setLayout(new BorderLayout());
 		disp1.setSize(500, 500);

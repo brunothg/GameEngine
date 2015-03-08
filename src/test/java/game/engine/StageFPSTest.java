@@ -18,7 +18,7 @@ public class StageFPSTest {
 
 		Clock clk = new Clock();
 
-		JFrame disp = new JFrame();
+		JFrame disp = new JFrame("FPS Stage test");
 		disp.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		disp.setLayout(new BorderLayout());
 		disp.setSize(500, 500);
