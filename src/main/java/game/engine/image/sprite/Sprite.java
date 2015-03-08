@@ -1,7 +1,6 @@
 package game.engine.image.sprite;
 
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 /**
@@ -38,7 +37,14 @@ public class Sprite {
 		this.height = height;
 	}
 
+	/**
+	 * When using this constructor you'll have to override all methods.
+	 */
 	protected Sprite() {
+
+		image = null;
+		width = 0;
+		height = 0;
 	}
 
 /**
@@ -76,11 +82,8 @@ public class Sprite {
 	 */
 	public BufferedImage getTile(int x, int y) {
 
-		BufferedImage tile = new BufferedImage(getTileWidth(), getTileHeight(),
-				BufferedImage.TYPE_INT_ARGB_PRE);
-
-		Graphics2D g2d = tile.createGraphics();
-		drawTile(g2d, x, y, tile.getWidth(), tile.getHeight());
+		BufferedImage tile = image.getSubimage(x * getTileWidth(), y
+				* getTileHeight(), getTileWidth(), getTileHeight());
 
 		return tile;
 	}

@@ -9,7 +9,9 @@ import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.Shape;
 import java.awt.image.BufferedImage;
+import java.awt.image.ColorModel;
 import java.awt.image.ImageObserver;
+import java.awt.image.WritableRaster;
 
 import javax.swing.ImageIcon;
 
@@ -209,5 +211,24 @@ public class ImageUtils {
 		}
 
 		return img;
+	}
+
+	/**
+	 * Create copy of an {@link BufferedImage}. Properties will be dismissed.
+	 * 
+	 * @param image
+	 *            Image to be copied
+	 * @return Copied image
+	 */
+	public static BufferedImage copy(BufferedImage image) {
+
+		ColorModel cm = image.getColorModel();
+		boolean alphaPremultiplied = image.isAlphaPremultiplied();
+		WritableRaster raster = image.copyData(null);
+
+		BufferedImage copy = new BufferedImage(cm, raster, alphaPremultiplied,
+				null);
+
+		return copy;
 	}
 }
