@@ -14,8 +14,15 @@ import java.awt.Stroke;
 import java.awt.geom.Arc2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
 import java.util.EventListener;
 
+/**
+ * A simple animated loading screen.
+ * 
+ * @author Marvin Bruns
+ *
+ */
 public class LoadingScene implements Scene {
 
 	private static final int GRID_OFFSET = 20;
@@ -50,6 +57,20 @@ public class LoadingScene implements Scene {
 	private double outerCirclePosition = 0;
 	private double textPhase = 0;
 
+	private BufferedImage shadow;
+	private boolean drawShadow;
+
+	/**
+	 * {@link LoadingScene} without shadow painting
+	 */
+	public LoadingScene() {
+		this(false);
+	}
+
+	public LoadingScene(boolean drawShadow) {
+		this.drawShadow = drawShadow;
+	}
+
 	@Override
 	public void paintScene(Graphics2D g, int width, int height, long elapsedTime) {
 
@@ -57,7 +78,11 @@ public class LoadingScene implements Scene {
 
 		drawBackground(g, width, height);
 		drawGrid(g, width, height);
-		drawShadow(g, width, height);
+
+		if (drawShadow) {
+			drawShadow(g, width, height);
+		}
+
 		drawOuterCircle(g, width, height, elapsedTime);
 		drawInnerCircle(g, width, height, elapsedTime);
 		drawText(g, width, height, elapsedTime);
@@ -161,23 +186,39 @@ public class LoadingScene implements Scene {
 		g.setStroke(strokeB);
 	}
 
-	private void drawShadow(Graphics2D g, int width, int height) {
+	private void drawShadow(Graphics2D g2d, int width, int height) {
 
-		Point2D center = new Point2D.Double(width * 0.5, height * 0.5);
+		/**
+		 * Shadow drawing takes much time. So buffering the shadow is a huge
+		 * time improvement.
+		 */
+		if (shadow == null || shadow.getWidth() < width
+				|| shadow.getHeight() < height) {
 
-		Color[] colors = new Color[] { COLOR_RADIAL_INNER, COLOR_RADIAL_OUTER };
-		float[] fractions = new float[] { SHADOW_FRACTION_INNER,
-				SHADOW_FRACTION_OUTER };
+			shadow = new BufferedImage(width, height,
+					BufferedImage.TYPE_INT_ARGB_PRE);
+			Graphics2D g = shadow.createGraphics();
 
-		RadialGradientPaint shadowGradient = new RadialGradientPaint(center,
-				(float) Math.min(width, height), fractions, colors);
+			Point2D center = new Point2D.Double(width * 0.5, height * 0.5);
 
-		Paint paintB = g.getPaint();
-		g.setPaint(shadowGradient);
+			Color[] colors = new Color[] { COLOR_RADIAL_INNER,
+					COLOR_RADIAL_OUTER };
+			float[] fractions = new float[] { SHADOW_FRACTION_INNER,
+					SHADOW_FRACTION_OUTER };
 
-		g.fill(new Rectangle2D.Double(0, 0, width, height));
+			RadialGradientPaint shadowGradient = new RadialGradientPaint(
+					center, (float) Math.min(width, height), fractions, colors);
 
-		g.setPaint(paintB);
+			Paint paintB = g.getPaint();
+			g.setPaint(shadowGradient);
+
+			g.fill(new Rectangle2D.Double(0, 0, width, height));
+
+			g.setPaint(paintB);
+		}
+
+		g2d.drawImage(shadow, 0, 0, width, height, 0, 0, shadow.getWidth(),
+				shadow.getHeight(), null);
 	}
 
 	private void drawGrid(Graphics2D g, int width, int height) {
