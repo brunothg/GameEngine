@@ -17,6 +17,8 @@ import java.awt.image.WritableRaster;
  */
 public abstract class SceneObject {
 
+	protected final static Point ORIGIN_TOP_LEFT = new Point(0, 0);
+
 	private Point position;
 	private Size size;
 
@@ -146,11 +148,15 @@ public abstract class SceneObject {
 
 	/**
 	 * The origin of this {@link SceneObject}. This object's position will be
-	 * translated to it's origin.
+	 * translated to it's origin. The default implementation returns
+	 * {@link #ORIGIN_TOP_LEFT}
 	 * 
 	 * @return The origin of this ScreenObject
 	 */
-	public abstract Point getOrigin();
+	public Point getOrigin() {
+
+		return ORIGIN_TOP_LEFT;
+	}
 
 	/**
 	 * The size of this {@link SceneObject}

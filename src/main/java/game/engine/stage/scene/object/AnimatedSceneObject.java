@@ -15,7 +15,7 @@ public class AnimatedSceneObject extends SceneObject {
 	private Sprite sprite;
 
 	private long defaultTime;
-	private long[] time;
+	private long[][] time;
 
 	private long timeBase;
 	private int frame;
@@ -32,9 +32,9 @@ public class AnimatedSceneObject extends SceneObject {
 	 *            Nanosecond for animation used if no individual time is
 	 *            provided
 	 * @param time
-	 *            Time for every frame
+	 *            Time for every frame. Long[row][frame]
 	 */
-	public AnimatedSceneObject(Sprite sprite, long defaultTime, long[] time) {
+	public AnimatedSceneObject(Sprite sprite, long defaultTime, long[][] time) {
 
 		this.sprite = sprite;
 		this.defaultTime = defaultTime;
@@ -109,7 +109,7 @@ public class AnimatedSceneObject extends SceneObject {
 		timeBase += elapsedTime;
 
 		long tempTime;
-		while (timeBase >= (tempTime = getTime(frame))) {
+		while (timeBase >= (tempTime = getTime(getAnimationRow(), frame))) {
 
 			timeBase -= tempTime;
 			frame++;
@@ -121,11 +121,11 @@ public class AnimatedSceneObject extends SceneObject {
 		sprite.drawTile(g, frame, getAnimationRow(), getWidth(), getHeight());
 	}
 
-	private long getTime(int frame) {
+	protected long getTime(int row, int frame) {
 
 		if (time != null && frame < time.length) {
 
-			return time[frame];
+			return time[row][frame];
 		}
 
 		return defaultTime;
@@ -134,7 +134,7 @@ public class AnimatedSceneObject extends SceneObject {
 	@Override
 	public Point getOrigin() {
 
-		return new Point(0, 0);
+		return ORIGIN_TOP_LEFT;
 	}
 
 }
