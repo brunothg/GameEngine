@@ -8,11 +8,8 @@ import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.Shape;
-import java.awt.geom.Area;
 import java.awt.image.BufferedImage;
-import java.awt.image.ColorModel;
 import java.awt.image.ImageObserver;
-import java.awt.image.WritableRaster;
 
 /**
  * Utility class for images.
@@ -160,87 +157,6 @@ public class ImageUtils {
 
 		g2d.setComposite(beforeComposite);
 		g2d.setColor(beforeColor);
-	}
-
-	/**
-	 * Get the outlines of a {@link BufferedImage}. The {@link Area} will be
-	 * translated into global context, so that it will represent the object in
-	 * shape, size, and location.
-	 * 
-	 * @param img
-	 *            The image
-	 * @param x
-	 *            X-Coordinate for translating the image coordinates into global
-	 *            context
-	 * @param y
-	 *            y-Coordinate for translating the image coordinates into global
-	 *            context
-	 * @param read
-	 *            The area to be parsed
-	 * @param onlyOutline
-	 *            if true only one global shape is created which covers the
-	 *            whole image. Otherwise free spaces are cut out.
-	 * @return The {@link Area} object representing the {@link BufferedImage}'s
-	 *         outlines
-	 */
-	public static Area getOutlines(BufferedImage img, int x, int y,
-			Rectangle read, boolean onlyOutline) {
-
-		if (img == null) {
-			return null;
-		}
-
-		if (read == null) {
-			read = new Rectangle(0, 0, img.getWidth(), img.getHeight());
-		}
-
-		Area area;
-
-		if (!onlyOutline) {
-			area = outlinesWithInlines(img, x, y, read);
-		} else {
-			area = outlinesWithoutInlines(img, x, y, read);
-		}
-
-		return area;
-	}
-
-	private static Area outlinesWithoutInlines(BufferedImage img, int x, int y,
-			Rectangle read) {
-		// TODO outlinesWithoutInlines
-
-		int width = img.getWidth();
-		int height = img.getHeight();
-
-		throw new UnsupportedOperationException(
-				"outlinesWithoutInlines not implemented yet");
-	}
-
-	private static Area outlinesWithInlines(BufferedImage img, int x, int y,
-			Rectangle read) {
-
-		// TODO Improve -> Performance to bad
-
-		int width = Math.min(img.getWidth(), read.x + read.width);
-		int height = Math.min(img.getHeight(), read.y + read.height);
-
-		Area area = new Area();
-
-		ColorModel colorModel = img.getColorModel();
-		WritableRaster raster = img.getRaster();
-
-		for (int iy = read.y; iy < height; iy++) {
-			for (int ix = read.x; ix < width; ix++) {
-
-				int alpha = colorModel.getAlpha(raster.getDataElements(ix, iy,
-						null));
-				if (alpha != 0) {
-					area.add(new Area(new Rectangle(ix + x, iy + y, 1, 1)));
-				}
-			}
-		}
-
-		return area;
 	}
 
 	/**
