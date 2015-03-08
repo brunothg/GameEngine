@@ -7,6 +7,7 @@ import game.engine.time.ClockListener;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Toolkit;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -182,6 +183,8 @@ public class Stage extends JPanel implements ClockListener {
 			g.drawImage(offScreen, 0, 0, getWidth(), getHeight(), 0, 0,
 					offScreen.getWidth(), offScreen.getHeight(), null);
 		}
+
+		Toolkit.getDefaultToolkit().sync();
 	}
 
 	/**
