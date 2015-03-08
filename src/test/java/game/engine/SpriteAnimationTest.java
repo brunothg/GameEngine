@@ -1,6 +1,5 @@
 package game.engine;
 
-import game.engine.image.ImageUtils;
 import game.engine.image.InternalImage;
 import game.engine.image.sprite.Sprite;
 import game.engine.image.sprite.WeakSprite;
@@ -19,8 +18,10 @@ import java.awt.Graphics2D;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.URL;
 import java.util.EventListener;
 
+import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
@@ -38,16 +39,16 @@ public class SpriteAnimationTest {
 
 		final Sprite sprite;
 
-		sprite = new WeakSprite(ImageUtils.BufferedImage(InternalImage
-				.load("animatedSprite.png")), 32, 32);
+		// sprite = new WeakSprite(ImageUtils.BufferedImage(InternalImage
+		// .load("animatedSprite.png")), 32, 32);
 
 		// sprite = new WeakSprite(
 		// ImageIO.read(new URL(
 		// "https://highergroundz.files.wordpress.com/2012/07/spritesheetvolt_run.png")),
 		// 280, 385);
 
-		// sprite = new WeakSprite(ImageIO.read(new URL(
-		// "http://i.stack.imgur.com/i7oRv.png")), 64, 69);
+		sprite = new WeakSprite(ImageIO.read(new URL(
+				"http://i.stack.imgur.com/i7oRv.png")), 64, 69);
 
 		final AnimatedSceneObject animation = new AnimatedSceneObject(sprite,
 				TimeUtils.NanosecondsOfMilliseconds(100));

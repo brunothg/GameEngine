@@ -5,7 +5,8 @@ import game.engine.image.sprite.Sprite;
 import java.awt.Graphics2D;
 
 /**
- * Animates a sprite.
+ * Animates a sprite. Every row is treated as a single animation and can be
+ * switched.
  * 
  * @author Marvin Bruns
  *
@@ -13,6 +14,7 @@ import java.awt.Graphics2D;
 public class AnimatedSceneObject extends SceneObject {
 
 	private Sprite sprite;
+	private int[] frames;
 
 	private long defaultTime;
 	private long[][] time;
@@ -33,17 +35,28 @@ public class AnimatedSceneObject extends SceneObject {
 	 *            provided
 	 * @param time
 	 *            Time for every frame. Long[row][frame]
+	 * @param frames
+	 *            An array containing the number of frames used for every row.
+	 *            If negative or too high the sprite's maximum frame number is
+	 *            used.
 	 */
-	public AnimatedSceneObject(Sprite sprite, long defaultTime, long[][] time) {
+	public AnimatedSceneObject(Sprite sprite, long defaultTime, long[][] time,
+			int[] frames) {
 
 		this.sprite = sprite;
 		this.defaultTime = defaultTime;
 		this.time = time;
+		this.frames = frames;
 		this.timeBase = 0;
 		this.frame = 0;
 
 		setAnimationRow(0);
 		setSize(sprite.getTileWidth(), sprite.getTileHeight());
+	}
+
+	public AnimatedSceneObject(Sprite sprite, long defaultTime, long[][] time) {
+
+		this(sprite, defaultTime, time, null);
 	}
 
 	/**
@@ -58,7 +71,7 @@ public class AnimatedSceneObject extends SceneObject {
 	 */
 	public AnimatedSceneObject(Sprite sprite, long defaultTime) {
 
-		this(sprite, defaultTime, null);
+		this(sprite, defaultTime, null, null);
 	}
 
 	/**
@@ -132,7 +145,7 @@ public class AnimatedSceneObject extends SceneObject {
 
 			timeBase -= tempTime;
 			frame++;
-			if (frame >= sprite.getColumns()) {
+			if (frame >= getFrameCount(getAnimationRow())) {
 				frame = 0;
 			}
 		}
@@ -140,6 +153,9 @@ public class AnimatedSceneObject extends SceneObject {
 		sprite.drawTile(g, frame, getAnimationRow(), getWidth(), getHeight());
 	}
 
+	/**
+	 * Animation time for a frame
+	 */
 	protected long getTime(int row, int frame) {
 
 		if (time != null && frame < time.length) {
@@ -148,6 +164,24 @@ public class AnimatedSceneObject extends SceneObject {
 		}
 
 		return defaultTime;
+	}
+
+	/**
+	 * Number of used frames of a row
+	 */
+	protected int getFrameCount(int row) {
+
+		if (frames != null && row < frames.length) {
+
+			int frameCount = frames[row];
+
+			if (frameCount >= 0 && frameCount < sprite.getColumns()) {
+
+				return frameCount;
+			}
+		}
+
+		return sprite.getColumns();
 	}
 
 	@Override
