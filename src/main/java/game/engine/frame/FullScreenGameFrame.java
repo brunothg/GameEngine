@@ -166,8 +166,6 @@ public class FullScreenGameFrame extends Window implements Stage {
 	@Override
 	public void tick(long frames, long coveredTime) {
 
-		Scene scene = getScene();
-
 		int width = getWidth();
 		int height = getHeight();
 
@@ -175,11 +173,18 @@ public class FullScreenGameFrame extends Window implements Stage {
 		Graphics2D g2d = (Graphics2D) buffer.getDrawGraphics();
 		ImageUtils.clearImage(g2d, width, height, ImageUtils.COLOR_TRANSPARENT);
 
-		scene.paintScene(g2d, width, height, coveredTime);
+		paintScene(coveredTime, width, height, g2d);
 
 		g2d.dispose();
 
 		buffer.show();
+	}
+
+	private void paintScene(long coveredTime, int width, int height,
+			Graphics2D g2d) {
+
+		Scene scene = getScene();
+		scene.paintScene(g2d, width, height, coveredTime);
 	}
 
 	private BufferStrategy getBuffer() {

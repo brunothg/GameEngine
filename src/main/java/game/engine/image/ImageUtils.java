@@ -3,11 +3,13 @@ package game.engine.image;
 import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Composite;
+import java.awt.Cursor;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.Shape;
+import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
 import java.awt.image.ImageObserver;
@@ -238,5 +240,18 @@ public class ImageUtils {
 				null);
 
 		return copy;
+	}
+
+	/**
+	 * Create an invisible cursor
+	 */
+	public static Cursor createEmptyCursor(String name) {
+
+		if (name == null || name.isEmpty()) {
+			name = "transparentCursor";
+		}
+
+		return Toolkit.getDefaultToolkit().createCustomCursor(
+				new EmptyImage.AlphaImage(), new java.awt.Point(0, 0), name);
 	}
 }
