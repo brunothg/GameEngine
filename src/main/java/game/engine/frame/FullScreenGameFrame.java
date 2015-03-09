@@ -14,8 +14,12 @@ import java.awt.GraphicsConfiguration;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.Window;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferStrategy;
 import java.io.IOException;
+import java.util.EventListener;
 
 import javax.imageio.ImageIO;
 
@@ -23,7 +27,13 @@ import javax.imageio.ImageIO;
  * 
  * GameFrame using <b>Fullscreen Exclusive Mode</b> for better performance, if
  * possible. If full screen mode isn't supported, full screen mode is emulated
- * (performance may be equal {@link GameFrame}).
+ * (performance may be equal {@link GameFrame}).<br>
+ * Supported EventListeners:<br>
+ * <ul>
+ * <li>{@link KeyListener}</li>
+ * <li>{@link MouseListener}</li>
+ * <li>{@link MouseMotionListener}</li>
+ * </ul>
  * 
  * @author Marvin Bruns
  *
@@ -39,6 +49,8 @@ public class FullScreenGameFrame extends Window implements Stage {
 
 	private volatile Scene scene;
 	private Object sceneLock = new Object();
+
+	private EventListener[] sceneListener;
 
 	/**
 	 * Uses default {@link GraphicsDevice}.
@@ -180,7 +192,79 @@ public class FullScreenGameFrame extends Window implements Stage {
 	public void setScene(Scene scene) {
 
 		synchronized (this.sceneLock) {
+
+			recycleScene();
+
 			this.scene = scene;
+			registerEventListeners();
+		}
+	}
+
+	/**
+	 * Register scene's EventListeners
+	 */
+	private void registerEventListeners() {
+
+		sceneListener = getScene().getEventListeners();
+
+		if (sceneListener == null) {
+			return;
+		}
+
+		for (int i = 0; i < sceneListener.length; i++) {
+
+			EventListener evl = sceneListener[i];
+			addEventListener(evl);
+		}
+	}
+
+	/**
+	 * Remove all registered EventListeners
+	 */
+	private void recycleScene() {
+
+		if (sceneListener == null) {
+			return;
+		}
+
+		for (int i = 0; i < sceneListener.length; i++) {
+
+			EventListener evl = sceneListener[i];
+			removeEventListener(evl);
+		}
+	}
+
+	private void addEventListener(EventListener evl) {
+
+		Class<?> cls = evl.getClass();
+
+		if (KeyListener.class.isInstance(cls)) {
+			addKeyListener((KeyListener) evl);
+		}
+
+		if (MouseListener.class.isInstance(cls)) {
+			addMouseListener((MouseListener) evl);
+		}
+
+		if (MouseMotionListener.class.isInstance(cls)) {
+			addMouseMotionListener((MouseMotionListener) evl);
+		}
+	}
+
+	private void removeEventListener(EventListener evl) {
+
+		Class<?> cls = evl.getClass();
+
+		if (KeyListener.class.isInstance(cls)) {
+			removeKeyListener((KeyListener) evl);
+		}
+
+		if (MouseListener.class.isInstance(cls)) {
+			removeMouseListener((MouseListener) evl);
+		}
+
+		if (MouseMotionListener.class.isInstance(cls)) {
+			removeMouseMotionListener((MouseMotionListener) evl);
 		}
 	}
 
