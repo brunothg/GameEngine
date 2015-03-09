@@ -4,7 +4,7 @@ import game.engine.frame.SwingGameFrame;
 import game.engine.stage.scene.FPSScene;
 import game.engine.stage.scene.LoadingScene;
 
-public class GameFrameTest {
+public class SwingGameFrameTest {
 
 	public static void main(String[] args) {
 
