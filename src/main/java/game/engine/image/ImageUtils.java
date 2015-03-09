@@ -74,6 +74,8 @@ public class ImageUtils {
 		graphics.drawImage(img, 0, 0, width, height, 0, 0, width, height,
 				observer);
 
+		graphics.dispose();
+
 		return bimg;
 	}
 
@@ -116,6 +118,8 @@ public class ImageUtils {
 		graphics.drawImage(img, 0, 0, width, height, 0, 0,
 				img.getWidth(observer), img.getHeight(observer), observer);
 
+		graphics.dispose();
+
 		return bimg;
 	}
 
@@ -134,6 +138,8 @@ public class ImageUtils {
 
 		Graphics2D g2d = img.createGraphics();
 		clearImage(g2d, img.getWidth(), img.getHeight(), clear);
+
+		g2d.dispose();
 	}
 
 	/**
@@ -209,6 +215,8 @@ public class ImageUtils {
 
 			g2d.draw(shape);
 		}
+
+		g2d.dispose();
 
 		return img;
 	}

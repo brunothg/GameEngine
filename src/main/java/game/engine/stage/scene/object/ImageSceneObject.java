@@ -53,7 +53,7 @@ public class ImageSceneObject extends SceneObject {
 	@Override
 	public Point getOrigin() {
 
-		return new Point(0, 0);
+		return ORIGIN_TOP_LEFT;
 	}
 
 	public BufferedImage getImage() {

@@ -17,7 +17,8 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 /**
- * Buffered swing component. Draws scenes and is the base component for all further drawings.<br>
+ * Buffered swing component. Draws scenes and is the base component for all
+ * further drawings.<br>
  * Supported EventListeners:<br>
  * <ul>
  * <li>{@link KeyListener}</li>
@@ -27,8 +28,7 @@ import javax.swing.SwingUtilities;
  * 
  * @author Marvin Bruns
  */
-public class SwingStage extends JPanel implements Stage
-{
+public class SwingStage extends JPanel implements Stage {
 
 	private static final long serialVersionUID = 1L;
 
@@ -41,13 +41,12 @@ public class SwingStage extends JPanel implements Stage
 	private Object offScreenLock = new Object();
 
 	/**
-	 * Used if the off screen could'n be drawn (e.g. size is zero). Will be added to elapsedTime
-	 * next not skipped drawing.
+	 * Used if the off screen could'n be drawn (e.g. size is zero). Will be
+	 * added to elapsedTime next not skipped drawing.
 	 */
 	private long skippedTime = 0;
 
-	public SwingStage()
-	{
+	public SwingStage() {
 
 		setOpaque(true);
 		setBackground(Color.BLACK);
@@ -58,8 +57,7 @@ public class SwingStage extends JPanel implements Stage
 	}
 
 	@Override
-	public void setScene(Scene scene)
-	{
+	public void setScene(Scene scene) {
 
 		recycleScene();
 
@@ -68,28 +66,23 @@ public class SwingStage extends JPanel implements Stage
 	}
 
 	@Override
-	public Scene getScene()
-	{
+	public Scene getScene() {
 
 		return this.scene;
 	}
 
 	@Override
-	public void tick(long frames, long coveredTime)
-	{
+	public void tick(long frames, long coveredTime) {
 
 		drawOffScreen(coveredTime);
 		threadsafeRepaint();
 	}
 
-	private void threadsafeRepaint()
-	{
-		SwingUtilities.invokeLater(new Runnable()
-		{
+	private void threadsafeRepaint() {
+		SwingUtilities.invokeLater(new Runnable() {
 
 			@Override
-			public void run()
-			{
+			public void run() {
 				repaint();
 			}
 		});
@@ -98,18 +91,15 @@ public class SwingStage extends JPanel implements Stage
 	/**
 	 * Register scene's EventListeners
 	 */
-	private void registerEventListeners()
-	{
+	private void registerEventListeners() {
 
 		sceneListener = getScene().getEventListeners();
 
-		if (sceneListener == null)
-		{
+		if (sceneListener == null) {
 			return;
 		}
 
-		for (int i = 0; i < sceneListener.length; i++)
-		{
+		for (int i = 0; i < sceneListener.length; i++) {
 
 			EventListener evl = sceneListener[i];
 			addEventListener(evl);
@@ -119,67 +109,55 @@ public class SwingStage extends JPanel implements Stage
 	/**
 	 * Remove all registered EventListeners
 	 */
-	private void recycleScene()
-	{
+	private void recycleScene() {
 
-		if (sceneListener == null)
-		{
+		if (sceneListener == null) {
 			return;
 		}
 
-		for (int i = 0; i < sceneListener.length; i++)
-		{
+		for (int i = 0; i < sceneListener.length; i++) {
 
 			EventListener evl = sceneListener[i];
 			removeEventListener(evl);
 		}
 	}
 
-	private void addEventListener(EventListener evl)
-	{
+	private void addEventListener(EventListener evl) {
 
 		Class<?> cls = evl.getClass();
 
-		if (KeyListener.class.isInstance(cls))
-		{
+		if (KeyListener.class.isInstance(cls)) {
 			addKeyListener((KeyListener) evl);
 		}
 
-		if (MouseListener.class.isInstance(cls))
-		{
+		if (MouseListener.class.isInstance(cls)) {
 			addMouseListener((MouseListener) evl);
 		}
 
-		if (MouseMotionListener.class.isInstance(cls))
-		{
+		if (MouseMotionListener.class.isInstance(cls)) {
 			addMouseMotionListener((MouseMotionListener) evl);
 		}
 	}
 
-	private void removeEventListener(EventListener evl)
-	{
+	private void removeEventListener(EventListener evl) {
 
 		Class<?> cls = evl.getClass();
 
-		if (KeyListener.class.isInstance(cls))
-		{
+		if (KeyListener.class.isInstance(cls)) {
 			removeKeyListener((KeyListener) evl);
 		}
 
-		if (MouseListener.class.isInstance(cls))
-		{
+		if (MouseListener.class.isInstance(cls)) {
 			removeMouseListener((MouseListener) evl);
 		}
 
-		if (MouseMotionListener.class.isInstance(cls))
-		{
+		if (MouseMotionListener.class.isInstance(cls)) {
 			removeMouseMotionListener((MouseMotionListener) evl);
 		}
 	}
 
 	@Override
-	protected void paintComponent(Graphics g)
-	{
+	protected void paintComponent(Graphics g) {
 
 		Graphics2D g2 = (Graphics2D) g;
 
@@ -188,21 +166,18 @@ public class SwingStage extends JPanel implements Stage
 		g2.fillRect(0, 0, getWidth(), getHeight());
 
 		// Draw off screen
-		if (getScene() == null || offScreen == null)
-		{
+		if (getScene() == null || offScreen == null) {
 			return;
 		}
-		synchronized (offScreenLock)
-		{
+		synchronized (offScreenLock) {
 
 			// Recreate if check dimensions
-			if (recreateOffScreen(getWidth(), getHeight()))
-			{
+			if (recreateOffScreen(getWidth(), getHeight())) {
 				drawOffScreen(0);
 			}
 
-			g.drawImage(offScreen, 0, 0, getWidth(), getHeight(), 0, 0, offScreen.getWidth(), offScreen.getHeight(),
-				null);
+			g.drawImage(offScreen, 0, 0, getWidth(), getHeight(), 0, 0,
+					offScreen.getWidth(), offScreen.getHeight(), null);
 		}
 
 		Toolkit.getDefaultToolkit().sync();
@@ -210,18 +185,17 @@ public class SwingStage extends JPanel implements Stage
 
 	/**
 	 * 
-	 * @param elapedTime Elapsed time since last drawing.
+	 * @param elapedTime
+	 *            Elapsed time since last drawing.
 	 * @return
 	 */
-	private void drawOffScreen(long elapedTime)
-	{
+	private void drawOffScreen(long elapedTime) {
 
 		// Get size
 		int width = getWidth();
 		int height = getHeight();
 
-		if (width <= 0 || height <= 0)
-		{
+		if (width <= 0 || height <= 0) {
 
 			skippedTime += elapedTime;
 			return;
@@ -231,19 +205,17 @@ public class SwingStage extends JPanel implements Stage
 		skippedTime = 0;
 
 		// Drawing not possible -> no scene to display
-		if (getScene() == null)
-		{
+		if (getScene() == null) {
 			return;
 		}
 
-		synchronized (offScreenLock)
-		{
+		synchronized (offScreenLock) {
 
 			// Create if null or check dimensions
-			if (recreateOffScreen(width, height))
-			{
+			if (recreateOffScreen(width, height)) {
 
-				offScreen = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB_PRE);
+				offScreen = new BufferedImage(width, height,
+						BufferedImage.TYPE_INT_ARGB_PRE);
 			}
 
 			// Clear stage and paint scene
@@ -251,19 +223,20 @@ public class SwingStage extends JPanel implements Stage
 			ImageUtils.clearImage(offGraphics, width, height, COLOR_CLEAR);
 
 			getScene().paintScene(offGraphics, width, height, elapedTime);
+
+			offGraphics.dispose();
 		}
 	}
 
 	/**
 	 * Tests if the off screen has to be created or recreated.
 	 */
-	private boolean recreateOffScreen(int width, int height)
-	{
+	private boolean recreateOffScreen(int width, int height) {
 
-		synchronized (offScreenLock)
-		{
+		synchronized (offScreenLock) {
 
-			return offScreen == null || (offScreen.getWidth() != width || offScreen.getHeight() != height);
+			return offScreen == null
+					|| (offScreen.getWidth() != width || offScreen.getHeight() != height);
 		}
 	}
 }

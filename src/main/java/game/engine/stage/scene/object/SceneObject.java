@@ -69,6 +69,8 @@ public abstract class SceneObject {
 			g2d.setColor(Color.BLACK);
 			g2d.drawRect(0, 0, width, height);
 		}
+
+		g2d.dispose();
 	}
 
 	/**
