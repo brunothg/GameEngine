@@ -4,7 +4,8 @@ import java.util.EventListener;
 
 public interface ClockListener extends EventListener {
 	/**
-	 * A new tick occurred. Do your time based work.
+	 * A new tick occurred. Do your time based work. A clock will call this
+	 * method from a thread. Think of synchronization etc.
 	 * 
 	 * @param frames
 	 *            Full frames covered by this tick

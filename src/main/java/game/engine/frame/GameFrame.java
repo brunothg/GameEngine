@@ -79,8 +79,8 @@ public class GameFrame extends JFrame {
 	}
 
 	/**
-	 * Change the {@link SwingStage} that is used by this {@link GameFrame}. Normally
-	 * there's no reason to change the default stage.
+	 * Change the {@link SwingStage} that is used by this {@link GameFrame}.
+	 * Normally there's no reason to change the default stage.
 	 * 
 	 * @param stage
 	 */

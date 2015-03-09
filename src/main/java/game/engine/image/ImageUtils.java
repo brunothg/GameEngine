@@ -23,7 +23,7 @@ import javax.swing.ImageIcon;
  */
 public class ImageUtils {
 
-	private static final Color COLOR_TRANSPARENT = new Color(0, 0, 0, 0);
+	public static final Color COLOR_TRANSPARENT = new Color(0, 0, 0, 0);
 
 	/**
 	 * Uses {@link BufferedImage#TYPE_INT_ARGB}
