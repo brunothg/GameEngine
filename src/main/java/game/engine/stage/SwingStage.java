@@ -32,8 +32,6 @@ public class SwingStage extends JPanel implements Stage {
 
 	private static final long serialVersionUID = 1L;
 
-	private static final Color COLOR_CLEAR = new Color(0, 0, 0, 0);
-
 	private Scene scene;
 	private EventListener[] sceneListener;
 
@@ -220,7 +218,8 @@ public class SwingStage extends JPanel implements Stage {
 
 			// Clear stage and paint scene
 			Graphics2D offGraphics = offScreen.createGraphics();
-			ImageUtils.clearImage(offGraphics, width, height, COLOR_CLEAR);
+			ImageUtils.clearImage(offGraphics, width, height,
+					ImageUtils.COLOR_TRANSPARENT);
 
 			getScene().paintScene(offGraphics, width, height, elapedTime);
 
