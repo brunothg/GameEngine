@@ -1,6 +1,6 @@
 package game.engine;
 
-import game.engine.stage.Stage;
+import game.engine.stage.SwingStage;
 import game.engine.stage.scene.FPSScene;
 import game.engine.stage.scene.Scene;
 import game.engine.time.Clock;
@@ -24,7 +24,7 @@ public class StageFPSTest {
 		disp.setSize(500, 500);
 		disp.setLocationRelativeTo(null);
 
-		Stage stage = new Stage();
+		SwingStage stage = new SwingStage();
 		stage.setBackground(Color.GREEN);
 		clk.addClockListener(stage);
 		disp.add(stage, BorderLayout.CENTER);

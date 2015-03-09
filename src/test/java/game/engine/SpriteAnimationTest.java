@@ -3,7 +3,7 @@ package game.engine;
 import game.engine.image.InternalImage;
 import game.engine.image.sprite.Sprite;
 import game.engine.image.sprite.WeakSprite;
-import game.engine.stage.Stage;
+import game.engine.stage.SwingStage;
 import game.engine.stage.scene.FPSScene;
 import game.engine.stage.scene.Scene;
 import game.engine.stage.scene.object.AnimatedSceneObject;
@@ -105,7 +105,7 @@ public class SpriteAnimationTest {
 
 		disp1.add(new JScrollPane(rowselect), BorderLayout.EAST);
 
-		Stage stage = new Stage();
+		SwingStage stage = new SwingStage();
 		stage.setMinimumSize(new Dimension(sprite.getTileWidth() + 10, sprite
 				.getTileHeight() + 10));
 		stage.setPreferredSize(stage.getMinimumSize());

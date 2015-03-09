@@ -1,7 +1,7 @@
 package game.engine.frame;
 
 import game.engine.image.EmptyImage;
-import game.engine.stage.Stage;
+import game.engine.stage.SwingStage;
 import game.engine.stage.scene.LoadingScene;
 import game.engine.stage.scene.Scene;
 import game.engine.time.Clock;
@@ -21,7 +21,7 @@ public class GameFrame extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private Stage stage;
+	private SwingStage stage;
 	private Clock clock;
 
 	public GameFrame(String title, GraphicsConfiguration gc) {
@@ -50,7 +50,7 @@ public class GameFrame extends JFrame {
 		setDefaultIcon();
 		setSize(800, 600, true);
 
-		stage = new Stage();
+		stage = new SwingStage();
 		stage.setScene(new LoadingScene());
 		add(stage, BorderLayout.CENTER);
 
@@ -73,18 +73,18 @@ public class GameFrame extends JFrame {
 	 * 
 	 * @return Stage of this frame
 	 */
-	public Stage getStage() {
+	public SwingStage getStage() {
 
 		return stage;
 	}
 
 	/**
-	 * Change the {@link Stage} that is used by this {@link GameFrame}. Normally
+	 * Change the {@link SwingStage} that is used by this {@link GameFrame}. Normally
 	 * there's no reason to change the default stage.
 	 * 
 	 * @param stage
 	 */
-	public void setStage(Stage stage) {
+	public void setStage(SwingStage stage) {
 
 		if (stage == null) {
 			throw new IllegalArgumentException("Null value not allowed");
@@ -96,7 +96,7 @@ public class GameFrame extends JFrame {
 	}
 
 	/**
-	 * @see Stage#setScene(Scene)
+	 * @see SwingStage#setScene(Scene)
 	 */
 	public void setScene(Scene scene) {
 
@@ -104,7 +104,7 @@ public class GameFrame extends JFrame {
 	}
 
 	/**
-	 * @see Stage#getScene()
+	 * @see SwingStage#getScene()
 	 */
 	public Scene getScene() {
 
