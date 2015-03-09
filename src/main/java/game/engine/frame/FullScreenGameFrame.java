@@ -4,7 +4,6 @@ import game.engine.exception.FullscreenException;
 import game.engine.image.EmptyImage;
 import game.engine.image.ImageUtils;
 import game.engine.stage.Stage;
-import game.engine.stage.SwingStage;
 import game.engine.stage.scene.LoadingScene;
 import game.engine.stage.scene.Scene;
 import game.engine.time.Clock;
@@ -177,9 +176,7 @@ public class FullScreenGameFrame extends Window implements Stage {
 		return this.getBufferStrategy();
 	}
 
-	/**
-	 * @see SwingStage#setScene(Scene)
-	 */
+	@Override
 	public void setScene(Scene scene) {
 
 		synchronized (this.sceneLock) {
@@ -187,9 +184,7 @@ public class FullScreenGameFrame extends Window implements Stage {
 		}
 	}
 
-	/**
-	 * @see SwingStage#getScene()
-	 */
+	@Override
 	public Scene getScene() {
 
 		synchronized (this.sceneLock) {
