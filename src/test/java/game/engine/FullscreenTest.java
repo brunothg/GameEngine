@@ -9,7 +9,7 @@ public class FullscreenTest {
 	public static void main(String[] args) {
 
 		FullScreenGameFrame gameFrame = new FullScreenGameFrame();
-		gameFrame.setScene(new FPSScene(new LoadingScene(true)));
+		gameFrame.setScene(new FPSScene(new LoadingScene()));
 
 		gameFrame.setVisible(true);
 	}

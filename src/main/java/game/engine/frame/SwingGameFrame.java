@@ -14,7 +14,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 
-public class GameFrame extends JFrame {
+public class SwingGameFrame extends JFrame {
 
 	/**
 	 * 
@@ -24,19 +24,19 @@ public class GameFrame extends JFrame {
 	private SwingStage stage;
 	private Clock clock;
 
-	public GameFrame(String title, GraphicsConfiguration gc) {
+	public SwingGameFrame(String title, GraphicsConfiguration gc) {
 
 		super(title, gc);
 		initialize();
 	}
 
-	public GameFrame(String title) {
+	public SwingGameFrame(String title) {
 
 		super(title);
 		initialize();
 	}
 
-	public GameFrame() {
+	public SwingGameFrame() {
 
 		super("GameEngine");
 		initialize();
@@ -61,7 +61,7 @@ public class GameFrame extends JFrame {
 
 	private void setDefaultIcon() {
 		try {
-			setIconImage(ImageIO.read(GameFrame.class
+			setIconImage(ImageIO.read(SwingGameFrame.class
 					.getResource("/game/engine/media/icon.png")));
 		} catch (IOException e) {
 			setIconImage(new EmptyImage.AlphaImage());
@@ -79,7 +79,7 @@ public class GameFrame extends JFrame {
 	}
 
 	/**
-	 * Change the {@link SwingStage} that is used by this {@link GameFrame}.
+	 * Change the {@link SwingStage} that is used by this {@link SwingGameFrame}.
 	 * Normally there's no reason to change the default stage.
 	 * 
 	 * @param stage
@@ -128,7 +128,7 @@ public class GameFrame extends JFrame {
 	}
 
 	/**
-	 * Set the size of this {@link GameFrame}. Setting the inner size may only
+	 * Set the size of this {@link SwingGameFrame}. Setting the inner size may only
 	 * work if this frame is visible.
 	 * 
 	 * @param width

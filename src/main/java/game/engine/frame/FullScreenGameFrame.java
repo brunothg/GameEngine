@@ -27,7 +27,7 @@ import javax.imageio.ImageIO;
  * 
  * GameFrame using <b>Fullscreen Exclusive Mode</b> for better performance, if
  * possible. If full screen mode isn't supported, full screen mode is emulated
- * (performance may be equal {@link GameFrame}).<br>
+ * (performance may be equal {@link SwingGameFrame}).<br>
  * Supported EventListeners:<br>
  * <ul>
  * <li>{@link KeyListener}</li>
@@ -156,7 +156,7 @@ public class FullScreenGameFrame extends Window implements Stage {
 
 	private void setDefaultIcon() {
 		try {
-			setIconImage(ImageIO.read(GameFrame.class
+			setIconImage(ImageIO.read(SwingGameFrame.class
 					.getResource("/game/engine/media/icon.png")));
 		} catch (IOException e) {
 			setIconImage(new EmptyImage.AlphaImage());
