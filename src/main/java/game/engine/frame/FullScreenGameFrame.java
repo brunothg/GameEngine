@@ -18,7 +18,6 @@ import java.awt.Window;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
-import java.io.IOException;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.imageio.ImageIO;
@@ -136,9 +135,9 @@ public class FullScreenGameFrame {
 
 	private void setDefaultIcon() {
 		try {
-			window.setIconImage(ImageIO.read(SwingGameFrame.class
+			window.setIconImage(ImageIO.read(FullScreenGameFrame.class
 					.getResource("/game/engine/media/icon.png")));
-		} catch (IOException e) {
+		} catch (Exception e) {
 			window.setIconImage(new EmptyImage.AlphaImage());
 		}
 	}
