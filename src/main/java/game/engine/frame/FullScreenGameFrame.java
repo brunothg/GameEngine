@@ -8,6 +8,7 @@ import game.engine.stage.scene.Scene;
 import game.engine.time.Clock;
 
 import java.awt.BorderLayout;
+import java.awt.Cursor;
 import java.awt.DisplayMode;
 import java.awt.Frame;
 import java.awt.GraphicsConfiguration;
@@ -324,6 +325,14 @@ public class FullScreenGameFrame {
 	public double getFramesPerSecond() {
 
 		return clock.getFramesPerSecond();
+	}
+
+	/**
+	 * @see Frame#setCursor(Cursor)
+	 */
+	public void setCursor(Cursor cursor) {
+
+		window.setCursor(cursor);
 	}
 
 	/**
