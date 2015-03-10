@@ -33,6 +33,8 @@ public class SwingStage extends JPanel implements Stage {
 	private static final long serialVersionUID = 1L;
 
 	private Scene scene;
+	private Object sceneLock = new Object();
+
 	private EventListener[] sceneListener;
 
 	private BufferedImage offScreen;
@@ -57,16 +59,20 @@ public class SwingStage extends JPanel implements Stage {
 	@Override
 	public void setScene(Scene scene) {
 
-		recycleScene();
+		synchronized (sceneLock) {
+			recycleScene();
 
-		this.scene = scene;
-		registerEventListeners();
+			this.scene = scene;
+			registerEventListeners();
+		}
 	}
 
 	@Override
 	public Scene getScene() {
 
-		return this.scene;
+		synchronized (sceneLock) {
+			return this.scene;
+		}
 	}
 
 	@Override
@@ -221,7 +227,9 @@ public class SwingStage extends JPanel implements Stage {
 			ImageUtils.clearImage(offGraphics, width, height,
 					ImageUtils.COLOR_TRANSPARENT);
 
-			getScene().paintScene(offGraphics, width, height, elapedTime);
+			synchronized (sceneLock) {
+				getScene().paintScene(offGraphics, width, height, elapedTime);
+			}
 
 			offGraphics.dispose();
 		}

@@ -118,6 +118,7 @@ public class FullScreenGameFrame {
 
 	private void initialize() {
 
+		window.setLayout(new BorderLayout());
 		window.setAlwaysOnTop(true);
 		window.setIgnoreRepaint(true);
 		window.setUndecorated(true);
@@ -132,7 +133,6 @@ public class FullScreenGameFrame {
 		clock.addClockListener(stage);
 		clock.start();
 
-		window.setLayout(new BorderLayout());
 	}
 
 	private void setDefaultIcon() {

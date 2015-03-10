@@ -194,6 +194,9 @@ public class LoadingScene implements Scene {
 		 */
 		if (shadow == null || shadow.getWidth() < width
 				|| shadow.getHeight() < height) {
+			if (width <= 0 || height <= 0) {
+				return;
+			}
 
 			shadow = new BufferedImage(width, height,
 					BufferedImage.TYPE_INT_ARGB_PRE);
