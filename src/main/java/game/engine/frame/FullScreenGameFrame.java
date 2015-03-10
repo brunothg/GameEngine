@@ -175,6 +175,13 @@ public class FullScreenGameFrame {
 			return true;
 		}
 
+		try {
+			gd.setDisplayMode(dm);
+
+			return true;
+		} catch (Throwable e) {
+		}
+
 		return false;
 	}
 
