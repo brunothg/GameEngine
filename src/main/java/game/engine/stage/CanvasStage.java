@@ -1,5 +1,6 @@
 package game.engine.stage;
 
+import game.engine.image.NullGraphics;
 import game.engine.stage.scene.Scene;
 
 import java.awt.Canvas;
@@ -33,7 +34,7 @@ public class CanvasStage extends Canvas implements Stage {
 
 		if (!isReadyForDrawing()) {
 
-			return;
+			g2d = new NullGraphics();
 		} else {
 
 			g2d = (Graphics2D) bufferStrategy.getDrawGraphics();
