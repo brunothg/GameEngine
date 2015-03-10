@@ -1,7 +1,13 @@
 package game.engine.frame;
 
 import game.engine.image.EmptyImage;
+import game.engine.stage.CanvasStage;
+import game.engine.stage.SwingStage;
+import game.engine.stage.scene.LoadingScene;
+import game.engine.stage.scene.Scene;
+import game.engine.time.Clock;
 
+import java.awt.BorderLayout;
 import java.awt.DisplayMode;
 import java.awt.GraphicsConfiguration;
 import java.awt.GraphicsDevice;
@@ -30,6 +36,9 @@ public class FullScreenGameFrame
 	private AtomicBoolean isInFullScreenMode = new AtomicBoolean(false);
 
 	private DisplayMode previousDisplayMode;
+
+	private CanvasStage stage;
+	private Clock clock;
 
 	/**
 	 * Uses default GraphicsDevice
@@ -87,6 +96,15 @@ public class FullScreenGameFrame
 		window.setAlwaysOnTop(true);
 		window.setIgnoreRepaint(true);
 		setDefaultIcon();
+
+		stage = new CanvasStage();
+		stage.setScene(new LoadingScene());
+
+		clock = new Clock();
+		clock.addClockListener(stage);
+		clock.start();
+
+		window.setLayout(new BorderLayout());
 	}
 
 	private void setDefaultIcon()
@@ -142,8 +160,37 @@ public class FullScreenGameFrame
 	public void dispose()
 	{
 
-		setVisible(false);
-		window.dispose();
+		try
+		{
+			setVisible(false);
+			window.dispose();
+		}
+		catch (Exception e)
+		{
+		}
+		finally
+		{
+
+			clock.destroy();
+		}
+	}
+
+	@Override
+	protected void finalize() throws Throwable
+	{
+
+		try
+		{
+			clock.destroy();
+		}
+		catch (Exception e)
+		{
+		}
+		finally
+		{
+
+			super.finalize();
+		}
 	}
 
 	public void setVisible(boolean visible)
@@ -197,4 +244,71 @@ public class FullScreenGameFrame
 			setVisible(false);
 		}
 	}
+
+	/**
+	 * Get the stage of this game frame.
+	 * 
+	 * @return Stage of this frame
+	 */
+	public CanvasStage getStage()
+	{
+
+		return stage;
+	}
+
+	/**
+	 * Change the {@link SwingStage} that is used by this {@link SwingGameFrame}. Normally there's
+	 * no reason to change the default stage.
+	 * 
+	 * @param stage
+	 */
+	public void setStage(CanvasStage stage)
+	{
+
+		if (stage == null)
+		{
+			throw new IllegalArgumentException("Null value not allowed");
+		}
+		clock.removeClockListener(this.stage);
+
+		this.stage = stage;
+		clock.addClockListener(stage);
+	}
+
+	/**
+	 * @see SwingStage#setScene(Scene)
+	 */
+	public void setScene(Scene scene)
+	{
+
+		getStage().setScene(scene);
+	}
+
+	/**
+	 * @see SwingStage#getScene()
+	 */
+	public Scene getScene()
+	{
+
+		return getStage().getScene();
+	}
+
+	/**
+	 * @see Clock#setFramesPerSecond(int)
+	 */
+	public void setFramesPerSecond(int framesPerSecond)
+	{
+
+		clock.setFramesPerSecond(framesPerSecond);
+	}
+
+	/**
+	 * @see Clock#getFramesPerSecond()
+	 */
+	public double getFramesPerSecond()
+	{
+
+		return clock.getFramesPerSecond();
+	}
+
 }

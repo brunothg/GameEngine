@@ -142,15 +142,33 @@ public class SwingGameFrame extends JFrame
 	@Override
 	public void dispose()
 	{
-		clock.destroy();
-		super.dispose();
+		try
+		{
+			super.dispose();
+		}
+		catch (Exception e)
+		{
+		}
+		finally
+		{
+			clock.destroy();
+		}
 	}
 
 	@Override
 	protected void finalize() throws Throwable
 	{
-		clock.destroy();
-		super.finalize();
+		try
+		{
+			clock.destroy();
+		}
+		catch (Exception e)
+		{
+		}
+		finally
+		{
+			super.finalize();
+		}
 	}
 
 	/**
