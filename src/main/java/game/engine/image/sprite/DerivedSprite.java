@@ -22,7 +22,7 @@ public class DerivedSprite extends Sprite {
 	public DerivedSprite(Sprite s, int x, int y, int width, int height) {
 
 		if (x < 0 || y < 0 || x + width > s.getColumns()
-				|| y + height > s.getRows()) {
+				|| y + height > s.getRows() || width < 0 || height < 0) {
 			throw new IllegalArgumentException("Values out of bounds: "
 					+ String.format("[%d,%d,%d,%d]:[0,0,%d,%d]", x, y, width,
 							height, s.getColumns(), s.getRows()));
