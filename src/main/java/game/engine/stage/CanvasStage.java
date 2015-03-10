@@ -69,7 +69,10 @@ public class CanvasStage extends Canvas implements Stage {
 		}
 
 		g2d.dispose();
-		bufferStrategy.show();
+
+		if (!isNullGraphic) {
+			bufferStrategy.show();
+		}
 	}
 
 	private boolean isReadyForDrawing() {
