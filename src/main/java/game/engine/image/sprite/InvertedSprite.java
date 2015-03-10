@@ -168,11 +168,17 @@ public class InvertedSprite extends Sprite {
 		return (getRows() - 1) - y;
 	}
 
+	/**
+	 * Check if X-Coordinates are inverted
+	 */
 	public boolean isInvertX() {
 
 		return invertX;
 	}
 
+	/**
+	 * Check if Y-Coordinates are inverted
+	 */
 	public boolean isInvertY() {
 
 		return invertY;
