@@ -60,14 +60,14 @@ public abstract class SceneObject {
 		int width = getWidth();
 		int height = getHeight();
 
-		Graphics2D g2d = (Graphics2D) g.create(x_topLeft, y_topLeft, width + 1,
-				height + 1);
+		Graphics2D g2d = (Graphics2D) g.create(x_topLeft, y_topLeft, width,
+				height);
 		paint(g2d, elapsedTime);
 
 		if (isDrawBoundingBox()) {
 
 			g2d.setColor(Color.BLACK);
-			g2d.drawRect(0, 0, width, height);
+			g2d.drawRect(0, 0, width - 1, height - 1);
 		}
 
 		g2d.dispose();
