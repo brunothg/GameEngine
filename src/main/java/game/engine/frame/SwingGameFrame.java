@@ -15,6 +15,11 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 
+/**
+ * 
+ * @author Marvin Bruns
+ *
+ */
 public class SwingGameFrame extends JFrame
 {
 
@@ -206,28 +211,44 @@ public class SwingGameFrame extends JFrame
 		setSize(width + addWidth, height + addHeight);
 	}
 
-	@Override
+	/**
+	 * Not guaranteed to work properly
+	 * 
+	 * @see JFrame#add(Component)
+	 */
 	public Component add(Component comp)
 	{
 
 		return super.add(comp);
 	}
 
-	@Override
+	/**
+	 * Not guaranteed to work properly
+	 * 
+	 * @see JFrame#add(Component, Object)
+	 */
 	public void add(Component comp, Object constraints)
 	{
 
 		super.add(comp, constraints);
 	}
 
-	@Override
+	/**
+	 * Not guaranteed to work properly
+	 * 
+	 * @see JFrame#remove(Component)
+	 */
 	public void remove(Component comp)
 	{
 
 		super.remove(comp);
 	}
 
-	@Override
+	/**
+	 * Not guaranteed to work properly
+	 * 
+	 * @see JFrame#remove(int)
+	 */
 	public void remove(int index)
 	{
 
