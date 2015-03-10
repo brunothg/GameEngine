@@ -27,6 +27,20 @@ public class FullScreenGameFrameTest {
 			}
 
 		});
+
+		new Thread(new Runnable() {
+
+			@Override
+			public void run() {
+
+				try {
+					Thread.sleep(15000);
+				} catch (InterruptedException e) {
+				}
+
+				System.exit(0);
+			}
+		}).start();
 	}
 
 }
