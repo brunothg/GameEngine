@@ -30,11 +30,13 @@ public class CanvasStage extends Canvas implements Stage {
 	@Override
 	public void tick(long frames, long coveredTime) {
 
+		boolean isNullGraphic = false;
 		Graphics2D g2d;
 
 		if (!isReadyForDrawing()) {
 
 			g2d = new NullGraphics();
+			isNullGraphic = true;
 		} else {
 
 			g2d = (Graphics2D) bufferStrategy.getDrawGraphics();
@@ -46,7 +48,15 @@ public class CanvasStage extends Canvas implements Stage {
 		synchronized (sceneLock) {
 
 			Scene scene = getScene();
-			scene.paintScene(g2d, width, height, coveredTime);
+
+			if (isNullGraphic) {
+				try {
+					scene.paintScene(g2d, width, height, coveredTime);
+				} catch (Throwable t) {
+				}
+			} else {
+				scene.paintScene(g2d, width, height, coveredTime);
+			}
 		}
 
 		g2d.dispose();
