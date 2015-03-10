@@ -11,6 +11,15 @@ import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferStrategy;
 import java.util.EventListener;
 
+/**
+ * Stage using {@link Canvas} for drawing. If supported draws images using page
+ * flipping.<br>
+ * Before using this you should test it. With some JVM implementations this will
+ * fail.
+ * 
+ * @author Marvin Bruns
+ *
+ */
 public class CanvasStage extends Canvas implements Stage {
 
 	private static final long serialVersionUID = 1L;

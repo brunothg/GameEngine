@@ -24,7 +24,11 @@ import javax.imageio.ImageIO;
 
 /**
  * 
- * Fullscreen GameFrame
+ * Fullscreen GameFrame using {@link CanvasStage} for drawing.<br>
+ * Before using this you should test it. With some JVM implementations this will
+ * fail.<br>
+ * Don't forget to build some kind of exit and dispose this frame.
+ * 
  * 
  * @author Marvin Bruns
  *
