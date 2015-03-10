@@ -29,11 +29,15 @@ public class CanvasStage extends Canvas implements Stage {
 	@Override
 	public void tick(long frames, long coveredTime) {
 
+		Graphics2D g2d;
+
 		if (!isReadyForDrawing()) {
 
-		}
+			return;
+		} else {
 
-		Graphics2D g2d = (Graphics2D) bufferStrategy.getDrawGraphics();
+			g2d = (Graphics2D) bufferStrategy.getDrawGraphics();
+		}
 
 		int width = getWidth();
 		int height = getHeight();
