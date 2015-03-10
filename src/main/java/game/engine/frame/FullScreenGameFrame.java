@@ -44,35 +44,53 @@ public class FullScreenGameFrame {
 	private Clock clock;
 
 	/**
-	 * Uses default GraphicsDevice
+	 * Uses default title
 	 * 
-	 * @see #FullScreenGameFrame(GraphicsDevice)
+	 * @see #FullScreenGameFrame(String)
 	 */
 	public FullScreenGameFrame() {
 
+		this("GameFrame");
+	}
+
+	/**
+	 * Uses default GraphicsDevice
+	 * 
+	 * @param title
+	 *            Frame title
+	 * @see #FullScreenGameFrame(GraphicsDevice)
+	 */
+	public FullScreenGameFrame(String title) {
+
 		this(GraphicsEnvironment.getLocalGraphicsEnvironment()
-				.getDefaultScreenDevice());
+				.getDefaultScreenDevice(), title);
 	}
 
 	/**
 	 * Uses default {@link DisplayMode}
 	 * 
+	 * @param title
+	 *            Frame title
+	 * 
 	 * @see #FullScreenGameFrame(GraphicsDevice, DisplayMode)
 	 */
-	public FullScreenGameFrame(GraphicsDevice gd) {
+	public FullScreenGameFrame(GraphicsDevice gd, String title) {
 
-		this(gd, gd.getDisplayMode());
+		this(gd, gd.getDisplayMode(), title);
 	}
 
 	/**
 	 * Uses default {@link GraphicsConfiguration}
 	 * 
+	 * @param title
+	 *            Frame title
+	 * 
 	 * @see #FullScreenGameFrame(GraphicsDevice, GraphicsConfiguration,
 	 *      DisplayMode)
 	 */
-	public FullScreenGameFrame(GraphicsDevice gd, DisplayMode dm) {
+	public FullScreenGameFrame(GraphicsDevice gd, DisplayMode dm, String title) {
 
-		this(gd, gd.getDefaultConfiguration(), dm);
+		this(gd, gd.getDefaultConfiguration(), dm, title);
 	}
 
 	/**
@@ -83,11 +101,13 @@ public class FullScreenGameFrame {
 	 *            {@link GraphicsConfiguration} used for {@link Window}
 	 * @param dm
 	 *            {@link DisplayMode} used for rendering
+	 * @param title
+	 *            Frame title
 	 */
 	public FullScreenGameFrame(GraphicsDevice gd, GraphicsConfiguration gc,
-			DisplayMode dm) {
+			DisplayMode dm, String title) {
 
-		this.window = new Frame(null, gc);
+		this.window = new Frame(title, gc);
 
 		this.gd = gd;
 		this.dm = dm;
