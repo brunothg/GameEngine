@@ -151,6 +151,10 @@ public class Clock extends Thread {
 
 			for (ClockListener cl : listeners) {
 
+				if (cl == null) {
+					return;
+				}
+
 				cl.tick(frames, coveredTime);
 			}
 		}

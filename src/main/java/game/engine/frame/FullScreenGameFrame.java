@@ -119,7 +119,6 @@ public class FullScreenGameFrame {
 	private void initialize() {
 
 		window.setLayout(new BorderLayout());
-		window.setAlwaysOnTop(true);
 		window.setIgnoreRepaint(true);
 		window.setUndecorated(true);
 		window.setResizable(false);
