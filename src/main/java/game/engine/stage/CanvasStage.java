@@ -1,8 +1,10 @@
 package game.engine.stage;
 
+import java.awt.Canvas;
+
 import game.engine.stage.scene.Scene;
 
-public class CanvasStage implements Stage
+public class CanvasStage extends Canvas implements Stage
 {
 
 	@Override

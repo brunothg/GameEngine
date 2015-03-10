@@ -13,6 +13,9 @@ import java.awt.GraphicsConfiguration;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.Window;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.io.IOException;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -99,6 +102,7 @@ public class FullScreenGameFrame
 
 		stage = new CanvasStage();
 		stage.setScene(new LoadingScene());
+		window.add(stage, BorderLayout.CENTER);
 
 		clock = new Clock();
 		clock.addClockListener(stage);
@@ -270,8 +274,10 @@ public class FullScreenGameFrame
 			throw new IllegalArgumentException("Null value not allowed");
 		}
 		clock.removeClockListener(this.stage);
+		window.remove(this.stage);
 
 		this.stage = stage;
+		window.add(this.stage, BorderLayout.CENTER);
 		clock.addClockListener(stage);
 	}
 
@@ -309,6 +315,33 @@ public class FullScreenGameFrame
 	{
 
 		return clock.getFramesPerSecond();
+	}
+
+	/**
+	 * @see Window#addKeyListener(KeyListener)
+	 */
+	public void addKeyListener(KeyListener l)
+	{
+
+		window.addKeyListener(l);
+	}
+
+	/**
+	 * @see Window#addMouseListener(MouseListener)
+	 */
+	public void addMouseListener(MouseListener l)
+	{
+
+		window.addMouseListener(l);
+	}
+
+	/**
+	 * @see Window#addMouseMotionListener(MouseMotionListener)
+	 */
+	public void addMouseListener(MouseMotionListener l)
+	{
+
+		window.addMouseMotionListener(l);
 	}
 
 }

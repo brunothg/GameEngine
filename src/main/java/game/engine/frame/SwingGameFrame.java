@@ -7,6 +7,7 @@ import game.engine.stage.scene.Scene;
 import game.engine.time.Clock;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.GraphicsConfiguration;
 import java.awt.Insets;
 import java.io.IOException;
@@ -54,7 +55,7 @@ public class SwingGameFrame extends JFrame
 
 		stage = new SwingStage();
 		stage.setScene(new LoadingScene());
-		add(stage, BorderLayout.CENTER);
+		super.add(stage, BorderLayout.CENTER);
 
 		clock = new Clock();
 		clock.addClockListener(stage);
@@ -98,8 +99,10 @@ public class SwingGameFrame extends JFrame
 			throw new IllegalArgumentException("Null value not allowed");
 		}
 		clock.removeClockListener(this.stage);
+		super.remove(this.stage);
 
 		this.stage = stage;
+		super.add(this.stage, BorderLayout.CENTER);
 		clock.addClockListener(stage);
 	}
 
@@ -201,5 +204,33 @@ public class SwingGameFrame extends JFrame
 		int addHeight = insets.top + insets.bottom;
 
 		setSize(width + addWidth, height + addHeight);
+	}
+
+	@Override
+	public Component add(Component comp)
+	{
+
+		return super.add(comp);
+	}
+
+	@Override
+	public void add(Component comp, Object constraints)
+	{
+
+		super.add(comp, constraints);
+	}
+
+	@Override
+	public void remove(Component comp)
+	{
+
+		super.remove(comp);
+	}
+
+	@Override
+	public void remove(int index)
+	{
+
+		super.remove(index);
 	}
 }
