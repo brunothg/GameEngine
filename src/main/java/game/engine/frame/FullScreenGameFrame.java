@@ -13,6 +13,7 @@ import java.awt.Frame;
 import java.awt.GraphicsConfiguration;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
+import java.awt.Image;
 import java.awt.Window;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
@@ -144,6 +145,19 @@ public class FullScreenGameFrame {
 	}
 
 	/**
+	 * @see Frame#setTitle(String)
+	 */
+	public void setTitle(String title) {
+
+		window.setTitle(title);
+	}
+
+	public void setIcon(Image image) {
+
+		window.setIconImage(image);
+	}
+
+	/**
 	 * Change DisplayMode when in full screen exclusive mode
 	 * 
 	 * @param dm
@@ -177,7 +191,7 @@ public class FullScreenGameFrame {
 	/**
 	 * Set invisible and dispose window
 	 * 
-	 * @see Window#dispose()
+	 * @see Frame#dispose()
 	 */
 	public void dispose() {
 
@@ -272,7 +286,7 @@ public class FullScreenGameFrame {
 	}
 
 	/**
-	 * @see SwingStage#setScene(Scene)
+	 * @see CanvasStage#setScene(Scene)
 	 */
 	public void setScene(Scene scene) {
 
@@ -280,7 +294,7 @@ public class FullScreenGameFrame {
 	}
 
 	/**
-	 * @see SwingStage#getScene()
+	 * @see CanvasStage#getScene()
 	 */
 	public Scene getScene() {
 
@@ -304,7 +318,7 @@ public class FullScreenGameFrame {
 	}
 
 	/**
-	 * @see Window#addKeyListener(KeyListener)
+	 * @see Frame#addKeyListener(KeyListener)
 	 */
 	public void addKeyListener(KeyListener l) {
 
@@ -312,7 +326,7 @@ public class FullScreenGameFrame {
 	}
 
 	/**
-	 * @see Window#addMouseListener(MouseListener)
+	 * @see Frame#addMouseListener(MouseListener)
 	 */
 	public void addMouseListener(MouseListener l) {
 
@@ -320,7 +334,7 @@ public class FullScreenGameFrame {
 	}
 
 	/**
-	 * @see Window#addMouseMotionListener(MouseMotionListener)
+	 * @see Frame#addMouseMotionListener(MouseMotionListener)
 	 */
 	public void addMouseListener(MouseMotionListener l) {
 
