@@ -28,15 +28,14 @@ import javax.imageio.ImageIO;
  * @author Marvin Bruns
  *
  */
-public class FullScreenGameFrame
-{
+public class FullScreenGameFrame {
 
 	private Window window;
 
 	private GraphicsDevice gd;
 	private DisplayMode dm;
 
-	private AtomicBoolean isInFullScreenMode = new AtomicBoolean(false);
+	private AtomicBoolean isInFullScreenExclusiveMode = new AtomicBoolean(false);
 
 	private DisplayMode previousDisplayMode;
 
@@ -48,10 +47,10 @@ public class FullScreenGameFrame
 	 * 
 	 * @see #FullScreenGameFrame(GraphicsDevice)
 	 */
-	public FullScreenGameFrame()
-	{
+	public FullScreenGameFrame() {
 
-		this(GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice());
+		this(GraphicsEnvironment.getLocalGraphicsEnvironment()
+				.getDefaultScreenDevice());
 	}
 
 	/**
@@ -59,8 +58,7 @@ public class FullScreenGameFrame
 	 * 
 	 * @see #FullScreenGameFrame(GraphicsDevice, DisplayMode)
 	 */
-	public FullScreenGameFrame(GraphicsDevice gd)
-	{
+	public FullScreenGameFrame(GraphicsDevice gd) {
 
 		this(gd, gd.getDisplayMode());
 	}
@@ -68,22 +66,25 @@ public class FullScreenGameFrame
 	/**
 	 * Uses default {@link GraphicsConfiguration}
 	 * 
-	 * @see #FullScreenGameFrame(GraphicsDevice, GraphicsConfiguration, DisplayMode)
+	 * @see #FullScreenGameFrame(GraphicsDevice, GraphicsConfiguration,
+	 *      DisplayMode)
 	 */
-	public FullScreenGameFrame(GraphicsDevice gd, DisplayMode dm)
-	{
+	public FullScreenGameFrame(GraphicsDevice gd, DisplayMode dm) {
 
 		this(gd, gd.getDefaultConfiguration(), dm);
 	}
 
 	/**
 	 * 
-	 * @param gd {@link GraphicsDevice} used for rendering
-	 * @param gc {@link GraphicsConfiguration} used for {@link Window}
-	 * @param dm {@link DisplayMode} used for rendering
+	 * @param gd
+	 *            {@link GraphicsDevice} used for rendering
+	 * @param gc
+	 *            {@link GraphicsConfiguration} used for {@link Window}
+	 * @param dm
+	 *            {@link DisplayMode} used for rendering
 	 */
-	public FullScreenGameFrame(GraphicsDevice gd, GraphicsConfiguration gc, DisplayMode dm)
-	{
+	public FullScreenGameFrame(GraphicsDevice gd, GraphicsConfiguration gc,
+			DisplayMode dm) {
 
 		this.window = new Window(null, gc);
 
@@ -93,8 +94,7 @@ public class FullScreenGameFrame
 		initialize();
 	}
 
-	private void initialize()
-	{
+	private void initialize() {
 
 		window.setAlwaysOnTop(true);
 		window.setIgnoreRepaint(true);
@@ -111,14 +111,11 @@ public class FullScreenGameFrame
 		window.setLayout(new BorderLayout());
 	}
 
-	private void setDefaultIcon()
-	{
-		try
-		{
-			window.setIconImage(ImageIO.read(SwingGameFrame.class.getResource("/game/engine/media/icon.png")));
-		}
-		catch (IOException e)
-		{
+	private void setDefaultIcon() {
+		try {
+			window.setIconImage(ImageIO.read(SwingGameFrame.class
+					.getResource("/game/engine/media/icon.png")));
+		} catch (IOException e) {
 			window.setIconImage(new EmptyImage.AlphaImage());
 		}
 	}
@@ -126,16 +123,15 @@ public class FullScreenGameFrame
 	/**
 	 * Change DisplayMode when in full screen exclusive mode
 	 * 
-	 * @param dm {@link DisplayMode}
+	 * @param dm
+	 *            {@link DisplayMode}
 	 * @return true if it was successful
 	 */
-	public boolean setDisplayMode(DisplayMode dm)
-	{
+	public boolean setDisplayMode(DisplayMode dm) {
 
 		this.dm = dm;
 
-		if (isInFullScreenMode.get() && gd.isDisplayChangeSupported())
-		{
+		if (isInFullScreenExclusiveMode.get() && gd.isDisplayChangeSupported()) {
 
 			gd.setDisplayMode(dm);
 
@@ -150,10 +146,9 @@ public class FullScreenGameFrame
 	 * 
 	 * @return true if in fullscreen exclusive mode
 	 */
-	public boolean isInExclusiveFullscreenMode()
-	{
+	public boolean isInExclusiveFullscreenMode() {
 
-		return isInFullScreenMode.get();
+		return isInFullScreenExclusiveMode.get();
 	}
 
 	/**
@@ -161,92 +156,67 @@ public class FullScreenGameFrame
 	 * 
 	 * @see Window#dispose()
 	 */
-	public void dispose()
-	{
+	public void dispose() {
 
-		try
-		{
+		try {
 			setVisible(false);
 			window.dispose();
-		}
-		catch (Exception e)
-		{
-		}
-		finally
-		{
+		} catch (Exception e) {
+		} finally {
 
 			clock.destroy();
 		}
 	}
 
 	@Override
-	protected void finalize() throws Throwable
-	{
+	protected void finalize() throws Throwable {
 
-		try
-		{
+		try {
 			clock.destroy();
-		}
-		catch (Exception e)
-		{
-		}
-		finally
-		{
+		} catch (Exception e) {
+		} finally {
 
 			super.finalize();
 		}
 	}
 
-	public void setVisible(boolean visible)
-	{
-		if (visible)
-		{
+	public void setVisible(boolean visible) {
+		if (visible) {
 
 			show();
-		}
-		else
-		{
+		} else {
 
 			hide();
 		}
 	}
 
-	private void show()
-	{
+	private void show() {
 
-		if (gd.isFullScreenSupported() && !isInFullScreenMode.get())
-		{
+		boolean fullScreenSupported = gd.isFullScreenSupported();
+
+		if (fullScreenSupported && !isInFullScreenExclusiveMode.get()) {
 
 			previousDisplayMode = gd.getDisplayMode();
 
-			gd.setFullScreenWindow(window);
-			gd.setDisplayMode(dm);
-
-			isInFullScreenMode.set(true);
+			isInFullScreenExclusiveMode.set(true);
 		}
-		else
-		{
 
-			setVisible(true);
-		}
+		gd.setFullScreenWindow(window);
+		setDisplayMode(dm);
 	}
 
-	private void hide()
-	{
+	private void hide() {
 
-		if (isInFullScreenMode.get())
-		{
+		setDisplayMode(previousDisplayMode);
 
-			gd.setDisplayMode(previousDisplayMode);
-			gd.setFullScreenWindow(null);
+		if (isInFullScreenExclusiveMode.get()) {
 
-			isInFullScreenMode.set(false);
+			previousDisplayMode = null;
+
+			isInFullScreenExclusiveMode.set(false);
 		}
-		else
-		{
 
-			setVisible(false);
-		}
+		gd.setFullScreenWindow(null);
 	}
 
 	/**
@@ -254,23 +224,20 @@ public class FullScreenGameFrame
 	 * 
 	 * @return Stage of this frame
 	 */
-	public CanvasStage getStage()
-	{
+	public CanvasStage getStage() {
 
 		return stage;
 	}
 
 	/**
-	 * Change the {@link SwingStage} that is used by this {@link SwingGameFrame}. Normally there's
-	 * no reason to change the default stage.
+	 * Change the {@link SwingStage} that is used by this {@link SwingGameFrame}
+	 * . Normally there's no reason to change the default stage.
 	 * 
 	 * @param stage
 	 */
-	public void setStage(CanvasStage stage)
-	{
+	public void setStage(CanvasStage stage) {
 
-		if (stage == null)
-		{
+		if (stage == null) {
 			throw new IllegalArgumentException("Null value not allowed");
 		}
 		clock.removeClockListener(this.stage);
@@ -284,8 +251,7 @@ public class FullScreenGameFrame
 	/**
 	 * @see SwingStage#setScene(Scene)
 	 */
-	public void setScene(Scene scene)
-	{
+	public void setScene(Scene scene) {
 
 		getStage().setScene(scene);
 	}
@@ -293,8 +259,7 @@ public class FullScreenGameFrame
 	/**
 	 * @see SwingStage#getScene()
 	 */
-	public Scene getScene()
-	{
+	public Scene getScene() {
 
 		return getStage().getScene();
 	}
@@ -302,8 +267,7 @@ public class FullScreenGameFrame
 	/**
 	 * @see Clock#setFramesPerSecond(int)
 	 */
-	public void setFramesPerSecond(int framesPerSecond)
-	{
+	public void setFramesPerSecond(int framesPerSecond) {
 
 		clock.setFramesPerSecond(framesPerSecond);
 	}
@@ -311,8 +275,7 @@ public class FullScreenGameFrame
 	/**
 	 * @see Clock#getFramesPerSecond()
 	 */
-	public double getFramesPerSecond()
-	{
+	public double getFramesPerSecond() {
 
 		return clock.getFramesPerSecond();
 	}
@@ -320,8 +283,7 @@ public class FullScreenGameFrame
 	/**
 	 * @see Window#addKeyListener(KeyListener)
 	 */
-	public void addKeyListener(KeyListener l)
-	{
+	public void addKeyListener(KeyListener l) {
 
 		window.addKeyListener(l);
 	}
@@ -329,8 +291,7 @@ public class FullScreenGameFrame
 	/**
 	 * @see Window#addMouseListener(MouseListener)
 	 */
-	public void addMouseListener(MouseListener l)
-	{
+	public void addMouseListener(MouseListener l) {
 
 		window.addMouseListener(l);
 	}
@@ -338,8 +299,7 @@ public class FullScreenGameFrame
 	/**
 	 * @see Window#addMouseMotionListener(MouseMotionListener)
 	 */
-	public void addMouseListener(MouseMotionListener l)
-	{
+	public void addMouseListener(MouseMotionListener l) {
 
 		window.addMouseMotionListener(l);
 	}
