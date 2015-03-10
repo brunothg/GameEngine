@@ -9,6 +9,7 @@ import game.engine.time.Clock;
 
 import java.awt.BorderLayout;
 import java.awt.DisplayMode;
+import java.awt.Frame;
 import java.awt.GraphicsConfiguration;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
@@ -30,7 +31,7 @@ import javax.imageio.ImageIO;
  */
 public class FullScreenGameFrame {
 
-	private Window window;
+	private Frame window;
 
 	private GraphicsDevice gd;
 	private DisplayMode dm;
@@ -86,7 +87,7 @@ public class FullScreenGameFrame {
 	public FullScreenGameFrame(GraphicsDevice gd, GraphicsConfiguration gc,
 			DisplayMode dm) {
 
-		this.window = new Window(null, gc);
+		this.window = new Frame(null, gc);
 
 		this.gd = gd;
 		this.dm = dm;
@@ -98,6 +99,8 @@ public class FullScreenGameFrame {
 
 		window.setAlwaysOnTop(true);
 		window.setIgnoreRepaint(true);
+		window.setUndecorated(true);
+		window.setResizable(false);
 		setDefaultIcon();
 
 		stage = new CanvasStage();
