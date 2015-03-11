@@ -1,39 +1,29 @@
 package game.engine.image.sprite;
 
+import game.engine.image.ImageUtils;
+
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
 /**
- * A sprite that uses an other sprite, but limits the dimension and translate the coordinates.
+ * A sprite that uses an other sprite, but transforms it using the provided {@link AffineTransform}.
  * 
  * @author Marvin Bruns
  *
  */
-public class DerivedSprite extends Sprite
+public class AffineTransformedSprite extends Sprite
 {
 
-	private Sprite s;
+	private Sprite sprite;
+	private AffineTransform transform;
 
-	private int x;
-	private int y;
-	private int w;
-	private int h;
-
-	public DerivedSprite(Sprite s, int x, int y, int width, int height)
+	public AffineTransformedSprite(Sprite sprite, AffineTransform transform)
 	{
 
-		if (x < 0 || y < 0 || x + width > s.getColumns() || y + height > s.getRows() || width < 0 || height < 0)
-		{
-			throw new IllegalArgumentException("Values out of bounds: "
-				+ String.format("[%d,%d,%d,%d]:[0,0,%d,%d]", x, y, width, height, s.getColumns(), s.getRows()));
-		}
-
-		this.s = s;
-		this.x = x;
-		this.y = y;
-		this.w = width;
-		this.h = height;
+		this.sprite = sprite;
+		this.transform = transform;
 	}
 
 /**
@@ -54,12 +44,16 @@ public class DerivedSprite extends Sprite
 	public void drawTile(Graphics2D g, int x, int y, int width, int height)
 	{
 
-		if (x < 0 || y < 0 || x >= getColumns() || y >= getRows())
-		{
-			throw new ArrayIndexOutOfBoundsException("Coordinates are out of bounds");
-		}
+		AffineTransform transBefore = g.getTransform();
 
-		s.drawTile(g, x + this.x, y + this.y, width, height);
+		AffineTransform tr = new AffineTransform();
+
+		tr.concatenate(transBefore);
+		tr.concatenate(transform);
+		g.setTransform(tr);
+
+		sprite.drawTile(g, x, y, width, height);
+		g.setTransform(transBefore);
 	}
 
 	/**
@@ -72,12 +66,7 @@ public class DerivedSprite extends Sprite
 	public BufferedImage getTile(int x, int y)
 	{
 
-		if (x < 0 || y < 0 || x >= getColumns() || y >= getRows())
-		{
-			throw new ArrayIndexOutOfBoundsException("Coordinates are out of bounds");
-		}
-
-		return s.getTile(x + this.x, y + this.y);
+		return ImageUtils.transform(sprite.getTile(x, y), transform);
 	}
 
 	/**
@@ -87,7 +76,7 @@ public class DerivedSprite extends Sprite
 	public int getTileCount()
 	{
 
-		return getRows() * getColumns();
+		return sprite.getTileCount();
 	}
 
 	/**
@@ -97,7 +86,7 @@ public class DerivedSprite extends Sprite
 	public int getRows()
 	{
 
-		return h;
+		return sprite.getRows();
 	}
 
 	/**
@@ -107,7 +96,7 @@ public class DerivedSprite extends Sprite
 	public int getColumns()
 	{
 
-		return w;
+		return sprite.getColumns();
 	}
 
 	/**
@@ -117,7 +106,7 @@ public class DerivedSprite extends Sprite
 	public int getTileWidth()
 	{
 
-		return s.getTileWidth();
+		return sprite.getTileWidth();
 	}
 
 	/**
@@ -127,6 +116,6 @@ public class DerivedSprite extends Sprite
 	public int getTileHeight()
 	{
 
-		return s.getTileHeight();
+		return sprite.getTileHeight();
 	}
 }

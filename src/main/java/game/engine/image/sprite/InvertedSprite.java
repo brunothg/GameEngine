@@ -1,16 +1,18 @@
 package game.engine.image.sprite;
 
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 /**
- * {@link Sprite} that uses another sprite and inverts the coordinates. Now the
- * first frame is the last etc.
+ * {@link Sprite} that uses another sprite and inverts the coordinates. Now the first frame is the
+ * last etc.
  * 
  * @author Marvin Bruns
  *
  */
-public class InvertedSprite extends Sprite {
+public class InvertedSprite extends Sprite
+{
 
 	private Sprite sprite;
 
@@ -19,14 +21,12 @@ public class InvertedSprite extends Sprite {
 
 	/**
 	 * 
-	 * @param sprite
-	 *            {@link Sprite} used for this sprite
-	 * @param invertX
-	 *            if true X-Axis is inverted
-	 * @param invertY
-	 *            if true Y-Axis is inverted
+	 * @param sprite {@link Sprite} used for this sprite
+	 * @param invertX if true X-Axis is inverted
+	 * @param invertY if true Y-Axis is inverted
 	 */
-	public InvertedSprite(Sprite sprite, boolean invertX, boolean invertY) {
+	public InvertedSprite(Sprite sprite, boolean invertX, boolean invertY)
+	{
 
 		this.sprite = sprite;
 
@@ -49,7 +49,8 @@ public class InvertedSprite extends Sprite {
 	 * 
 	 * @param height The height of the Graphics object to draw on
 	 */
-	public void drawTile(Graphics g, int x, int y, int width, int height) {
+	public void drawTile(Graphics2D g, int x, int y, int width, int height)
+	{
 
 		int translatedX = translateX(x);
 		int translatedY = translateY(y);
@@ -60,13 +61,12 @@ public class InvertedSprite extends Sprite {
 	/**
 	 * Get a tile of this sprite
 	 * 
-	 * @param x
-	 *            X-Coordinate of the tile
-	 * @param y
-	 *            Y-Coordinate of the tile
+	 * @param x X-Coordinate of the tile
+	 * @param y Y-Coordinate of the tile
 	 * @return A {@link BufferedImage} containing the tile
 	 */
-	public BufferedImage getTile(int x, int y) {
+	public BufferedImage getTile(int x, int y)
+	{
 
 		int translatedX = translateX(x);
 		int translatedY = translateY(y);
@@ -78,7 +78,8 @@ public class InvertedSprite extends Sprite {
 	 * Get the number of tiles in this sprite.
 	 * 
 	 */
-	public int getTileCount() {
+	public int getTileCount()
+	{
 
 		return sprite.getRows();
 	}
@@ -87,7 +88,8 @@ public class InvertedSprite extends Sprite {
 	 * Get the number of rows.
 	 * 
 	 */
-	public int getRows() {
+	public int getRows()
+	{
 
 		return sprite.getRows();
 	}
@@ -96,7 +98,8 @@ public class InvertedSprite extends Sprite {
 	 * Get the number of columns.
 	 * 
 	 */
-	public int getColumns() {
+	public int getColumns()
+	{
 
 		return sprite.getColumns();
 	}
@@ -105,7 +108,8 @@ public class InvertedSprite extends Sprite {
 	 * Get the width of one tile
 	 * 
 	 */
-	public int getTileWidth() {
+	public int getTileWidth()
+	{
 
 		return sprite.getTileWidth();
 	}
@@ -114,7 +118,8 @@ public class InvertedSprite extends Sprite {
 	 * Get the height of one tile
 	 * 
 	 */
-	public int getTileHeight() {
+	public int getTileHeight()
+	{
 
 		return sprite.getTileHeight();
 	}
@@ -122,27 +127,26 @@ public class InvertedSprite extends Sprite {
 	/**
 	 * Get sub-sprite with given dimension.
 	 * 
-	 * @param x
-	 *            X-Coordinate of first tile
-	 * @param y
-	 *            Y-Coordinate of first tile
-	 * @param width
-	 *            Width of the sub-sprite
-	 * @param height
-	 *            Height of the sub-sprite
+	 * @param x X-Coordinate of first tile
+	 * @param y Y-Coordinate of first tile
+	 * @param width Width of the sub-sprite
+	 * @param height Height of the sub-sprite
 	 * @return The sub-sprite
 	 */
-	public Sprite getSubSprite(int x, int y, int width, int height) {
+	public Sprite getSubSprite(int x, int y, int width, int height)
+	{
 
 		int translatedX = translateX(x);
 		int translatedY = translateY(y);
 
-		if (invertX) {
+		if (invertX)
+		{
 			int transWidth = width - 1;
 			translatedX -= transWidth;
 		}
 
-		if (invertY) {
+		if (invertY)
+		{
 			int transHeight = height - 1;
 			translatedY -= transHeight;
 		}
@@ -150,18 +154,22 @@ public class InvertedSprite extends Sprite {
 		return sprite.getSubSprite(translatedX, translatedY, width, height);
 	}
 
-	private int translateX(int x) {
+	private int translateX(int x)
+	{
 
-		if (!invertX) {
+		if (!invertX)
+		{
 			return x;
 		}
 
 		return (getColumns() - 1) - x;
 	}
 
-	private int translateY(int y) {
+	private int translateY(int y)
+	{
 
-		if (!invertY) {
+		if (!invertY)
+		{
 			return y;
 		}
 
@@ -171,7 +179,8 @@ public class InvertedSprite extends Sprite {
 	/**
 	 * Check if X-Coordinates are inverted
 	 */
-	public boolean isInvertX() {
+	public boolean isInvertX()
+	{
 
 		return invertX;
 	}
@@ -179,7 +188,8 @@ public class InvertedSprite extends Sprite {
 	/**
 	 * Check if Y-Coordinates are inverted
 	 */
-	public boolean isInvertY() {
+	public boolean isInvertY()
+	{
 
 		return invertY;
 	}

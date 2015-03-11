@@ -3,6 +3,7 @@ package game.engine.image.sprite;
 import game.engine.image.ImageUtils;
 
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 /**
@@ -11,7 +12,8 @@ import java.awt.image.BufferedImage;
  * @author Marvin Bruns
  *
  */
-public class Sprite {
+public class Sprite
+{
 
 	private BufferedImage image;
 
@@ -21,16 +23,15 @@ public class Sprite {
 	/**
 	 * Create a new sprite.
 	 * 
-	 * @param image
-	 *            The image that contains the sub-images
-	 * @param width
-	 *            Width of one sub-image
-	 * @param height
-	 *            Height of one sub-image
+	 * @param image The image that contains the sub-images
+	 * @param width Width of one sub-image
+	 * @param height Height of one sub-image
 	 */
-	public Sprite(BufferedImage image, int width, int height) {
+	public Sprite(BufferedImage image, int width, int height)
+	{
 
-		if (image == null) {
+		if (image == null)
+		{
 			throw new IllegalArgumentException("Null value not allowed");
 		}
 
@@ -42,7 +43,8 @@ public class Sprite {
 	/**
 	 * When using this constructor you'll have to override all methods.
 	 */
-	protected Sprite() {
+	protected Sprite()
+	{
 
 		width = 0;
 		height = 0;
@@ -63,28 +65,27 @@ public class Sprite {
 	 * 
 	 * @param height The height of the Graphics object to draw on
 	 */
-	public void drawTile(Graphics g, int x, int y, int width, int height) {
+	public void drawTile(Graphics2D g, int x, int y, int width, int height)
+	{
 
 		int srcX = x * (getTileWidth());
 		int srcY = y * (getTileHeight());
 
-		g.drawImage(image, 0, 0, width, height, srcX, srcY, srcX
-				+ getTileWidth(), srcY + getTileHeight(), null);
+		g.drawImage(image, 0, 0, width, height, srcX, srcY, srcX + getTileWidth(), srcY + getTileHeight(), null);
 	}
 
 	/**
 	 * Get a tile of this sprite
 	 * 
-	 * @param x
-	 *            X-Coordinate of the tile
-	 * @param y
-	 *            Y-Coordinate of the tile
+	 * @param x X-Coordinate of the tile
+	 * @param y Y-Coordinate of the tile
 	 * @return A {@link BufferedImage} containing the tile
 	 */
-	public BufferedImage getTile(int x, int y) {
+	public BufferedImage getTile(int x, int y)
+	{
 
-		BufferedImage tile = image.getSubimage(x * getTileWidth(), y
-				* getTileHeight(), getTileWidth(), getTileHeight());
+		BufferedImage tile = image
+			.getSubimage(x * getTileWidth(), y * getTileHeight(), getTileWidth(), getTileHeight());
 
 		return tile;
 	}
@@ -93,7 +94,8 @@ public class Sprite {
 	 * Get the number of tiles in this sprite.
 	 * 
 	 */
-	public int getTileCount() {
+	public int getTileCount()
+	{
 
 		return getRows() * getColumns();
 	}
@@ -102,7 +104,8 @@ public class Sprite {
 	 * Get the number of rows.
 	 * 
 	 */
-	public int getRows() {
+	public int getRows()
+	{
 
 		return image.getHeight() / getTileHeight();
 	}
@@ -111,7 +114,8 @@ public class Sprite {
 	 * Get the number of columns.
 	 * 
 	 */
-	public int getColumns() {
+	public int getColumns()
+	{
 
 		return image.getWidth() / getTileWidth();
 	}
@@ -120,7 +124,8 @@ public class Sprite {
 	 * Get the width of one tile
 	 * 
 	 */
-	public int getTileWidth() {
+	public int getTileWidth()
+	{
 
 		return width;
 	}
@@ -129,7 +134,8 @@ public class Sprite {
 	 * Get the height of one tile
 	 * 
 	 */
-	public int getTileHeight() {
+	public int getTileHeight()
+	{
 
 		return height;
 	}
@@ -137,17 +143,14 @@ public class Sprite {
 	/**
 	 * Get sub-sprite with given dimension.
 	 * 
-	 * @param x
-	 *            X-Coordinate of first tile
-	 * @param y
-	 *            Y-Coordinate of first tile
-	 * @param width
-	 *            Width of the sub-sprite
-	 * @param height
-	 *            Height of the sub-sprite
+	 * @param x X-Coordinate of first tile
+	 * @param y Y-Coordinate of first tile
+	 * @param width Width of the sub-sprite
+	 * @param height Height of the sub-sprite
 	 * @return The sub-sprite
 	 */
-	public Sprite getSubSprite(int x, int y, int width, int height) {
+	public Sprite getSubSprite(int x, int y, int width, int height)
+	{
 
 		return new DerivedSprite(this, x, y, width, height);
 	}
