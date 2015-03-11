@@ -1,40 +1,40 @@
 package game.engine.image.sprite;
 
+import game.engine.image.ImageUtils;
+
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 /**
- * A {@link Sprite} that initially divides the provided image into sub-images. First creation is
- * slower and consumes more memory than the unbuffered Sprite, but calls to get/drawTile are much
- * faster.
+ * A {@link Sprite} that initially divides the provided image into sub-images.
+ * First creation is slower and consumes more memory than the unbuffered Sprite,
+ * but calls to get/drawTile are much faster.
  * 
  * @author Marvin Bruns
  *
  */
-public class BufferedSprite extends Sprite
-{
+public class BufferedSprite extends Sprite {
 
 	private BufferedImage[][] tiles;
 
 	private int width;
 	private int height;
 
-	public BufferedSprite(BufferedImage image, int width, int height)
-	{
+	public BufferedSprite(BufferedImage image, int width, int height) {
 		super();
 
 		this.width = width;
 		this.height = height;
 
-		tiles = new BufferedImage[image.getWidth() / width][image.getHeight() / height];
+		tiles = new BufferedImage[image.getWidth() / width][image.getHeight()
+				/ height];
 
-		for (int x = 0; x < tiles.length; x++)
-		{
-			for (int y = 0; y < tiles[x].length; y++)
-			{
+		for (int x = 0; x < tiles.length; x++) {
+			for (int y = 0; y < tiles[x].length; y++) {
 
-				tiles[x][y] = image.getSubimage(x * width, y * height, width, height);
+				tiles[x][y] = ImageUtils.copy(image.getSubimage(x * width, y
+						* height, width, height));
 			}
 		}
 	}
@@ -54,58 +54,56 @@ public class BufferedSprite extends Sprite
 	 * 
 	 * @param height The height of the Graphics object to draw on
 	 */
-	public void drawTile(Graphics2D g, int x, int y, int width, int height)
-	{
+	public void drawTile(Graphics2D g, int x, int y, int width, int height) {
 
 		BufferedImage tile = getTile(x, y);
 
-		g.drawImage(tile, 0, 0, width, height, 0, 0, tile.getWidth(), tile.getHeight(), null);
+		g.drawImage(tile, 0, 0, width, height, 0, 0, tile.getWidth(),
+				tile.getHeight(), null);
 	}
 
 	/**
-	 * Get a tile of this sprite
+	 * Get a tile of this sprite. Creates a copy of the underlying tile.
+	 * Otherwise the original tile would be transformed. User
+	 * {@link #drawTile(Graphics2D, int, int, int, int)} for faster action.
 	 * 
-	 * @param x X-Coordinate of the tile
-	 * @param y Y-Coordinate of the tile
+	 * @param x
+	 *            X-Coordinate of the tile
+	 * @param y
+	 *            Y-Coordinate of the tile
 	 * @return A {@link BufferedImage} containing the tile
 	 */
-	public BufferedImage getTile(int x, int y)
-	{
+	public BufferedImage getTile(int x, int y) {
 
-		return tiles[x][y];
+		return ImageUtils.copy(tiles[x][y]);
 	}
 
 	@Override
-	public int getTileCount()
-	{
+	public int getTileCount() {
 
 		return getRows() * getColumns();
 	}
 
 	@Override
-	public int getRows()
-	{
+	public int getRows() {
 
 		return tiles.length;
 	}
 
 	@Override
-	public int getColumns()
-	{
+	public int getColumns() {
 
 		return tiles[0].length;
 	}
 
 	@Override
-	public int getTileWidth()
-	{
+	public int getTileWidth() {
 
 		return width;
 	}
 
 	@Override
-	public int getTileHeight()
-	{
+	public int getTileHeight() {
 
 		return height;
 	}

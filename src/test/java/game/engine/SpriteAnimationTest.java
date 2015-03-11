@@ -1,6 +1,7 @@
 package game.engine;
 
 import game.engine.image.InternalImage;
+import game.engine.image.sprite.InvertedSprite;
 import game.engine.image.sprite.Sprite;
 import game.engine.image.sprite.WeakSprite;
 import game.engine.stage.SwingStage;
@@ -47,8 +48,9 @@ public class SpriteAnimationTest {
 		// "https://highergroundz.files.wordpress.com/2012/07/spritesheetvolt_run.png")),
 		// 280, 385);
 
-		sprite = new WeakSprite(ImageIO.read(new URL(
-				"http://i.stack.imgur.com/i7oRv.png")), 64, 69);
+		sprite = new InvertedSprite(new WeakSprite(ImageIO.read(new URL(
+				"http://i.stack.imgur.com/i7oRv.png")), 64, 69), false, true,
+				true);
 
 		final AnimatedSceneObject animation = new AnimatedSceneObject(sprite,
 				TimeUtils.NanosecondsOfMilliseconds(100));
@@ -106,8 +108,8 @@ public class SpriteAnimationTest {
 		disp1.add(new JScrollPane(rowselect), BorderLayout.EAST);
 
 		SwingStage stage = new SwingStage();
-		stage.setMinimumSize(new Dimension(sprite.getTileWidth() + 10, sprite
-				.getTileHeight() + 10));
+		stage.setMinimumSize(new Dimension(animation.getWidth() + 10, animation
+				.getHeight() + 10));
 		stage.setPreferredSize(stage.getMinimumSize());
 		disp1.add(stage, BorderLayout.WEST);
 

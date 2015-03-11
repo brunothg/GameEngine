@@ -24,8 +24,7 @@ import javax.swing.ImageIcon;
  * @author Marvin Bruns
  *
  */
-public class ImageUtils
-{
+public class ImageUtils {
 
 	public static final Color COLOR_TRANSPARENT = new Color(0, 0, 0, 0);
 
@@ -34,8 +33,7 @@ public class ImageUtils
 	 * 
 	 * @see #BufferedImage(Image, int)
 	 */
-	public static BufferedImage BufferedImage(Image img)
-	{
+	public static BufferedImage BufferedImage(Image img) {
 
 		return BufferedImage(img, BufferedImage.TYPE_INT_ARGB);
 	}
@@ -45,8 +43,7 @@ public class ImageUtils
 	 * 
 	 * @see #BufferedImage(Image, ImageObserver, int)
 	 */
-	public static BufferedImage BufferedImage(Image img, int type)
-	{
+	public static BufferedImage BufferedImage(Image img, int type) {
 
 		ImageIcon imgIc = new ImageIcon(img);
 
@@ -56,16 +53,18 @@ public class ImageUtils
 	/**
 	 * Convert a {@link Image} in a {@link BufferedImage}
 	 * 
-	 * @param img Image to convert
-	 * @param observer {@link ImageObserver}
-	 * @param type {@link BufferedImage#TYPE_INT_ARGB} etc.
+	 * @param img
+	 *            Image to convert
+	 * @param observer
+	 *            {@link ImageObserver}
+	 * @param type
+	 *            {@link BufferedImage#TYPE_INT_ARGB} etc.
 	 * @return the img as BufferedImage
 	 */
-	public static BufferedImage BufferedImage(Image img, ImageObserver observer, int type)
-	{
+	public static BufferedImage BufferedImage(Image img,
+			ImageObserver observer, int type) {
 
-		if (img instanceof BufferedImage)
-		{
+		if (img instanceof BufferedImage) {
 			return (BufferedImage) img;
 		}
 
@@ -75,7 +74,8 @@ public class ImageUtils
 		BufferedImage bimg = new BufferedImage(width, height, type);
 
 		Graphics2D graphics = bimg.createGraphics();
-		graphics.drawImage(img, 0, 0, width, height, 0, 0, width, height, observer);
+		graphics.drawImage(img, 0, 0, width, height, 0, 0, width, height,
+				observer);
 
 		graphics.dispose();
 
@@ -87,30 +87,39 @@ public class ImageUtils
 	 * 
 	 * @see #getScaledInstance(Image, int, int, int, ImageObserver)
 	 */
-	public static BufferedImage getScaledInstance(Image img, int width, int height, ImageObserver observer)
-	{
+	public static BufferedImage getScaledInstance(Image img, int width,
+			int height, ImageObserver observer) {
 
-		return getScaledInstance(img, width, height, BufferedImage.TYPE_INT_ARGB, observer);
+		return getScaledInstance(img, width, height,
+				BufferedImage.TYPE_INT_ARGB, observer);
 	}
 
 	/**
 	 * Get a scaled version of an image
 	 * 
-	 * @param img The image to scale
-	 * @param width New width
-	 * @param height New height
-	 * @param type The image type e.g. {@link BufferedImage#TYPE_INT_ARGB}
-	 * @param observer {@link ImageObserver}
+	 * @param img
+	 *            The image to scale
+	 * @param width
+	 *            New width
+	 * @param height
+	 *            New height
+	 * @param type
+	 *            The image type e.g. {@link BufferedImage#TYPE_INT_ARGB}
+	 * @param observer
+	 *            {@link ImageObserver}
 	 * @return
 	 */
-	public static BufferedImage getScaledInstance(Image img, int width, int height, int type, ImageObserver observer)
-	{
+	public static BufferedImage getScaledInstance(Image img, int width,
+			int height, int type, ImageObserver observer) {
 		BufferedImage bimg = new BufferedImage(width, height, type);
 
 		Graphics2D graphics = bimg.createGraphics();
-		graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		graphics.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC);
-		graphics.drawImage(img, 0, 0, width, height, 0, 0, img.getWidth(observer), img.getHeight(observer), observer);
+		graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+				RenderingHints.VALUE_ANTIALIAS_ON);
+		graphics.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
+				RenderingHints.VALUE_INTERPOLATION_BICUBIC);
+		graphics.drawImage(img, 0, 0, width, height, 0, 0,
+				img.getWidth(observer), img.getHeight(observer), observer);
 
 		graphics.dispose();
 
@@ -122,11 +131,13 @@ public class ImageUtils
 	 * 
 	 * @see #clearImage(Graphics2D, int, int, Color)
 	 * 
-	 * @param img Image to be cleared
-	 * @param clear Color used for clearing this object. Only this color will be present
+	 * @param img
+	 *            Image to be cleared
+	 * @param clear
+	 *            Color used for clearing this object. Only this color will be
+	 *            present
 	 */
-	public static void clearImage(BufferedImage img, Color clear)
-	{
+	public static void clearImage(BufferedImage img, Color clear) {
 
 		Graphics2D g2d = img.createGraphics();
 		clearImage(g2d, img.getWidth(), img.getHeight(), clear);
@@ -135,16 +146,22 @@ public class ImageUtils
 	}
 
 	/**
-	 * Clears a {@link Graphics2D} object with the given Color. Alpha values will replace the
-	 * current alpha. The resulting {@link Graphics2D} object will be transparent.
+	 * Clears a {@link Graphics2D} object with the given Color. Alpha values
+	 * will replace the current alpha. The resulting {@link Graphics2D} object
+	 * will be transparent.
 	 * 
-	 * @param g2d {@link Graphics2D} object to be cleared
-	 * @param width Width of the area
-	 * @param height Height of the area
-	 * @param clear Color used for clearing this object. Only this color will be present
+	 * @param g2d
+	 *            {@link Graphics2D} object to be cleared
+	 * @param width
+	 *            Width of the area
+	 * @param height
+	 *            Height of the area
+	 * @param clear
+	 *            Color used for clearing this object. Only this color will be
+	 *            present
 	 */
-	public static void clearImage(Graphics2D g2d, int width, int height, Color clear)
-	{
+	public static void clearImage(Graphics2D g2d, int width, int height,
+			Color clear) {
 
 		Color beforeColor = g2d.getColor();
 		Composite beforeComposite = g2d.getComposite();
@@ -160,16 +177,19 @@ public class ImageUtils
 	/**
 	 * Converts a {@link Shape} into a {@link BufferedImage}
 	 * 
-	 * @param shape Shape do be drawn
-	 * @param shapeColor Color in which the shape will be drawn
-	 * @param fill if true the shape will be filled in. Otherwise only the outlines will be painted.
+	 * @param shape
+	 *            Shape do be drawn
+	 * @param shapeColor
+	 *            Color in which the shape will be drawn
+	 * @param fill
+	 *            if true the shape will be filled in. Otherwise only the
+	 *            outlines will be painted.
 	 * @return The shape as image
 	 */
-	public static BufferedImage shapeToImage(Shape shape, Color shapeColor, boolean fill)
-	{
+	public static BufferedImage shapeToImage(Shape shape, Color shapeColor,
+			boolean fill) {
 
-		if (shape == null)
-		{
+		if (shape == null) {
 			return null;
 		}
 
@@ -177,26 +197,24 @@ public class ImageUtils
 		int width = bounds.x + bounds.width;
 		int height = bounds.y + bounds.height;
 
-		if (width <= 0 || height <= 0)
-		{
+		if (width <= 0 || height <= 0) {
 			return null;
 		}
 
-		BufferedImage img = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB_PRE);
+		BufferedImage img = new BufferedImage(width, height,
+				BufferedImage.TYPE_INT_ARGB_PRE);
 
 		Graphics2D g2d = img.createGraphics();
 		clearImage(g2d, width, height, COLOR_TRANSPARENT);
-		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+				RenderingHints.VALUE_ANTIALIAS_ON);
 
 		g2d.setColor(shapeColor);
 
-		if (fill)
-		{
+		if (fill) {
 
 			g2d.fill(shape);
-		}
-		else
-		{
+		} else {
 
 			g2d.draw(shape);
 		}
@@ -207,19 +225,45 @@ public class ImageUtils
 	}
 
 	/**
-	 * Create copy of an {@link BufferedImage}. Properties will be dismissed.
+	 * Create a deep copy of an {@link BufferedImage}. Properties will be
+	 * dismissed. May fail.
 	 * 
-	 * @param image Image to be copied
+	 * @param image
+	 *            Image to be copied
 	 * @return Copied image
 	 */
-	public static BufferedImage copy(BufferedImage image)
-	{
+	public static BufferedImage deepCopy(BufferedImage image) {
 
-		ColorModel cm = image.getColorModel();
-		boolean alphaPremultiplied = image.isAlphaPremultiplied();
-		WritableRaster raster = image.copyData(null);
+		BufferedImage copy;
+		try {
+			ColorModel cm = image.getColorModel();
+			boolean alphaPremultiplied = image.isAlphaPremultiplied();
+			WritableRaster raster = image.copyData(null);
 
-		BufferedImage copy = new BufferedImage(cm, raster, alphaPremultiplied, null);
+			copy = new BufferedImage(cm, raster, alphaPremultiplied, null);
+		} catch (Exception e) {
+			return copy(image);
+		}
+
+		return copy;
+	}
+
+	/**
+	 * Create a copy of an {@link BufferedImage}.
+	 * 
+	 * @param image
+	 *            Image to be copied
+	 * @return Copied image
+	 */
+	public static BufferedImage copy(BufferedImage image) {
+
+		BufferedImage copy = new BufferedImage(image.getWidth(),
+				image.getHeight(), BufferedImage.TYPE_INT_ARGB_PRE);
+
+		Graphics2D g2d = copy.createGraphics();
+		g2d.drawImage(image, 0, 0, copy.getWidth(), copy.getHeight(), 0, 0,
+				image.getWidth(), image.getHeight(), null);
+		g2d.dispose();
 
 		return copy;
 	}
@@ -227,28 +271,73 @@ public class ImageUtils
 	/**
 	 * Create an invisible cursor
 	 */
-	public static Cursor createEmptyCursor(String name)
-	{
+	public static Cursor createEmptyCursor(String name) {
 
-		if (name == null || name.isEmpty())
-		{
+		if (name == null || name.isEmpty()) {
 			name = "transparentCursor";
 		}
 
-		return Toolkit.getDefaultToolkit().createCustomCursor(new EmptyImage.AlphaImage(), new java.awt.Point(0, 0),
-			name);
+		return Toolkit.getDefaultToolkit().createCustomCursor(
+				new EmptyImage.AlphaImage(), new java.awt.Point(0, 0), name);
 	}
 
-	public static BufferedImage transform(BufferedImage img, AffineTransform transformation)
-	{
+	/**
+	 * Transform a {@link BufferedImage} using an {@link AffineTransform}. The
+	 * returned image is the same as passed as Argument. All work is done direct
+	 * on the image.
+	 */
+	public static BufferedImage transform(BufferedImage img,
+			AffineTransform transformation) {
 
 		Graphics2D g2d = img.createGraphics();
 		g2d.setTransform(transformation);
 
-		g2d.drawImage(img, 0, 0, img.getWidth(), img.getHeight(), 0, 0, img.getWidth(), img.getHeight(), null);
+		g2d.drawImage(img, 0, 0, img.getWidth(), img.getHeight(), 0, 0,
+				img.getWidth(), img.getHeight(), null);
 
 		g2d.dispose();
 
 		return img;
+	}
+
+	/**
+	 * Mirror a {@link BufferedImage}. The returned image is a new
+	 * BufferedImage.
+	 * 
+	 */
+	public static BufferedImage mirror(BufferedImage img, boolean mirrorX,
+			boolean mirrorY) {
+
+		BufferedImage mirroredImg = copy(img);
+		Graphics2D g2d = mirroredImg.createGraphics();
+
+		double halfWidth = (mirroredImg.getWidth() * 0.5);
+		double halfHeight = (mirroredImg.getHeight() * 0.5);
+
+		AffineTransform beforeTransform = g2d.getTransform();
+
+		AffineTransform transform = new AffineTransform();
+		transform.concatenate(g2d.getTransform());
+		transform.translate(halfWidth, halfHeight);
+
+		if (mirrorX) {
+			transform.scale(-1, 1);
+		}
+
+		if (mirrorY) {
+			transform.scale(1, -1);
+		}
+
+		transform.translate(-halfWidth, -halfHeight);
+		g2d.setTransform(transform);
+
+		g2d.drawImage(img, 0, 0, mirroredImg.getWidth(),
+				mirroredImg.getHeight(), 0, 0, mirroredImg.getWidth(),
+				mirroredImg.getHeight(), null);
+
+		g2d.setTransform(beforeTransform);
+		g2d.dispose();
+
+		return mirroredImg;
 	}
 }

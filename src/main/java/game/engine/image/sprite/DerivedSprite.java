@@ -5,31 +5,31 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 /**
- * A sprite that uses an other sprite, but limits the dimension and translate the coordinates.
+ * A sprite that uses an other sprite, but limits the dimension and translate
+ * the coordinates.
  * 
  * @author Marvin Bruns
  *
  */
-public class DerivedSprite extends Sprite
-{
+public class DerivedSprite extends Sprite {
 
-	private Sprite s;
+	private Sprite sprite;
 
 	private int x;
 	private int y;
 	private int w;
 	private int h;
 
-	public DerivedSprite(Sprite s, int x, int y, int width, int height)
-	{
+	public DerivedSprite(Sprite s, int x, int y, int width, int height) {
 
-		if (x < 0 || y < 0 || x + width > s.getColumns() || y + height > s.getRows() || width < 0 || height < 0)
-		{
+		if (x < 0 || y < 0 || x + width > s.getColumns()
+				|| y + height > s.getRows() || width < 0 || height < 0) {
 			throw new IllegalArgumentException("Values out of bounds: "
-				+ String.format("[%d,%d,%d,%d]:[0,0,%d,%d]", x, y, width, height, s.getColumns(), s.getRows()));
+					+ String.format("[%d,%d,%d,%d]:[0,0,%d,%d]", x, y, width,
+							height, s.getColumns(), s.getRows()));
 		}
 
-		this.s = s;
+		this.sprite = s;
 		this.x = x;
 		this.y = y;
 		this.w = width;
@@ -51,41 +51,40 @@ public class DerivedSprite extends Sprite
 	 * 
 	 * @param height The height of the Graphics object to draw on
 	 */
-	public void drawTile(Graphics2D g, int x, int y, int width, int height)
-	{
+	public void drawTile(Graphics2D g, int x, int y, int width, int height) {
 
-		if (x < 0 || y < 0 || x >= getColumns() || y >= getRows())
-		{
-			throw new ArrayIndexOutOfBoundsException("Coordinates are out of bounds");
+		if (x < 0 || y < 0 || x >= getColumns() || y >= getRows()) {
+			throw new ArrayIndexOutOfBoundsException(
+					"Coordinates are out of bounds");
 		}
 
-		s.drawTile(g, x + this.x, y + this.y, width, height);
+		sprite.drawTile(g, x + this.x, y + this.y, width, height);
 	}
 
 	/**
 	 * Get a tile of this sprite
 	 * 
-	 * @param x X-Coordinate of the tile
-	 * @param y Y-Coordinate of the tile
+	 * @param x
+	 *            X-Coordinate of the tile
+	 * @param y
+	 *            Y-Coordinate of the tile
 	 * @return A {@link BufferedImage} containing the tile
 	 */
-	public BufferedImage getTile(int x, int y)
-	{
+	public BufferedImage getTile(int x, int y) {
 
-		if (x < 0 || y < 0 || x >= getColumns() || y >= getRows())
-		{
-			throw new ArrayIndexOutOfBoundsException("Coordinates are out of bounds");
+		if (x < 0 || y < 0 || x >= getColumns() || y >= getRows()) {
+			throw new ArrayIndexOutOfBoundsException(
+					"Coordinates are out of bounds");
 		}
 
-		return s.getTile(x + this.x, y + this.y);
+		return sprite.getTile(x + this.x, y + this.y);
 	}
 
 	/**
 	 * Get the number of tiles in this sprite.
 	 * 
 	 */
-	public int getTileCount()
-	{
+	public int getTileCount() {
 
 		return getRows() * getColumns();
 	}
@@ -94,8 +93,7 @@ public class DerivedSprite extends Sprite
 	 * Get the number of rows.
 	 * 
 	 */
-	public int getRows()
-	{
+	public int getRows() {
 
 		return h;
 	}
@@ -104,8 +102,7 @@ public class DerivedSprite extends Sprite
 	 * Get the number of columns.
 	 * 
 	 */
-	public int getColumns()
-	{
+	public int getColumns() {
 
 		return w;
 	}
@@ -114,19 +111,17 @@ public class DerivedSprite extends Sprite
 	 * Get the width of one tile
 	 * 
 	 */
-	public int getTileWidth()
-	{
+	public int getTileWidth() {
 
-		return s.getTileWidth();
+		return sprite.getTileWidth();
 	}
 
 	/**
 	 * Get the height of one tile
 	 * 
 	 */
-	public int getTileHeight()
-	{
+	public int getTileHeight() {
 
-		return s.getTileHeight();
+		return sprite.getTileHeight();
 	}
 }
