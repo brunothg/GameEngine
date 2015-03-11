@@ -82,7 +82,7 @@ public class AnimatedSceneObject extends SceneObject {
 	 * Create an {@link AnimatedSceneObject} from a sprite with equal time for
 	 * every frame.
 	 * 
-	 * @see #AnimatedSceneObject(DefaultSprite, long, long[])
+	 * @see #AnimatedSceneObject(DefaultSprite, long, long[][])
 	 * @param sprite
 	 *            The animated sprite
 	 * @param defaultTime
