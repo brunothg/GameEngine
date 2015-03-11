@@ -2,22 +2,21 @@ package game.engine.image.sprite;
 
 import game.engine.image.ImageUtils;
 
-import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
 /**
- * {@link Sprite} that uses another sprite and inverts the coordinates. Now the
- * first frame is the last etc.<br>
+ * {@link DefaultSprite} that uses another sprite and inverts the coordinates.
+ * Now the first frame is the last etc.<br>
  * Mirroring is also supported.
  * 
  * @author Marvin Bruns
  *
  */
-public class InvertedSprite extends Sprite {
+public class InvertedSprite implements Sprite {
 
-	private Sprite sprite;
+	private DefaultSprite sprite;
 
 	private boolean invertX;
 	private boolean invertY;
@@ -28,7 +27,7 @@ public class InvertedSprite extends Sprite {
 	/**
 	 * 
 	 * @param sprite
-	 *            {@link Sprite} used for this sprite
+	 *            {@link DefaultSprite} used for this sprite
 	 * @param X
 	 *            if true X-Axis is inverted
 	 * @param Y
@@ -37,7 +36,8 @@ public class InvertedSprite extends Sprite {
 	 *            if true the X, Y parameters are used for mirroring. Otherwise
 	 *            coordinates will be inverted.
 	 */
-	public InvertedSprite(Sprite sprite, boolean X, boolean Y, boolean mirror) {
+	public InvertedSprite(DefaultSprite sprite, boolean X, boolean Y,
+			boolean mirror) {
 
 		this(sprite, (mirror) ? false : X, (mirror) ? false : Y, (mirror) ? X
 				: false, (mirror) ? Y : false);
@@ -46,7 +46,7 @@ public class InvertedSprite extends Sprite {
 	/**
 	 * 
 	 * @param sprite
-	 *            {@link Sprite} used for this sprite
+	 *            {@link DefaultSprite} used for this sprite
 	 * @param invertX
 	 *            if true X-Axis is inverted
 	 * @param invertY
@@ -57,8 +57,8 @@ public class InvertedSprite extends Sprite {
 	 *            if true the tiles will be mirrored in Y direction (top-bottom)
 	 *
 	 */
-	public InvertedSprite(Sprite sprite, boolean invertX, boolean invertY,
-			boolean mirrorX, boolean mirrorY) {
+	public InvertedSprite(DefaultSprite sprite, boolean invertX,
+			boolean invertY, boolean mirrorX, boolean mirrorY) {
 
 		this.sprite = sprite;
 
@@ -68,21 +68,7 @@ public class InvertedSprite extends Sprite {
 		this.mirrorY = mirrorY;
 	}
 
-/**
-	 * 
-	 * Draws a tile of this sprite. The tile is drawn with {@code Bounds(0, 0,
-	 * width, height).
-	 * 
-	 * @param g {@link Graphics} object to draw on
-	 * 
-	 * @param x X-Coordinate of the tile
-	 * 
-	 * @param y Y-Coordinate of the tile
-	 * 
-	 * @param width The width of the Graphics object to draw on
-	 * 
-	 * @param height The height of the Graphics object to draw on
-	 */
+	@Override
 	public void drawTile(Graphics2D g, int x, int y, int width, int height) {
 
 		int translatedX = translateX(x);
@@ -116,17 +102,7 @@ public class InvertedSprite extends Sprite {
 		g.setTransform(beforeTransform);
 	}
 
-	/**
-	 * Get a tile of this sprite. Creates a copy of the underlying tile.
-	 * Otherwise the original tile would be transformed. User
-	 * {@link #drawTile(Graphics2D, int, int, int, int)} for faster action.
-	 * 
-	 * @param x
-	 *            X-Coordinate of the tile
-	 * @param y
-	 *            Y-Coordinate of the tile
-	 * @return A {@link BufferedImage} containing the tile
-	 */
+	@Override
 	public BufferedImage getTile(int x, int y) {
 
 		int translatedX = translateX(x);
@@ -141,81 +117,58 @@ public class InvertedSprite extends Sprite {
 		return tile;
 	}
 
-	/**
-	 * Get the number of tiles in this sprite.
-	 * 
-	 */
+	@Override
 	public int getTileCount() {
 
 		return sprite.getRows();
 	}
 
-	/**
-	 * Get the number of rows.
-	 * 
-	 */
+	@Override
 	public int getRows() {
 
 		return sprite.getRows();
 	}
 
-	/**
-	 * Get the number of columns.
-	 * 
-	 */
+	@Override
 	public int getColumns() {
 
 		return sprite.getColumns();
 	}
 
-	/**
-	 * Get the width of one tile
-	 * 
-	 */
+	@Override
 	public int getTileWidth() {
 
 		return sprite.getTileWidth();
 	}
 
-	/**
-	 * Get the height of one tile
-	 * 
-	 */
+	@Override
 	public int getTileHeight() {
 
 		return sprite.getTileHeight();
 	}
 
 	/**
-	 * Get sub-sprite with given dimension.
-	 * 
-	 * @param x
-	 *            X-Coordinate of first tile
-	 * @param y
-	 *            Y-Coordinate of first tile
-	 * @param width
-	 *            Width of the sub-sprite
-	 * @param height
-	 *            Height of the sub-sprite
-	 * @return The sub-sprite
+	 * Don't need this overhead.
 	 */
-	public Sprite getSubSprite(int x, int y, int width, int height) {
-
-		int translatedX = translateX(x);
-		int translatedY = translateY(y);
-
-		if (invertX) {
-			int transWidth = width - 1;
-			translatedX -= transWidth;
-		}
-
-		if (invertY) {
-			int transHeight = height - 1;
-			translatedY -= transHeight;
-		}
-
-		return sprite.getSubSprite(translatedX, translatedY, width, height);
-	}
+	// public Sprite getSubSprite(int x, int y, int width, int height) {
+	//
+	// int translatedX = translateX(x);
+	// int translatedY = translateY(y);
+	//
+	// if (invertX) {
+	// int transWidth = width - 1;
+	// translatedX -= transWidth;
+	// }
+	//
+	// if (invertY) {
+	// int transHeight = height - 1;
+	// translatedY -= transHeight;
+	// }
+	//
+	// return new InvertedSprite(sprite.getSubSprite(translatedX, translatedY,
+	// width, height), isInvertX(), isInvertY(), isMirrorX(),
+	// isMirrorY());
+	// }
 
 	private int translateX(int x) {
 
@@ -265,5 +218,11 @@ public class InvertedSprite extends Sprite {
 	public boolean isMirrorY() {
 
 		return mirrorY;
+	}
+
+	@Override
+	public Sprite getSubSprite(int x, int y, int width, int height) {
+
+		return new DerivedSprite(this, x, y, width, height);
 	}
 }

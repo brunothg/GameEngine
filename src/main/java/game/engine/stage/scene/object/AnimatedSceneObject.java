@@ -1,5 +1,6 @@
 package game.engine.stage.scene.object;
 
+import game.engine.image.sprite.DefaultSprite;
 import game.engine.image.sprite.Sprite;
 
 import java.awt.Graphics2D;
@@ -69,7 +70,7 @@ public class AnimatedSceneObject extends SceneObject {
 	 * Create an {@link AnimatedSceneObject} from a sprite with equal time for
 	 * every frame.
 	 * 
-	 * @see #AnimatedSceneObject(Sprite, long, double[])
+	 * @see #AnimatedSceneObject(DefaultSprite, long, double[])
 	 * @param sprite
 	 *            The animated sprite
 	 * @param defaultTime

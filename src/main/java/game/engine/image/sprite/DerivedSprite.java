@@ -11,7 +11,7 @@ import java.awt.image.BufferedImage;
  * @author Marvin Bruns
  *
  */
-public class DerivedSprite extends Sprite {
+public class DerivedSprite implements Sprite {
 
 	private Sprite sprite;
 
@@ -61,15 +61,7 @@ public class DerivedSprite extends Sprite {
 		sprite.drawTile(g, x + this.x, y + this.y, width, height);
 	}
 
-	/**
-	 * Get a tile of this sprite
-	 * 
-	 * @param x
-	 *            X-Coordinate of the tile
-	 * @param y
-	 *            Y-Coordinate of the tile
-	 * @return A {@link BufferedImage} containing the tile
-	 */
+	@Override
 	public BufferedImage getTile(int x, int y) {
 
 		if (x < 0 || y < 0 || x >= getColumns() || y >= getRows()) {
@@ -123,5 +115,11 @@ public class DerivedSprite extends Sprite {
 	public int getTileHeight() {
 
 		return sprite.getTileHeight();
+	}
+
+	@Override
+	public Sprite getSubSprite(int x, int y, int width, int height) {
+
+		return new DerivedSprite(this, x, y, width, height);
 	}
 }

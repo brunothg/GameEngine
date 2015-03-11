@@ -7,20 +7,25 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 /**
- * A {@link Sprite} that initially divides the provided image into sub-images.
- * First creation is slower and consumes more memory than the unbuffered Sprite,
- * but calls to get/drawTile are much faster.
+ * A {@link DefaultSprite} that initially divides the provided image into
+ * sub-images. First creation is slower and consumes more memory than the
+ * unbuffered Sprite, but calls to get/drawTile are much faster.
  * 
  * @author Marvin Bruns
  *
  */
-public class BufferedSprite extends Sprite {
+public class BufferedSprite implements Sprite {
 
 	private BufferedImage[][] tiles;
 
 	private int width;
 	private int height;
 
+	/**
+	 * 
+	 * Creates a new {@link BufferedSprite}. The given {@link BufferedImage} is
+	 * copied.
+	 */
 	public BufferedSprite(BufferedImage image, int width, int height) {
 		super();
 
@@ -106,5 +111,11 @@ public class BufferedSprite extends Sprite {
 	public int getTileHeight() {
 
 		return height;
+	}
+
+	@Override
+	public Sprite getSubSprite(int x, int y, int width, int height) {
+
+		return new DerivedSprite(this, x, y, width, height);
 	}
 }
