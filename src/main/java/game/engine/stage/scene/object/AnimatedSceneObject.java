@@ -61,6 +61,18 @@ public class AnimatedSceneObject extends SceneObject {
 		setSize(sprite.getTileWidth(), sprite.getTileHeight());
 	}
 
+	/**
+	 * Create an {@link AnimatedSceneObject} from a sprite with full frames per
+	 * row.
+	 * 
+	 * @see #AnimatedSceneObject(Sprite, long, long[][], int[])
+	 * @param sprite
+	 *            The animated sprite
+	 * @param defaultTime
+	 *            Time for each frame where not specified
+	 * @param time
+	 *            individual time for every frame
+	 */
 	public AnimatedSceneObject(Sprite sprite, long defaultTime, long[][] time) {
 
 		this(sprite, defaultTime, time, null);
@@ -70,7 +82,7 @@ public class AnimatedSceneObject extends SceneObject {
 	 * Create an {@link AnimatedSceneObject} from a sprite with equal time for
 	 * every frame.
 	 * 
-	 * @see #AnimatedSceneObject(DefaultSprite, long, double[])
+	 * @see #AnimatedSceneObject(DefaultSprite, long, long[])
 	 * @param sprite
 	 *            The animated sprite
 	 * @param defaultTime

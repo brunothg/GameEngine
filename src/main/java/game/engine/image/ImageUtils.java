@@ -107,7 +107,6 @@ public class ImageUtils {
 	 *            The image type e.g. {@link BufferedImage#TYPE_INT_ARGB}
 	 * @param observer
 	 *            {@link ImageObserver}
-	 * @return
 	 */
 	public static BufferedImage getScaledInstance(Image img, int width,
 			int height, int type, ImageObserver observer) {

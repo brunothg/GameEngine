@@ -191,7 +191,6 @@ public class SwingStage extends JPanel implements Stage {
 	 * 
 	 * @param elapedTime
 	 *            Elapsed time since last drawing.
-	 * @return
 	 */
 	private void drawOffScreen(long elapedTime) {
 

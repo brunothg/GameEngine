@@ -63,7 +63,7 @@ public class FullScreenGameFrame {
 	 * 
 	 * @param title
 	 *            Frame title
-	 * @see #FullScreenGameFrame(GraphicsDevice)
+	 * @see #FullScreenGameFrame(GraphicsDevice, String)
 	 */
 	public FullScreenGameFrame(String title) {
 
@@ -77,7 +77,7 @@ public class FullScreenGameFrame {
 	 * @param title
 	 *            Frame title
 	 * 
-	 * @see #FullScreenGameFrame(GraphicsDevice, DisplayMode)
+	 * @see #FullScreenGameFrame(GraphicsDevice, DisplayMode, String)
 	 */
 	public FullScreenGameFrame(GraphicsDevice gd, String title) {
 
@@ -91,7 +91,7 @@ public class FullScreenGameFrame {
 	 *            Frame title
 	 * 
 	 * @see #FullScreenGameFrame(GraphicsDevice, GraphicsConfiguration,
-	 *      DisplayMode)
+	 *      DisplayMode, String)
 	 */
 	public FullScreenGameFrame(GraphicsDevice gd, DisplayMode dm, String title) {
 

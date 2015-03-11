@@ -332,7 +332,6 @@ public abstract class SceneObject {
 	 * 
 	 * @param obj
 	 *            Other Object for testing
-	 * @return
 	 */
 	public boolean consumesBoundingBox(SceneObject obj) {
 
@@ -355,8 +354,8 @@ public abstract class SceneObject {
 	 * @see #collidesBoundingBox(SceneObject)
 	 * 
 	 * @param obj
-	 *            Das zweite SceneObject
-	 * @return true wenn die beiden SceneObjects kollidieren
+	 *            Second SceneObject
+	 * @return true if both {@link SceneObject}s collide
 	 */
 	public boolean collides(SceneObject obj) {
 

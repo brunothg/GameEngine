@@ -44,20 +44,25 @@ public class BufferedSprite implements Sprite {
 		}
 	}
 
-/**
+	/**
 	 * 
 	 * Draws a tile of this sprite. The tile is drawn with {@code Bounds(0, 0,
-	 * width, height).
+	 * width, height)}.
 	 * 
-	 * @param g {@link Graphics} object to draw on
+	 * @param g
+	 *            {@link Graphics} object to draw on
 	 * 
-	 * @param x X-Coordinate of the tile
+	 * @param x
+	 *            X-Coordinate of the tile
 	 * 
-	 * @param y Y-Coordinate of the tile
+	 * @param y
+	 *            Y-Coordinate of the tile
 	 * 
-	 * @param width The width of the Graphics object to draw on
+	 * @param width
+	 *            The width of the Graphics object to draw on
 	 * 
-	 * @param height The height of the Graphics object to draw on
+	 * @param height
+	 *            The height of the Graphics object to draw on
 	 */
 	public void drawTile(Graphics2D g, int x, int y, int width, int height) {
 
