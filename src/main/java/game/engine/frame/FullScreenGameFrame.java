@@ -2,7 +2,6 @@ package game.engine.frame;
 
 import game.engine.image.EmptyImage;
 import game.engine.stage.CanvasStage;
-import game.engine.stage.SwingStage;
 import game.engine.stage.scene.LoadingScene;
 import game.engine.stage.scene.Scene;
 import game.engine.time.Clock;
@@ -277,8 +276,9 @@ public class FullScreenGameFrame {
 	}
 
 	/**
-	 * Change the {@link SwingStage} that is used by this {@link SwingGameFrame}
-	 * . Normally there's no reason to change the default stage.
+	 * Change the {@link CanvasStage} that is used by this
+	 * {@link SwingGameFrame} . Normally there's no reason to change the default
+	 * stage.
 	 * 
 	 * @param stage
 	 */
