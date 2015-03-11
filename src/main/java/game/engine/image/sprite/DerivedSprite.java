@@ -5,8 +5,8 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 /**
- * A sprite that uses an other sprite, but limits the dimension and translate
- * the coordinates.
+ * A {@link Sprite} that uses an other sprite, but limits the dimension and
+ * translate the coordinates.
  * 
  * @author Marvin Bruns
  *

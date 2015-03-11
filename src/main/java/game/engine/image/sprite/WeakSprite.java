@@ -7,8 +7,8 @@ import java.awt.image.BufferedImage;
 import java.lang.ref.WeakReference;
 
 /**
- * This implementation of {@link DefaultSprite} caches tiles with
- * {@link WeakReference} in order to find a balance between time and memory
+ * This implementation of {@link Sprite} caches tiles with {@link WeakReference}
+ * in order to find a balance between time and memory
  * 
  * @author Marvin Bruns
  *

@@ -7,8 +7,8 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
 /**
- * {@link DefaultSprite} that uses another sprite and inverts the coordinates.
- * Now the first frame is the last etc.<br>
+ * {@link Sprite} that uses another sprite and inverts the coordinates. Now the
+ * first frame is the last etc.<br>
  * Mirroring is also supported.
  * 
  * @author Marvin Bruns

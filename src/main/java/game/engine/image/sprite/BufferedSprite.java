@@ -7,9 +7,9 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 /**
- * A {@link DefaultSprite} that initially divides the provided image into
- * sub-images. First creation is slower and consumes more memory than the
- * unbuffered Sprite, but calls to get/drawTile are much faster.
+ * A {@link Sprite} that initially divides the provided image into sub-images.
+ * First creation is slower and consumes more memory than the unbuffered Sprite,
+ * but calls to get/drawTile are much faster.
  * 
  * @author Marvin Bruns
  *
