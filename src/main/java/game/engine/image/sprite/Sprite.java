@@ -4,6 +4,12 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 /**
+ * A sprite is an image that contains an array of smaller images (tiles). This
+ * images can be accessed like a normal Java array (and animated). But that this
+ * works, it is necessary that all tiles have the same size. Overlaying a grid
+ * of the dimensions of one frame marks all tiles. Even the space (if any
+ * exists) between the tiles has to be equal everywhere in the sprite, even at
+ * the edges of the sprite or tiles will be missed.
  * 
  * @author Marvin Bruns
  *
