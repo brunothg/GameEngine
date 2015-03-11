@@ -39,7 +39,7 @@ public class SpriteAnimationTest {
 		final Sprite sprite;
 
 		sprite = new WeakSprite(ImageUtils.BufferedImage(InternalImage
-				.load("animatedSprite.png")), 32, 32);
+				.load("animatedSprite.png")), 64, 64);
 
 		// sprite = new WeakSprite(
 		// ImageIO.read(new URL(
