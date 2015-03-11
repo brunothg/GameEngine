@@ -308,7 +308,8 @@ public class ImageUtils {
 	public static BufferedImage mirror(BufferedImage img, boolean mirrorX,
 			boolean mirrorY) {
 
-		BufferedImage mirroredImg = copy(img);
+		BufferedImage mirroredImg = new BufferedImage(img.getWidth(),
+				img.getHeight(), BufferedImage.TYPE_INT_ARGB_PRE);
 		Graphics2D g2d = mirroredImg.createGraphics();
 
 		double halfWidth = (mirroredImg.getWidth() * 0.5);

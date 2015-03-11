@@ -48,9 +48,11 @@ public class SpriteAnimationTest {
 		// "https://highergroundz.files.wordpress.com/2012/07/spritesheetvolt_run.png")),
 		// 280, 385);
 
-		sprite = new InvertedSprite(new WeakSprite(ImageIO.read(new URL(
-				"http://i.stack.imgur.com/i7oRv.png")), 64, 69), false, true,
-				true);
+		sprite = new InvertedSprite(
+				new WeakSprite(
+						ImageIO.read(new URL(
+								"https://highergroundz.files.wordpress.com/2012/07/spritesheetvolt_run.png")),
+						280, 385), false, true, true);
 
 		final AnimatedSceneObject animation = new AnimatedSceneObject(sprite,
 				TimeUtils.NanosecondsOfMilliseconds(100));
