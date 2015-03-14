@@ -340,4 +340,42 @@ public class ImageUtils {
 
 		return mirroredImg;
 	}
+
+	/**
+	 * The given {@link BufferedImage} will be colorized with the given
+	 * {@link Color}. Brightness will be used to modify the given color. <br>
+	 * The operation is done direct on the provided image.
+	 */
+	public static BufferedImage colorize(BufferedImage img, Color c) {
+
+		int width = img.getWidth();
+		int height = img.getHeight();
+
+		WritableRaster raster = img.getRaster();
+		ColorModel model = img.getColorModel();
+
+		for (int y = 0; y < height; y++) {
+			for (int x = 0; x < width; x++) {
+
+				Object pixel = raster.getDataElements(x, y, null);
+
+				double value = ((model.getRed(pixel) + model.getGreen(pixel) + model
+						.getBlue(pixel)) / 3.0) / 255.0;
+
+				if (value == Double.NaN || value == Double.NEGATIVE_INFINITY
+						|| value == Double.POSITIVE_INFINITY) {
+					continue;
+				}
+
+				Color cN = new Color((int) (value * c.getRed()),
+						(int) (value * c.getGreen()),
+						(int) (value * c.getBlue()), model.getAlpha(pixel));
+
+				raster.setDataElements(x, y,
+						model.getDataElements(cN.getRGB(), null));
+			}
+		}
+
+		return img;
+	}
 }
