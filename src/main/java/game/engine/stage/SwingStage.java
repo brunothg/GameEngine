@@ -128,34 +128,30 @@ public class SwingStage extends JPanel implements Stage {
 
 	private void addEventListener(EventListener evl) {
 
-		Class<?> cls = evl.getClass();
-
-		if (KeyListener.class.isInstance(cls)) {
+		if (KeyListener.class.isInstance(evl)) {
 			addKeyListener((KeyListener) evl);
 		}
 
-		if (MouseListener.class.isInstance(cls)) {
+		if (MouseListener.class.isInstance(evl)) {
 			addMouseListener((MouseListener) evl);
 		}
 
-		if (MouseMotionListener.class.isInstance(cls)) {
+		if (MouseMotionListener.class.isInstance(evl)) {
 			addMouseMotionListener((MouseMotionListener) evl);
 		}
 	}
 
 	private void removeEventListener(EventListener evl) {
 
-		Class<?> cls = evl.getClass();
-
-		if (KeyListener.class.isInstance(cls)) {
+		if (KeyListener.class.isInstance(evl)) {
 			removeKeyListener((KeyListener) evl);
 		}
 
-		if (MouseListener.class.isInstance(cls)) {
+		if (MouseListener.class.isInstance(evl)) {
 			removeMouseListener((MouseListener) evl);
 		}
 
-		if (MouseMotionListener.class.isInstance(cls)) {
+		if (MouseMotionListener.class.isInstance(evl)) {
 			removeMouseMotionListener((MouseMotionListener) evl);
 		}
 	}
