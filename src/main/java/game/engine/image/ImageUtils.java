@@ -378,4 +378,46 @@ public class ImageUtils {
 
 		return img;
 	}
+
+	/**
+	 * Fetch single frames and connect them, so that you get a single sprite
+	 * image.
+	 * 
+	 * @param frameWidth
+	 *            Width of one single frame
+	 * @param frameHeight
+	 *            Height of one single frame
+	 * @param frames
+	 *            The frames for the sprite
+	 * @return An image containing all given frames. Frames will be stretched to
+	 *         match frameWidth and frameHeight
+	 */
+	public static BufferedImage createSprite(int frameWidth, int frameHeight,
+			BufferedImage... frames) {
+
+		if (frames == null || frames.length <= 0) {
+			return null;
+		}
+
+		BufferedImage sprite = new BufferedImage(frameWidth * frames.length,
+				frameHeight, BufferedImage.TYPE_INT_ARGB_PRE);
+
+		Graphics2D g2d = sprite.createGraphics();
+
+		for (int i = 0; i < frames.length; i++) {
+
+			if (frames[i] == null) {
+				continue;
+			}
+
+			g2d.drawImage(frames[i], frameWidth * i, 0, frameWidth * i
+					+ frameWidth, frameHeight, 0, 0, frames[i].getWidth(),
+					frames[i].getHeight(), null);
+		}
+
+		g2d.dispose();
+
+		return sprite;
+	}
+
 }
