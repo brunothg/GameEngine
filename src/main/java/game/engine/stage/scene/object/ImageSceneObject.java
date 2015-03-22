@@ -4,6 +4,7 @@ import game.engine.image.ImageUtils;
 
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 
 /**
@@ -40,6 +41,11 @@ public class ImageSceneObject extends SceneObject {
 
 	@Override
 	protected void paint(Graphics2D g, long elapsedTime) {
+
+		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+				RenderingHints.VALUE_ANTIALIAS_ON);
+		g.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
+				RenderingHints.VALUE_INTERPOLATION_BICUBIC);
 
 		BufferedImage image = getImage();
 
