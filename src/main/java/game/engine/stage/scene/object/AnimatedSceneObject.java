@@ -190,6 +190,26 @@ public class AnimatedSceneObject extends SceneObject {
 	}
 
 	/**
+	 * Get the height of one frame of the underlying sprite.
+	 * 
+	 * @return Height of one original frame
+	 */
+	public int getTileHeight() {
+
+		return sprite.getTileHeight();
+	}
+
+	/**
+	 * Get the width of one frame of the underlying sprite.
+	 * 
+	 * @return Width of one original frame
+	 */
+	public int getTileWidth() {
+
+		return sprite.getTileWidth();
+	}
+
+	/**
 	 * Get the size of one frame of the underlying sprite.
 	 * 
 	 * @return Dimension of one original frame
