@@ -189,6 +189,16 @@ public class AnimatedSceneObject extends SceneObject {
 		timeBase = 0;
 	}
 
+	/**
+	 * Get the size of one frame of the underlying sprite.
+	 * 
+	 * @return Dimension of one original frame
+	 */
+	public Size getTileSize() {
+
+		return new Size(sprite.getTileWidth(), sprite.getTileHeight());
+	}
+
 	@Override
 	protected void paint(Graphics2D g, long elapsedTime) {
 
