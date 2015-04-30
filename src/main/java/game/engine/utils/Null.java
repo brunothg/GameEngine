@@ -2,16 +2,16 @@ package game.engine.utils;
 
 /**
  * 
- * Hilfsklasse mit Methoden für den Umgang mit null Werten.
+ * Utility class for null value handling
  */
 public class Null
 {
 
 	/**
-	 * Testet auf null value und ersetzt den Wert ggf.
+	 * Check if there is a null value. If there's a null value replace it.
 	 * 
-	 * @param test Wert zum Überprüfen
-	 * @param replace Ersatzwert
+	 * @param test Checked value
+	 * @param replace Replace value
 	 */
 	public static <T> T nvl(T test, T replace)
 	{
@@ -26,7 +26,9 @@ public class Null
 	}
 
 	/**
-	 * Überprüft, ob mindestens ein Wert null ist.
+	 * Check if there is any null value in a set of objects
+	 * 
+	 * @return true if at least one null value could be found
 	 */
 	public static boolean isAnyNull(Object... objs)
 	{
@@ -45,7 +47,9 @@ public class Null
 	}
 
 	/**
-	 * Überprüft, ob mindestens einer der Strings null oder empty ist.
+	 * Check if there is any null or empty string value in a set of strings
+	 * 
+	 * @return true if at least one null or empty string value could be found
 	 */
 	public static boolean isAnyEmpty(String... strings)
 	{
@@ -64,7 +68,9 @@ public class Null
 	}
 
 	/**
-	 * Überprüft, ob alle Werte null sind.
+	 * Check if all values are null values
+	 * 
+	 * @return true if all values are null values
 	 */
 	public static boolean isNull(Object... objs)
 	{
@@ -83,7 +89,9 @@ public class Null
 	}
 
 	/**
-	 * Überprüft, ob alle Werte ungleic null sind.
+	 * Check if no value is a null values
+	 * 
+	 * @return true if no value is a null value
 	 */
 	public static boolean isNotNull(Object... objs)
 	{

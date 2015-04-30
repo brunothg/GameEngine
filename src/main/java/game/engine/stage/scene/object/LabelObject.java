@@ -57,6 +57,11 @@ public class LabelObject extends SceneObject
 			g.setStroke(stroke);
 		}
 
+		if (font != null)
+		{
+			g.setFont(font);
+		}
+
 	}
 
 	/**
@@ -177,7 +182,8 @@ public class LabelObject extends SceneObject
 	}
 
 	/**
-	 * Set the used {@link ScaleStrategy}
+	 * Set the used {@link ScaleStrategy}. If the scale strategy is not
+	 * {@link ScaleStrategy#NoScale} the size of the {@link Font} is ignored.
 	 * 
 	 * @param scaleStrategy The strategy, that will be used fore scaling the text
 	 */
