@@ -21,7 +21,7 @@ public class LabelObject extends SceneObject
 {
 
 	private Font font;
-	private String text;
+	private String text = "";
 
 	private VerticalOrientation verticalTextOrientation = VerticalOrientation.Center;
 	private HorizontalOrientation horizontalTextOrientation = HorizontalOrientation.Center;
@@ -30,6 +30,18 @@ public class LabelObject extends SceneObject
 	private Stroke stroke;
 
 	private ScaleStrategy scaleStrategy = ScaleStrategy.FitParent;
+
+	public LabelObject()
+	{
+
+		this("");
+	}
+
+	public LabelObject(String text)
+	{
+
+		setText(text);
+	}
 
 	@Override
 	protected void paint(Graphics2D g, long elapsedTime)
