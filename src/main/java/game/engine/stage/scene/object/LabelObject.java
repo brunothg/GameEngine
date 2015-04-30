@@ -6,9 +6,14 @@ import game.engine.utils.Null;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.Paint;
+import java.awt.RenderingHints;
+import java.awt.Shape;
 import java.awt.Stroke;
+import java.awt.font.GlyphVector;
+import java.awt.font.LineMetrics;
 
 /**
  * 
@@ -21,12 +26,14 @@ public class LabelObject extends SceneObject
 {
 
 	private Font font;
+	private int fontFlags = Font.LAYOUT_LEFT_TO_RIGHT;
 	private String text = "";
 
 	private VerticalOrientation verticalTextOrientation = VerticalOrientation.Center;
 	private HorizontalOrientation horizontalTextOrientation = HorizontalOrientation.Center;
 
-	private Paint paint;
+	private Paint paint = Color.BLACK;
+	private Paint outlinePaint = Color.BLACK;
 	private Stroke stroke;
 
 	private ScaleStrategy scaleStrategy = ScaleStrategy.FitParent;
@@ -46,7 +53,9 @@ public class LabelObject extends SceneObject
 	@Override
 	protected void paint(Graphics2D g, long elapsedTime)
 	{
-		//TODO paint label
+		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+
 		if (paint != null)
 		{
 			g.setPaint(paint);
@@ -62,6 +71,122 @@ public class LabelObject extends SceneObject
 			g.setFont(font);
 		}
 
+		Font font = g.getFont();
+		String text = getText();
+		int flags = getFontFlags();
+
+		GlyphVector vector;
+		Shape outline;
+
+		FontMetrics fontMetrics = g.getFontMetrics(font);
+		LineMetrics lineMetrics = fontMetrics.getLineMetrics(text, g);
+
+		Integer deltaSize = null;
+		loop: while (true)
+		{
+
+			// + -> smaller
+			double stringHeight = lineMetrics.getAscent() + lineMetrics.getDescent();
+
+			switch (scaleStrategy)
+			{
+				case Auto:
+				case FitParent:
+					//Size to object bounds, if text smaller -> increase font size, if text bigger -> use smaller font size
+					if ((deltaSize == null || deltaSize > 0)
+						&& (fontMetrics.stringWidth(text) < getWidth() && stringHeight < getHeight()))
+					{
+						// to small
+						deltaSize = +1;
+					}
+					else if ((deltaSize == null || deltaSize < 0)
+						&& (fontMetrics.stringWidth(text) > getWidth() || stringHeight > getHeight()))
+					{
+						// to big
+						deltaSize = -1;
+					}
+					else
+					{
+						break loop;
+					}
+				break;
+				case FitSize:
+					//Size to text bounds, if text smaller than container -> /, if text bigger -> use smaller font size
+					if (fontMetrics.stringWidth(text) > getWidth() || stringHeight > getHeight())
+					{
+						// to big
+						deltaSize = -1;
+					}
+					else
+					{
+						break loop;
+					}
+				break;
+				case NoScale:
+				default:
+				break loop;
+			}
+			font = font.deriveFont((float) (font.getSize2D() + deltaSize));
+			g.setFont(font);
+
+			fontMetrics = g.getFontMetrics(font);
+			lineMetrics = fontMetrics.getLineMetrics(text, g);
+		}
+		vector = font.layoutGlyphVector(g.getFontRenderContext(), text.toCharArray(), 0, text.length(), flags);
+		outline = vector.getOutline();
+
+		layout(g, fontMetrics, text);
+		draw(g, outline);
+	}
+
+	private void draw(Graphics2D g, Shape outline)
+	{
+		g.fill(outline);
+		if (outlinePaint != null)
+		{
+			g.setPaint(outlinePaint);
+		}
+		g.draw(outline);
+	}
+
+	private void layout(Graphics2D g, FontMetrics metrics, String text)
+	{
+
+		LineMetrics lineMetrics = metrics.getLineMetrics(text, g);
+
+		double posX;
+		double posY;
+
+		switch (horizontalTextOrientation)
+		{
+			case East:
+				posX = getWidth() - metrics.stringWidth(text);
+			break;
+			case West:
+				posX = 0;
+			break;
+			case Center:
+			default:
+				posX = getWidth() * 0.5 - metrics.stringWidth(text) * 0.5;
+			break;
+		}
+
+		switch (verticalTextOrientation)
+		{
+			case North:
+				posY = lineMetrics.getAscent();
+			break;
+			case South:
+				posY = getHeight() - lineMetrics.getDescent();
+			break;
+			case Center:
+			default:
+				posY = lineMetrics.getAscent() + (getHeight() - (lineMetrics.getAscent() + lineMetrics.getDescent()))
+					* 0.5;
+			break;
+		}
+
+		g.translate(posX, posY);
 	}
 
 	/**
@@ -161,6 +286,32 @@ public class LabelObject extends SceneObject
 		setPaint(color);
 	}
 
+	public Paint getOutlinePaint()
+	{
+		return outlinePaint;
+	}
+
+	/**
+	 * Set the {@link Paint}, that is used for drawing outlines
+	 * 
+	 * @param paint The paint used for drawing outlines
+	 */
+	public void setOutlinePaint(Paint outlinePaint)
+	{
+		this.outlinePaint = outlinePaint;
+	}
+
+	/**
+	 * Set the color for outline painting
+	 * 
+	 * @see #setOutlinePaint(Paint)
+	 * @param outlineColor Color for outline painting
+	 */
+	public void setOutlineColor(Color outlineColor)
+	{
+		setOutlinePaint(outlineColor);
+	}
+
 	public Stroke getStroke()
 	{
 		return stroke;
@@ -195,6 +346,22 @@ public class LabelObject extends SceneObject
 		}
 
 		this.scaleStrategy = Null.nvl(scaleStrategy, ScaleStrategy.FitParent);
+	}
+
+	public int getFontFlags()
+	{
+		return fontFlags;
+	}
+
+	/**
+	 * Set the font flags as specified by
+	 * {@link Font#layoutGlyphVector(java.awt.font.FontRenderContext, char[], int, int, int)}
+	 * 
+	 * @param fontFlags The flags used for creating the {@link GlyphVector}
+	 */
+	public void setFontFlags(int fontFlags)
+	{
+		this.fontFlags = fontFlags;
 	}
 
 }
