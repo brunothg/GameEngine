@@ -85,8 +85,8 @@ public class LabelObject extends SceneObject
 		loop: while (true)
 		{
 
-			// + -> smaller
 			double stringHeight = lineMetrics.getAscent() + lineMetrics.getDescent();
+			double stringWidth = fontMetrics.stringWidth(text) + fontMetrics.charWidth(' ');
 
 			switch (scaleStrategy)
 			{
@@ -94,13 +94,13 @@ public class LabelObject extends SceneObject
 				case FitParent:
 					//Size to object bounds, if text smaller -> increase font size, if text bigger -> use smaller font size
 					if ((deltaSize == null || deltaSize > 0)
-						&& (fontMetrics.stringWidth(text) < getWidth() && stringHeight < getHeight()))
+						&& (stringWidth < getWidth() && stringHeight < getHeight()))
 					{
 						// to small
 						deltaSize = +1;
 					}
 					else if ((deltaSize == null || deltaSize < 0)
-						&& (fontMetrics.stringWidth(text) > getWidth() || stringHeight > getHeight()))
+						&& (stringWidth > getWidth() || stringHeight > getHeight()))
 					{
 						// to big
 						deltaSize = -1;
@@ -112,7 +112,7 @@ public class LabelObject extends SceneObject
 				break;
 				case FitSize:
 					//Size to text bounds, if text smaller than container -> /, if text bigger -> use smaller font size
-					if (fontMetrics.stringWidth(text) > getWidth() || stringHeight > getHeight())
+					if (stringWidth > getWidth() || stringHeight > getHeight())
 					{
 						// to big
 						deltaSize = -1;

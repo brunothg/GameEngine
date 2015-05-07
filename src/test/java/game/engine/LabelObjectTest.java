@@ -40,7 +40,7 @@ public class LabelObjectTest
 				label.setColor(Color.GREEN);
 				label.setOutlinePaint(Color.BLACK);
 
-				label.setScaleStrategy(ScaleStrategy.FitSize);
+				label.setScaleStrategy(ScaleStrategy.FitParent);
 
 				label.paintOnScene(g, elapsedTime);
 			}
