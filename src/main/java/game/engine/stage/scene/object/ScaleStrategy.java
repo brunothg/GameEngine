@@ -7,5 +7,5 @@ package game.engine.stage.scene.object;
  */
 public enum ScaleStrategy {
 
-	FitSize, FitParent, NoScale, Auto;
+	FitSize, FitHeight, FitParent, FitParentHeight, NoScale, Auto;
 }

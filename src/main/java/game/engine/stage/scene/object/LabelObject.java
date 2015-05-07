@@ -110,9 +110,38 @@ public class LabelObject extends SceneObject
 						break loop;
 					}
 				break;
+				case FitParentHeight:
+					//Size to object bounds, if text height smaller -> increase font size, if text height bigger -> use smaller font size
+					if ((deltaSize == null || deltaSize > 0) && (stringHeight < getHeight()))
+					{
+						// to small
+						deltaSize = +1;
+					}
+					else if ((deltaSize == null || deltaSize < 0) && (stringHeight > getHeight()))
+					{
+						// to big
+						deltaSize = -1;
+					}
+					else
+					{
+						break loop;
+					}
+				break;
 				case FitSize:
 					//Size to text bounds, if text smaller than container -> /, if text bigger -> use smaller font size
 					if (stringWidth > getWidth() || stringHeight > getHeight())
+					{
+						// to big
+						deltaSize = -1;
+					}
+					else
+					{
+						break loop;
+					}
+				break;
+				case FitHeight:
+					//Size to text bounds, if text smaller than container -> /, if text height bigger -> use smaller font size
+					if (stringHeight > getHeight())
 					{
 						// to big
 						deltaSize = -1;
