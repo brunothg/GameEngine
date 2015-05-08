@@ -102,14 +102,7 @@ public class CachedLabelObject extends LabelObject
 	@Override
 	public void setSize(int width, int height)
 	{
-		boolean redraw = false;
-		try
-		{
-			redraw = width != getWidth() || height != getHeight();
-		}
-		catch (NullPointerException e)
-		{
-		}
+		boolean redraw = width != getWidth() || height != getHeight();
 
 		super.setSize(width, height);
 
@@ -122,14 +115,7 @@ public class CachedLabelObject extends LabelObject
 	@Override
 	public void setSize(Size size)
 	{
-		boolean redraw = false;
-		try
-		{
-			redraw = size.getWidth() != getWidth() || size.getHeight() != getHeight();
-		}
-		catch (NullPointerException e)
-		{
-		}
+		boolean redraw = size.getWidth() != getWidth() || size.getHeight() != getHeight();
 
 		super.setSize(size);
 
@@ -220,6 +206,14 @@ public class CachedLabelObject extends LabelObject
 	public void setVerticalTextOrientation(VerticalOrientation verticalTextOrientation)
 	{
 		super.setVerticalTextOrientation(verticalTextOrientation);
+
+		updateCache(getWidth(), getHeight());
+	}
+
+	@Override
+	public void setScaleStrategy(ScaleStrategy scaleStrategy)
+	{
+		super.setScaleStrategy(scaleStrategy);
 
 		updateCache(getWidth(), getHeight());
 	}
