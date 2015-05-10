@@ -26,15 +26,27 @@ public class NinePatchImage {
 	}
 
 	private void compile(BufferedImage src) {
-		// TODO compile
 
 		List<Patch> hPatches = getPatches(src, true);
 		List<Patch> vPatches = getPatches(src, false);
+		stretchRegions = new Region[vPatches.size()][hPatches.size()];
 
+		int x = 0;
+		int y = 0;
 		for (Patch h : hPatches) {
 			for (Patch v : vPatches) {
 
+				Region region = new Region();
+				region.relHeight = (h.fixedSize) ? h.relSize : -1;
+				region.relWidth = (v.fixedSize) ? v.relSize : -1;
+				region.img = src.getSubimage(h.start, v.start, h.length(),
+						v.length());
+
+				stretchRegions[y][x] = region;
+				y++;
 			}
+			x++;
+			y = 0;
 		}
 	}
 
@@ -148,7 +160,9 @@ public class NinePatchImage {
 	private class Region {
 
 		BufferedImage img;
-		boolean fixedSize;
+
+		// If fixed size = -1
+		// If stretch area relative resize value
 		double relWidth;
 		double relHeight;
 	}
