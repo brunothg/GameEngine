@@ -20,12 +20,24 @@ public class NinePatchImage {
 
 	private Region[][] stretchRegions;
 
+	private int naturalWidth;
+	private int naturalHeight;
+
+	private boolean horizontalStretch;
+	private boolean verticalStretch;
+
 	public NinePatchImage(BufferedImage src) {
 
 		compile(src);
 	}
 
 	private void compile(BufferedImage src) {
+
+		naturalWidth = 0;
+		naturalHeight = 0;
+
+		horizontalStretch = false;
+		verticalStretch = false;
 
 		List<Patch> hPatches = getPatches(src, true);
 		List<Patch> vPatches = getPatches(src, false);
@@ -34,7 +46,18 @@ public class NinePatchImage {
 		int x = 0;
 		int y = 0;
 		for (Patch h : hPatches) {
+			if (!h.fixedSize) {
+				horizontalStretch = true;
+			} else {
+				naturalWidth += h.length();
+			}
+
 			for (Patch v : vPatches) {
+				if (!v.fixedSize) {
+					verticalStretch = true;
+				} else {
+					naturalHeight += v.length();
+				}
 
 				Region region = new Region();
 				region.relHeight = (h.fixedSize) ? h.relSize : -1;
@@ -123,6 +146,7 @@ public class NinePatchImage {
 
 	public void draw(Graphics g, int width, int height) {
 		// TODO draw
+
 	}
 
 	public BufferedImage getImage(int width, int height) {
