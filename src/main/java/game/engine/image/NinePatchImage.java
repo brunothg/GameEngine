@@ -1,0 +1,155 @@
+package game.engine.image;
+
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.util.LinkedList;
+import java.util.List;
+
+/**
+ * 
+ * This class represents a nine pitch image. Such an image contains a 1px
+ * border. Black pixel({@link Color#BLACK} ) at the left or top border indicate
+ * the stretch regions. Relative size of multiple regions will be kept.
+ * 
+ * @author Marvin Bruns
+ *
+ */
+public class NinePatchImage {
+
+	private Region[][] stretchRegions;
+
+	public NinePatchImage(BufferedImage src) {
+
+		compile(src);
+	}
+
+	private void compile(BufferedImage src) {
+		// TODO compile
+
+		List<Patch> hPatches = getPatches(src, true);
+		List<Patch> vPatches = getPatches(src, false);
+
+		for (Patch h : hPatches) {
+			for (Patch v : vPatches) {
+
+			}
+		}
+	}
+
+	private List<Patch> getPatches(BufferedImage src, boolean horizontal) {
+		List<Patch> patches = new LinkedList<Patch>();
+
+		int totalPatchSize = 0;
+		int start = -1;
+
+		int size = ((horizontal) ? src.getWidth() : src.getHeight());
+		for (int pos = 1; pos < size - 1; pos++) {
+
+			Color c = new Color(src.getRGB((horizontal) ? pos : 0,
+					(horizontal) ? 0 : pos), true);
+			if (!c.equals(Color.BLACK) || pos == size - 2) {
+				if (start != -1) {
+
+					Patch p;
+					{
+						Patch last = (patches.size() > 1) ? patches.get(patches
+								.size() - 1) : null;
+
+						p = new Patch();
+						p.start = (last != null) ? last.end : 1;
+						p.end = start;
+						p.fixedSize = true;
+
+						patches.add(p);
+					}
+
+					{
+						p = new Patch();
+						p.start = start;
+						p.end = pos;
+						p.fixedSize = false;
+
+						totalPatchSize += p.length();
+						patches.add(p);
+					}
+
+					start = -1;
+				}
+
+				continue;
+			}
+
+			if (start == -1) {
+				start = pos;
+			}
+		}
+
+		{
+			Patch last = (patches.size() > 0) ? patches.get(patches.size() - 1)
+					: null;
+
+			Patch p = new Patch();
+			p.start = (last != null) ? last.end : 1;
+			p.end = size - 1;
+			p.fixedSize = true;
+
+			if (p.length() > 0) {
+
+				patches.add(p);
+			}
+		}
+
+		for (Patch p : patches) {
+
+			p.relSize = p.length() / totalPatchSize;
+		}
+
+		return patches;
+	}
+
+	public void draw(Graphics g, int width, int height) {
+		// TODO draw
+	}
+
+	public BufferedImage getImage(int width, int height) {
+
+		BufferedImage image = new BufferedImage(width, height,
+				BufferedImage.TYPE_INT_ARGB_PRE);
+
+		Graphics2D graphics = image.createGraphics();
+		draw(graphics, width, height);
+		graphics.dispose();
+
+		return image;
+	}
+
+	private class Patch {
+		/**
+		 * inclusive
+		 */
+		int start;
+
+		/**
+		 * exclusive
+		 */
+		int end;
+
+		double relSize;
+		boolean fixedSize;
+
+		int length() {
+
+			return Math.abs(end - start);
+		}
+	}
+
+	private class Region {
+
+		BufferedImage img;
+		boolean fixedSize;
+		double relWidth;
+		double relHeight;
+	}
+}
