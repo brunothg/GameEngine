@@ -385,6 +385,15 @@ public class NinePatchImage implements Image {
 	}
 
 	/**
+	 * @see #getSourceSize()
+	 * @Override {@link Image#getSize()}
+	 */
+	public Size getSize() {
+
+		return getSourceSize();
+	}
+
+	/**
 	 * Get the used interpolation quality.
 	 * 
 	 * @return The used interpolation quality

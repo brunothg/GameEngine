@@ -1,6 +1,8 @@
 package game.engine.image.sprite;
 
+import game.engine.image.Image;
 import game.engine.image.ImageUtils;
+import game.engine.stage.scene.object.Size;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
@@ -11,7 +13,7 @@ import java.awt.image.BufferedImage;
  * @author Marvin Bruns
  *
  */
-public class DefaultSprite implements Sprite {
+public class DefaultSprite implements Sprite, Image {
 
 	private BufferedImage image;
 
@@ -60,12 +62,25 @@ public class DefaultSprite implements Sprite {
 	}
 
 	@Override
+	public void draw(Graphics2D g, int width, int height) {
+
+		g.drawImage(image, 0, 0, width, width, 0, 0, image.getWidth(),
+				image.getHeight(), null);
+	}
+
+	@Override
 	public BufferedImage getTile(int x, int y) {
 
 		BufferedImage tile = image.getSubimage(x * getTileWidth(), y
 				* getTileHeight(), getTileWidth(), getTileHeight());
 
 		return ImageUtils.copy(tile);
+	}
+
+	@Override
+	public Size getSize() {
+
+		return new Size(image.getWidth(), image.getHeight());
 	}
 
 	@Override
