@@ -215,6 +215,7 @@ public class NinePatchImage implements Image {
 		return patches;
 	}
 
+	@Override
 	public void draw(Graphics2D g, int width, int height) {
 
 		if (quality <= 0) {
@@ -386,7 +387,7 @@ public class NinePatchImage implements Image {
 
 	/**
 	 * @see #getSourceSize()
-	 * @Override {@link Image#getSize()}
+	 * @see Image#getSize()
 	 */
 	public Size getSize() {
 
