@@ -31,7 +31,7 @@ public class NinePatchImage {
 
 	private Insets insets;
 
-	private int quality = 0;
+	private int quality = 1;
 
 	/**
 	 * Crates a new stretchable image from a nine patch image. The data array is
