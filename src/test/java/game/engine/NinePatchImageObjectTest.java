@@ -4,6 +4,7 @@ import game.engine.frame.SwingGameFrame;
 import game.engine.image.InternalImage;
 import game.engine.stage.scene.FPSScene;
 import game.engine.stage.scene.Scene;
+import game.engine.stage.scene.object.CachedNinePatchImageSceneObject;
 import game.engine.stage.scene.object.NinePatchImageSceneObject;
 import game.engine.stage.scene.object.Point;
 
@@ -19,7 +20,7 @@ public class NinePatchImageObjectTest {
 		SwingGameFrame gameFrame = new SwingGameFrame();
 		gameFrame.setScene(new FPSScene(new Scene() {
 
-			NinePatchImageSceneObject label = new NinePatchImageSceneObject(
+			NinePatchImageSceneObject label = new CachedNinePatchImageSceneObject(
 					InternalImage.load("9patch.png"));
 
 			@Override

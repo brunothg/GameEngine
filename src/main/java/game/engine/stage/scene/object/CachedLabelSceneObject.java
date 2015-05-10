@@ -1,6 +1,6 @@
 package game.engine.stage.scene.object;
 
-import game.engine.stage.scene.object.LabelObject;
+import game.engine.stage.scene.object.LabelSceneObject;
 import game.engine.stage.scene.object.Size;
 import game.engine.stage.scene.object.Orientation.HorizontalOrientation;
 import game.engine.stage.scene.object.Orientation.VerticalOrientation;
@@ -15,25 +15,25 @@ import java.awt.image.BufferedImage;
 
 /**
  *
- * {@link LabelObject} that draws the text on a cached {@link BufferedImage}. This speeds up drawing
+ * {@link LabelSceneObject} that draws the text on a cached {@link BufferedImage}. This speeds up drawing
  * when animating text, but the quality might be less.
  * 
- * @see LabelObject
+ * @see LabelSceneObject
  * @author Marvin Bruns
  *
  */
-public class CachedLabelObject extends LabelObject
+public class CachedLabelSceneObject extends LabelSceneObject
 {
 
 	BufferedImage cache;
 
-	public CachedLabelObject(String text)
+	public CachedLabelSceneObject(String text)
 	{
 
 		super(text);
 	}
 
-	public CachedLabelObject()
+	public CachedLabelSceneObject()
 	{
 
 		super();

@@ -3,8 +3,8 @@ package game.engine;
 import game.engine.frame.SwingGameFrame;
 import game.engine.stage.scene.FPSScene;
 import game.engine.stage.scene.Scene;
-import game.engine.stage.scene.object.CachedLabelObject;
-import game.engine.stage.scene.object.LabelObject;
+import game.engine.stage.scene.object.CachedLabelSceneObject;
+import game.engine.stage.scene.object.LabelSceneObject;
 import game.engine.stage.scene.object.Point;
 import game.engine.stage.scene.object.ScaleStrategy;
 
@@ -24,7 +24,7 @@ public class LabelObjectTest
 		gameFrame.setScene(new FPSScene(new Scene()
 		{
 
-			LabelObject label = new CachedLabelObject("Das ist ein\n LabelObject");
+			LabelSceneObject label = new CachedLabelSceneObject("Das ist ein\n LabelObject");
 
 			@Override
 			public void paintScene(Graphics2D g, int width, int height, long elapsedTime)

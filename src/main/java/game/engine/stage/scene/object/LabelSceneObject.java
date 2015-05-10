@@ -22,7 +22,7 @@ import java.awt.font.LineMetrics;
  * @author Marvin Bruns
  *
  */
-public class LabelObject extends SceneObject {
+public class LabelSceneObject extends SceneObject {
 
 	private Font font;
 	private int fontFlags = Font.LAYOUT_LEFT_TO_RIGHT;
@@ -37,12 +37,12 @@ public class LabelObject extends SceneObject {
 
 	private ScaleStrategy scaleStrategy = ScaleStrategy.FitParent;
 
-	public LabelObject() {
+	public LabelSceneObject() {
 
 		this("");
 	}
 
-	public LabelObject(String text) {
+	public LabelSceneObject(String text) {
 
 		setText(text);
 	}
