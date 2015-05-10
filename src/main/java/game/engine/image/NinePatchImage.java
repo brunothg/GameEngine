@@ -46,18 +46,7 @@ public class NinePatchImage {
 		int x = 0;
 		int y = 0;
 		for (Patch h : hPatches) {
-			if (!h.fixedSize) {
-				horizontalStretch = true;
-			} else {
-				naturalWidth += h.length();
-			}
-
 			for (Patch v : vPatches) {
-				if (!v.fixedSize) {
-					verticalStretch = true;
-				} else {
-					naturalHeight += v.length();
-				}
 
 				Region region = new Region();
 				region.relHeight = (h.fixedSize) ? h.relSize : -1;
@@ -70,6 +59,24 @@ public class NinePatchImage {
 			}
 			x++;
 			y = 0;
+		}
+
+		for (Patch h : hPatches) {
+
+			if (!h.fixedSize) {
+				horizontalStretch = true;
+			} else {
+				naturalWidth += h.length();
+			}
+		}
+
+		for (Patch v : vPatches) {
+
+			if (!v.fixedSize) {
+				verticalStretch = true;
+			} else {
+				naturalHeight += v.length();
+			}
 		}
 	}
 
@@ -146,6 +153,9 @@ public class NinePatchImage {
 
 	public void draw(Graphics g, int width, int height) {
 		// TODO draw
+
+		int stretchableWidth = width - naturalWidth;
+		int stretchableHeight = height - naturalHeight;
 
 	}
 
