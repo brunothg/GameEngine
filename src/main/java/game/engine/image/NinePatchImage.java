@@ -1,5 +1,7 @@
 package game.engine.image;
 
+import game.engine.stage.scene.object.Size;
+
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -29,6 +31,16 @@ public class NinePatchImage {
 	public NinePatchImage(BufferedImage src) {
 
 		compile(src);
+
+		for (int y = 0; y < stretchRegions.length; y++) {
+			for (int x = 0; x < stretchRegions[y].length; x++) {
+				Region region = stretchRegions[y][x];
+				BufferedImage img = region.img;
+				System.out.printf("(%d, %d): %.2fx%.2f, %dx%d\n", x, y,
+						region.relWidth, region.relHeight, img.getWidth(),
+						img.getHeight());
+			}
+		}
 	}
 
 	private void compile(BufferedImage src) {
@@ -49,8 +61,8 @@ public class NinePatchImage {
 			for (Patch v : vPatches) {
 
 				Region region = new Region();
-				region.relHeight = (h.fixedSize) ? h.relSize : -1;
-				region.relWidth = (v.fixedSize) ? v.relSize : -1;
+				region.relWidth = (!h.fixedSize) ? h.relSize : -1;
+				region.relHeight = (!v.fixedSize) ? v.relSize : -1;
 				region.img = src.getSubimage(h.start, v.start, h.length(),
 						v.length());
 
@@ -178,8 +190,8 @@ public class NinePatchImage {
 		}
 
 		// calculate stretch size
-		int stretchableWidth = width - usedNaturalWidth;
-		int stretchableHeight = height - usedNaturalHeight;
+		final int stretchableWidth = width - usedNaturalWidth;
+		final int stretchableHeight = height - usedNaturalHeight;
 
 	}
 
@@ -193,6 +205,37 @@ public class NinePatchImage {
 		graphics.dispose();
 
 		return image;
+	}
+
+	/**
+	 * Get the capability to stretch this image in horizontal direction.
+	 * 
+	 * @return true, if this image can be stretched in horizontal direction
+	 */
+	public boolean isHorizontalStretachable() {
+
+		return horizontalStretch;
+	}
+
+	/**
+	 * Get the capability to stretch this image in vertical direction.
+	 * 
+	 * @return true, if this image can be stretched in vertical direction
+	 */
+	public boolean isVerticalStretachable() {
+
+		return verticalStretch;
+	}
+
+	/**
+	 * Get the natural minimum size of this image. Natural means the pixel of
+	 * the image, that aren't marked as stretch area.
+	 * 
+	 * @return The natural minimum size
+	 */
+	public Size getNaturalSize() {
+
+		return new Size(naturalWidth, naturalHeight);
 	}
 
 	private class Patch {
