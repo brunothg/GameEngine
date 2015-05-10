@@ -64,7 +64,7 @@ public class SpriteSceneObject extends SceneObject {
 	 * Create an {@link SpriteSceneObject} from a sprite with full frames per
 	 * row.
 	 * 
-	 * @see #AnimatedSceneObject(Sprite, long, long[][], int[])
+	 * @see #SpriteSceneObject(Sprite, long, long[][], int[])
 	 * @param sprite
 	 *            The animated sprite
 	 * @param defaultTime
@@ -81,7 +81,7 @@ public class SpriteSceneObject extends SceneObject {
 	 * Create an {@link SpriteSceneObject} from a sprite with equal time for
 	 * every frame.
 	 * 
-	 * @see #AnimatedSceneObject(Sprite, long, long[][])
+	 * @see #SpriteSceneObject(Sprite, long, long[][])
 	 * @param sprite
 	 *            The animated sprite
 	 * @param defaultTime
