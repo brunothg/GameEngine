@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>de.bno</groupId>
 	<artifactId>game.engine</artifactId>
-	<version>1.0.3</version>
+	<version>1.1.0</version>
 	<name>Game Engine</name>
 	<description>Java 2D Game Engine</description>
 
@@ -33,4 +33,14 @@
 		</dependency>
 	</dependencies>
 
+	<url>https://github.com/brunothg/GameEngine</url>
+	<packaging>jar</packaging>
+
+	<developers>
+		<developer>
+			<id>brunothg</id>
+			<name>Marvin Bruns</name>
+			<url>https://github.com/brunothg</url>
+		</developer>
+	</developers>
 </project>
