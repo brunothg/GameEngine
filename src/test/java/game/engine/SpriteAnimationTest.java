@@ -7,7 +7,7 @@ import game.engine.image.sprite.WeakSprite;
 import game.engine.stage.SwingStage;
 import game.engine.stage.scene.FPSScene;
 import game.engine.stage.scene.Scene;
-import game.engine.stage.scene.object.AnimatedSceneObject;
+import game.engine.stage.scene.object.SpriteSceneObject;
 import game.engine.stage.scene.object.Point;
 import game.engine.time.Clock;
 import game.engine.time.TimeUtils;
@@ -50,7 +50,7 @@ public class SpriteAnimationTest {
 		// "http://i.stack.imgur.com/i7oRv.png")), 64, 69), false, true,
 		// true);
 
-		final AnimatedSceneObject animation = new AnimatedSceneObject(sprite,
+		final SpriteSceneObject animation = new SpriteSceneObject(sprite,
 				TimeUtils.NanosecondsOfMilliseconds(100));
 		animation.setDrawBoundingBox(true);
 

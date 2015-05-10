@@ -18,7 +18,10 @@ import java.awt.image.BufferedImage;
 import java.util.EventListener;
 
 /**
- * A simple animated loading screen.
+ * A simple animated loading screen. On Linux systems the high quality drawing
+ * result in slow rendering or blocking the whole jvm. So by default the shadow
+ * drawing is turned off, but should be turned on supported systems for a great
+ * loading screen.
  * 
  * @author Marvin Bruns
  *

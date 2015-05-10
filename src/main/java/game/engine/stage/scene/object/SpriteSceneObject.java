@@ -11,7 +11,7 @@ import java.awt.Graphics2D;
  * @author Marvin Bruns
  *
  */
-public class AnimatedSceneObject extends SceneObject {
+public class SpriteSceneObject extends SceneObject {
 
 	private Sprite sprite;
 	private int[] frames;
@@ -25,7 +25,7 @@ public class AnimatedSceneObject extends SceneObject {
 	private int animation;
 
 	/**
-	 * Create an {@link AnimatedSceneObject} from a sprite. Only one row will be
+	 * Create an {@link SpriteSceneObject} from a sprite. Only one row will be
 	 * used for animation. The row used for this animation can be changed.
 	 * 
 	 * @param sprite
@@ -41,7 +41,7 @@ public class AnimatedSceneObject extends SceneObject {
 	 *            If negative or too high the sprite's maximum frame number is
 	 *            used.
 	 */
-	public AnimatedSceneObject(Sprite sprite, long defaultTime, long[][] time,
+	public SpriteSceneObject(Sprite sprite, long defaultTime, long[][] time,
 			int[] frames) {
 
 		if (defaultTime < 0) {
@@ -61,7 +61,7 @@ public class AnimatedSceneObject extends SceneObject {
 	}
 
 	/**
-	 * Create an {@link AnimatedSceneObject} from a sprite with full frames per
+	 * Create an {@link SpriteSceneObject} from a sprite with full frames per
 	 * row.
 	 * 
 	 * @see #AnimatedSceneObject(Sprite, long, long[][], int[])
@@ -72,13 +72,13 @@ public class AnimatedSceneObject extends SceneObject {
 	 * @param time
 	 *            individual time for every frame
 	 */
-	public AnimatedSceneObject(Sprite sprite, long defaultTime, long[][] time) {
+	public SpriteSceneObject(Sprite sprite, long defaultTime, long[][] time) {
 
 		this(sprite, defaultTime, time, null);
 	}
 
 	/**
-	 * Create an {@link AnimatedSceneObject} from a sprite with equal time for
+	 * Create an {@link SpriteSceneObject} from a sprite with equal time for
 	 * every frame.
 	 * 
 	 * @see #AnimatedSceneObject(Sprite, long, long[][])
@@ -87,7 +87,7 @@ public class AnimatedSceneObject extends SceneObject {
 	 * @param defaultTime
 	 *            Time for each frame
 	 */
-	public AnimatedSceneObject(Sprite sprite, long defaultTime) {
+	public SpriteSceneObject(Sprite sprite, long defaultTime) {
 
 		this(sprite, defaultTime, null, null);
 	}

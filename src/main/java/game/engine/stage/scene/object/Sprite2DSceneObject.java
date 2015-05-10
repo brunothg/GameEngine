@@ -8,15 +8,15 @@ import game.engine.image.sprite.Sprite;
  * @author Marvin Bruns
  *
  */
-public class Animated2DSceneObject extends AnimatedSceneObject {
+public class Sprite2DSceneObject extends SpriteSceneObject {
 
 	private long timeBase;
 
-	public Animated2DSceneObject(Sprite sprite, long defaultTime, long[][] time) {
+	public Sprite2DSceneObject(Sprite sprite, long defaultTime, long[][] time) {
 		super(sprite, defaultTime, time);
 	}
 
-	public Animated2DSceneObject(Sprite sprite, long defaultTime) {
+	public Sprite2DSceneObject(Sprite sprite, long defaultTime) {
 		super(sprite, defaultTime);
 	}
 
