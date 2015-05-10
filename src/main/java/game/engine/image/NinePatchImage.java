@@ -139,7 +139,6 @@ public class NinePatchImage implements Image {
 
 			count++;
 		}
-		System.out.println();
 
 		return inset;
 	}

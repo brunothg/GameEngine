@@ -26,10 +26,10 @@ public class NinePatchImageTest {
 
 		Insets insets = ninePatch.getInsets();
 
-		assertEquals(1, insets.right);
-		assertEquals(2, insets.top);
-		assertEquals(4, insets.left);
-		assertEquals(3, insets.bottom);
+		assertEquals(36, insets.right);
+		assertEquals(36, insets.top);
+		assertEquals(37, insets.left);
+		assertEquals(35, insets.bottom);
 	}
 
 	@Test
@@ -37,7 +37,7 @@ public class NinePatchImageTest {
 
 		Size size = ninePatch.getNaturalSize();
 
-		assertEquals(95, size.getWidth());
-		assertEquals(98, size.getHeight());
+		assertEquals(115, size.getWidth());
+		assertEquals(119, size.getHeight());
 	}
 }
