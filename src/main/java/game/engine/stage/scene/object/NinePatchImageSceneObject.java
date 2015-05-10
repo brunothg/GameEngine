@@ -24,6 +24,11 @@ public class NinePatchImageSceneObject extends SceneObject {
 		this.image = new NinePatchImage(image);
 	}
 
+	public NinePatchImageSceneObject(NinePatchImage image) {
+
+		this.image = image;
+	}
+
 	public NinePatchImageSceneObject(Image image) {
 
 		this(ImageUtils.BufferedImage(image));
