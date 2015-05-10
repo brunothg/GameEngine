@@ -16,42 +16,51 @@
     <header>
       <div class="container">
         <h1>GameEngine</h1>
-        <h2>Java, 2D, game, graphics, engine</h2>
+        <h2></h2>
 
         <section id="downloads">
           <a href="https://github.com/brunothg/GameEngine/zipball/master" class="btn">Download as .zip</a>
           <a href="https://github.com/brunothg/GameEngine/tarball/master" class="btn">Download as .tar.gz</a>
+          <a href="./javadocs" class="btn">View JavaDocs</a>
           <a href="https://github.com/brunothg/GameEngine" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
         </section>
       </div>
     </header>
 
     <div class="container">
-      <section id="main_content">
+      <article id="main_content">
         <h1>
 <a id="gameengine" class="anchor" href="#gameengine" aria-hidden="true"><span class="octicon octicon-link"></span></a>GameEngine</h1>
 
 <hr>
 
-<p>Simple game engine for 2D games in swing and awt.
-Supports running in fullscreen exclusive mode.</p>
+<p>A simple game engine for 2D games in Swing and AWT.
+Support for applications running in fullscreen exclusive mode.</p>
 
 <p>All drawing is organized within stages, which provide the basic drawing and buffering capabilities.
-The individual part is done with the Scene and SceneObject classes.</p>
+The individual work is done with the <a href="./javadocs/game/engine/stage/scene/Scene.html">Scene</a> and <a href="./javadocs/game/engine/stage/scene/object/SceneObject.html">SceneObject</a> classes.</p>
 
 <p>Basic collision detection (bounding box, alpha collision) is implemented by default.</p>
 
 <p>A timer class (Clock) handles the repaint job, so that you only have to provide the time based paint methods in your SceneObjects.</p>
 
-<p>Several utility classes for loading and displaying images can be used. Sprites and 9patch images are supported.</p>
+<p>Several utility classes for loading and displaying images can be used. Sprite and 9patch images are supported.</p>
 
 <p>A basic loading screen and SceneObjects for text drawing(LabelObject), animated text drawing(CachedLabelObject)
 and sprite rendering(SpriteSceneObject, Sprite2DSceneObject) are ready to use.</p>
 
 <p>Sample programs using this library can be found at: <a href="https://github.com/brunothg/JellySplush">JellySplush</a> or <a href="https://github.com/MuesLee/n8dA">RoboBattle</a></p>
 
-<p>JavaDocs can be found at: <a href="http://brunothg.github.io/GameEngine/javadocs/">GameEngine/javadocs/</a></p>
-      </section>
+<section>
+<div style="height: 30pt;"></div>
+<h2>JellySplush</h2>
+<video width="736" height="736" poster="./images/jelly_splush_splash.png" controls style="box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75); border: 1.5pt solid black;">
+<source src="./videos/jelly_splush_preview.mp4" type="video/mp4">
+<img src="./images/jelly_splush_splash.png">
+</video>
+</section>
+
+      </article>
     </div>
 
     
