@@ -154,8 +154,32 @@ public class NinePatchImage {
 	public void draw(Graphics g, int width, int height) {
 		// TODO draw
 
-		int stretchableWidth = width - naturalWidth;
-		int stretchableHeight = height - naturalHeight;
+		// calculate used base size
+		int usedNaturalWidth = (naturalWidth <= width) ? naturalWidth : width;
+		int usedNaturalHeight = (naturalHeight <= height) ? naturalHeight
+				: height;
+
+		double relWidth = usedNaturalWidth / (double) naturalWidth;
+		double relHeight = usedNaturalHeight / (double) naturalHeight;
+
+		if (relWidth < 1 || relHeight < 1) {
+
+			if (relWidth < relHeight) {
+
+				relHeight = relWidth;
+				usedNaturalHeight = (int) Math.min(
+						Math.round(naturalHeight * relHeight), height);
+			} else {
+
+				relWidth = relHeight;
+				usedNaturalWidth = (int) Math.min(
+						Math.round(naturalWidth * relWidth), width);
+			}
+		}
+
+		// calculate stretch size
+		int stretchableWidth = width - usedNaturalWidth;
+		int stretchableHeight = height - usedNaturalHeight;
 
 	}
 
