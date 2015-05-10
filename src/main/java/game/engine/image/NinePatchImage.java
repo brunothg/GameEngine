@@ -28,19 +28,17 @@ public class NinePatchImage {
 	private boolean horizontalStretch;
 	private boolean verticalStretch;
 
+	/**
+	 * Crates a new stretchable image from a nine patch image. The data array is
+	 * shared (consider creating a copy of the image).
+	 * 
+	 * @see BufferedImage#getSubimage(int, int, int, int)
+	 * @param src
+	 *            The shared source image
+	 */
 	public NinePatchImage(BufferedImage src) {
 
 		compile(src);
-
-		for (int y = 0; y < stretchRegions.length; y++) {
-			for (int x = 0; x < stretchRegions[y].length; x++) {
-				Region region = stretchRegions[y][x];
-				BufferedImage img = region.img;
-				System.out.printf("(%d, %d): %.2fx%.2f, %dx%d\n", x, y,
-						region.relWidth, region.relHeight, img.getWidth(),
-						img.getHeight());
-			}
-		}
 	}
 
 	private void compile(BufferedImage src) {
