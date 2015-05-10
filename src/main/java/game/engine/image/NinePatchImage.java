@@ -19,7 +19,7 @@ import java.util.List;
  * @author Marvin Bruns
  *
  */
-public class NinePatchImage {
+public class NinePatchImage implements Image {
 
 	private Region[][] stretchRegions;
 
