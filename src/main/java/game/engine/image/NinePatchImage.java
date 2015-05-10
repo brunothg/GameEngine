@@ -53,7 +53,6 @@ public class NinePatchImage {
 		verticalStretch = false;
 
 		insets = getInsets(src);
-		System.out.println(insets);
 
 		List<Patch> hPatches = getPatches(src, true);
 		List<Patch> vPatches = getPatches(src, false);
