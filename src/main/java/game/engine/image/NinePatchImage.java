@@ -3,9 +3,9 @@ package game.engine.image;
 import game.engine.stage.scene.object.Size;
 
 import java.awt.Color;
-import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Insets;
+import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.util.LinkedList;
 import java.util.List;
@@ -30,6 +30,8 @@ public class NinePatchImage {
 	private boolean verticalStretch;
 
 	private Insets insets;
+
+	private int quality = 0;
 
 	/**
 	 * Crates a new stretchable image from a nine patch image. The data array is
@@ -207,7 +209,21 @@ public class NinePatchImage {
 		return patches;
 	}
 
-	public void draw(Graphics g, int width, int height) {
+	public void draw(Graphics2D g, int width, int height) {
+
+		if (quality <= 0) {
+
+			g.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
+					RenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR);
+		} else if (quality == 1) {
+
+			g.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
+					RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+		} else {
+
+			g.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
+					RenderingHints.VALUE_INTERPOLATION_BICUBIC);
+		}
 
 		// calculate used base size
 		int usedNaturalWidth = (naturalWidth <= width) ? naturalWidth : width;
@@ -236,8 +252,8 @@ public class NinePatchImage {
 		final int stretchableWidth = width - usedNaturalWidth;
 		final int stretchableHeight = height - usedNaturalHeight;
 
-		int[] hSizes = new int[stretchRegions[0].length];
-		int[] vSizes = new int[stretchRegions.length];
+		double[] hSizes = new double[stretchRegions[0].length];
+		double[] vSizes = new double[stretchRegions.length];
 
 		for (int x = 0; x < hSizes.length; x++) {
 
@@ -247,10 +263,10 @@ public class NinePatchImage {
 
 			if (relWidth < 0) {
 
-				hSizes[x] = absWidth;
+				hSizes[x] = absWidth * usedRelativeWidth;
 			} else {
 
-				hSizes[x] = (int) Math.round(stretchableWidth * relWidth);
+				hSizes[x] = stretchableWidth * relWidth;
 			}
 		}
 
@@ -262,24 +278,27 @@ public class NinePatchImage {
 
 			if (relHeight < 0) {
 
-				vSizes[y] = absHeight;
+				vSizes[y] = absHeight * usedRelativeHeight;
 			} else {
 
-				vSizes[y] = (int) Math.round(stretchableHeight * relHeight);
+				vSizes[y] = stretchableHeight * relHeight;
 			}
 		}
 
-		int posX = 0;
-		int posY = 0;
+		double posX = 0;
+		double posY = 0;
 		for (int y = 0; y < vSizes.length; y++) {
-			int _height = vSizes[y];
+			double _height = vSizes[y];
 
 			for (int x = 0; x < hSizes.length; x++) {
-				int _width = hSizes[x];
+				double _width = hSizes[x];
 
 				BufferedImage img = stretchRegions[y][x].img;
-				g.drawImage(img, posX, posY, posX + (_width), posY + (_height),
-						0, 0, img.getWidth(), img.getHeight(), null);
+				g.drawImage(img, (int) Math.round(posX),
+						(int) Math.round(posY),
+						(int) Math.round(posX + (_width)),
+						(int) Math.round(posY + (_height)), 0, 0,
+						img.getWidth(), img.getHeight(), null);
 
 				posX += _width;
 			}
@@ -340,6 +359,21 @@ public class NinePatchImage {
 	public Insets getInsets() {
 
 		return insets;
+	}
+
+	public int getQuality() {
+		return quality;
+	}
+
+	/**
+	 * Set the interpolation quality values from 0 to 2 are allowed. Values out
+	 * of the range will be increased/decreased to fit the range.
+	 * 
+	 * @param quality
+	 *            Interpolation quality
+	 */
+	public void setQuality(int quality) {
+		this.quality = Math.max(0, Math.min(quality, 2));
 	}
 
 	private class Patch {
