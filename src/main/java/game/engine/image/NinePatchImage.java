@@ -5,6 +5,7 @@ import game.engine.stage.scene.object.Size;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Insets;
 import java.awt.image.BufferedImage;
 import java.util.LinkedList;
 import java.util.List;
@@ -28,6 +29,8 @@ public class NinePatchImage {
 	private boolean horizontalStretch;
 	private boolean verticalStretch;
 
+	private Insets insets;
+
 	/**
 	 * Crates a new stretchable image from a nine patch image. The data array is
 	 * shared (consider creating a copy of the image).
@@ -48,6 +51,9 @@ public class NinePatchImage {
 
 		horizontalStretch = false;
 		verticalStretch = false;
+
+		insets = getInsets(src);
+		System.out.println(insets);
 
 		List<Patch> hPatches = getPatches(src, true);
 		List<Patch> vPatches = getPatches(src, false);
@@ -88,6 +94,47 @@ public class NinePatchImage {
 				naturalHeight += v.length();
 			}
 		}
+	}
+
+	private Insets getInsets(BufferedImage src) {
+
+		int left, right, top, bottom;
+		left = right = top = bottom = 0;
+
+		left = getInset(src, true, true);
+		right = getInset(src, true, false);
+
+		top = getInset(src, false, true);
+		bottom = getInset(src, false, false);
+
+		return new Insets(top, left, bottom, right);
+	}
+
+	private int getInset(BufferedImage src, boolean horizontal, boolean positive) {
+		int inset = 0;
+
+		int size = (horizontal) ? src.getWidth() : src.getHeight();
+		int start = (positive) ? 1 : size - 2;
+
+		int count = 0;
+		for (int pos = start; ((positive) ? pos < size - 1 : pos > 0); pos = ((positive) ? pos + 1
+				: pos - 1)) {
+
+			Color c = new Color(src.getRGB((horizontal) ? pos
+					: src.getWidth() - 1, (horizontal) ? src.getHeight() - 1
+					: pos), true);
+
+			if (c.equals(Color.BLACK)) {
+
+				inset = count;
+				break;
+			}
+
+			count++;
+		}
+		System.out.println();
+
+		return inset;
 	}
 
 	private List<Patch> getPatches(BufferedImage src, boolean horizontal) {
@@ -283,6 +330,17 @@ public class NinePatchImage {
 	public Size getNaturalSize() {
 
 		return new Size(naturalWidth, naturalHeight);
+	}
+
+	/**
+	 * Get the {@link Insets} specified by the underlying nine patch source
+	 * image.
+	 * 
+	 * @return The {@link Insets} specified by the nine patch source image
+	 */
+	public Insets getInsets() {
+
+		return insets;
 	}
 
 	private class Patch {
