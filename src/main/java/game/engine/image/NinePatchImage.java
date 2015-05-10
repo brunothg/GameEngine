@@ -26,6 +26,9 @@ public class NinePatchImage {
 	private int naturalWidth;
 	private int naturalHeight;
 
+	private int sourceHeight;
+	private int sourceWidth;
+
 	private boolean horizontalStretch;
 	private boolean verticalStretch;
 
@@ -47,6 +50,9 @@ public class NinePatchImage {
 	}
 
 	private void compile(BufferedImage src) {
+
+		sourceHeight = src.getHeight() - 2;
+		sourceWidth = src.getWidth() - 2;
 
 		naturalWidth = 0;
 		naturalHeight = 0;
@@ -361,6 +367,28 @@ public class NinePatchImage {
 		return insets;
 	}
 
+	/**
+	 * Get the source size of this image. The source size is the size the
+	 * underlying image provides without the patch indicator border. This
+	 * results in the a size of:<br>
+	 * <br>
+	 * <code>src.getWidth() - 2, src.getHeight() - 2</code><br>
+	 * <br>
+	 * As the insets are returned as absolute values calculated with the source
+	 * size you can calculate the relative insets with the source size.
+	 * 
+	 * @return The source size of this image
+	 */
+	public Size getSourceSize() {
+
+		return new Size(sourceWidth, sourceHeight);
+	}
+
+	/**
+	 * Get the used interpolation quality.
+	 * 
+	 * @return The used interpolation quality
+	 */
 	public int getQuality() {
 		return quality;
 	}

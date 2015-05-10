@@ -35,4 +35,13 @@ public class NinePatchImageSceneObject extends SceneObject {
 		image.draw(g, getWidth(), getHeight());
 	}
 
+	/**
+	 * @see NinePatchImage#setQuality(int)
+	 * @param quality
+	 *            The interpolation quality
+	 */
+	public void setQuality(int quality) {
+
+		image.setQuality(quality);
+	}
 }
