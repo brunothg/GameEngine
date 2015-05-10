@@ -164,35 +164,84 @@ public class NinePatchImage {
 	}
 
 	public void draw(Graphics g, int width, int height) {
-		// TODO draw
 
 		// calculate used base size
 		int usedNaturalWidth = (naturalWidth <= width) ? naturalWidth : width;
 		int usedNaturalHeight = (naturalHeight <= height) ? naturalHeight
 				: height;
 
-		double relWidth = usedNaturalWidth / (double) naturalWidth;
-		double relHeight = usedNaturalHeight / (double) naturalHeight;
+		double usedRelativeWidth = usedNaturalWidth / (double) naturalWidth;
+		double usedRelativeHeight = usedNaturalHeight / (double) naturalHeight;
 
-		if (relWidth < 1 || relHeight < 1) {
+		if (usedRelativeWidth < 1 || usedRelativeHeight < 1) {
 
-			if (relWidth < relHeight) {
+			if (usedRelativeWidth < usedRelativeHeight) {
 
-				relHeight = relWidth;
+				usedRelativeHeight = usedRelativeWidth;
 				usedNaturalHeight = (int) Math.min(
-						Math.round(naturalHeight * relHeight), height);
+						Math.round(naturalHeight * usedRelativeHeight), height);
 			} else {
 
-				relWidth = relHeight;
+				usedRelativeWidth = usedRelativeHeight;
 				usedNaturalWidth = (int) Math.min(
-						Math.round(naturalWidth * relWidth), width);
+						Math.round(naturalWidth * usedRelativeWidth), width);
 			}
 		}
 
-		// calculate stretch size
+		// calculate stretched size
 		final int stretchableWidth = width - usedNaturalWidth;
 		final int stretchableHeight = height - usedNaturalHeight;
 
+		int[] hSizes = new int[stretchRegions[0].length];
+		int[] vSizes = new int[stretchRegions.length];
+
+		for (int x = 0; x < hSizes.length; x++) {
+
+			Region region = stretchRegions[0][x];
+			double relWidth = region.relWidth;
+			int absWidth = region.img.getWidth();
+
+			if (relWidth < 0) {
+
+				hSizes[x] = absWidth;
+			} else {
+
+				hSizes[x] = (int) Math.round(stretchableWidth * relWidth);
+			}
+		}
+
+		for (int y = 0; y < vSizes.length; y++) {
+
+			Region region = stretchRegions[y][0];
+			double relHeight = region.relHeight;
+			int absHeight = region.img.getHeight();
+
+			if (relHeight < 0) {
+
+				vSizes[y] = absHeight;
+			} else {
+
+				vSizes[y] = (int) Math.round(stretchableHeight * relHeight);
+			}
+		}
+
+		int posX = 0;
+		int posY = 0;
+		for (int y = 0; y < vSizes.length; y++) {
+			int _height = vSizes[y];
+
+			for (int x = 0; x < hSizes.length; x++) {
+				int _width = hSizes[x];
+
+				BufferedImage img = stretchRegions[y][x].img;
+				g.drawImage(img, posX, posY, posX + (_width), posY + (_height),
+						0, 0, img.getWidth(), img.getHeight(), null);
+
+				posX += _width;
+			}
+			posX = 0;
+			posY += _height;
+		}
 	}
 
 	public BufferedImage getImage(int width, int height) {
