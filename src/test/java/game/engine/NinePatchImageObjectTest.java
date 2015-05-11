@@ -21,7 +21,7 @@ public class NinePatchImageObjectTest {
 		gameFrame.setScene(new FPSScene(new Scene() {
 
 			NinePatchImageSceneObject label = new CachedNinePatchImageSceneObject(
-					InternalImage.load("9patch.png"));
+					InternalImage.load("9patch.9.png"));
 
 			@Override
 			public void paintScene(Graphics2D g, int width, int height,

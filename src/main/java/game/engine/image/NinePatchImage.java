@@ -190,7 +190,6 @@ public class NinePatchImage implements Image {
 				start = pos;
 			}
 		}
-
 		{
 			Patch last = (patches.size() > 0) ? patches.get(patches.size() - 1)
 					: null;
@@ -208,7 +207,7 @@ public class NinePatchImage implements Image {
 
 		for (Patch p : patches) {
 
-			p.relSize = p.length() / totalPatchSize;
+			p.relSize = p.length() / (double) totalPatchSize;
 		}
 
 		return patches;
