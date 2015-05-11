@@ -18,7 +18,7 @@ public class NinePatchImageTest {
 		InternalImage.setRootFolder("/game/engine/images/");
 
 		ninePatch = new NinePatchImage(ImageUtils.BufferedImage(InternalImage
-				.load("9patch.png")));
+				.load("9patch.9.png")));
 	}
 
 	@Test
