@@ -1,4 +1,4 @@
-package game.engine;
+package game.engine.xxx;
 
 import game.engine.frame.SwingGameFrame;
 import game.engine.stage.scene.FPSScene;

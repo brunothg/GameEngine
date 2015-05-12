@@ -1,6 +1,5 @@
 package game.engine;
 
-import game.engine.image.InternalImage;
 import game.engine.stage.SwingStage;
 import game.engine.stage.scene.Scene;
 import game.engine.stage.scene.object.CachedNinePatchImageSceneObject;
@@ -8,6 +7,7 @@ import game.engine.stage.scene.object.Point;
 import game.engine.time.Clock;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -27,15 +27,13 @@ import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.filechooser.FileFilter;
 
-public class NinePatchImageObjectTest {
+public class NinePatchImageObjectPreview {
 
 	static Object lock = new Object();
 	static CachedNinePatchImageSceneObject image;
 
 	public static void main(String[] args) {
 		setLaF();
-
-		InternalImage.setRootFolder("/game/engine/images/");
 
 		JFrame disp = new JFrame("Nine Patch - *.9.png");
 		disp.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -133,9 +131,28 @@ public class NinePatchImageObjectTest {
 
 		return new Scene() {
 
+			Color bg1 = new Color(55, 55, 55);
+			Color bg2 = new Color(200, 200, 200);
+
+			int bgSize = 10;
+
 			@Override
 			public void paintScene(Graphics2D g, int width, int height,
 					long elapsedTime) {
+
+				boolean colorToogle = true;
+				boolean colorToogleRow = false;
+
+				for (int y = 0; y < height; y += bgSize) {
+					for (int x = 0; x < width; x += bgSize) {
+						colorToogle = !colorToogle;
+
+						g.setColor((colorToogle) ? bg1 : bg2);
+						g.fillRect(x, y, bgSize, bgSize);
+					}
+					colorToogle = colorToogleRow;
+					colorToogleRow = !colorToogleRow;
+				}
 
 				synchronized (lock) {
 

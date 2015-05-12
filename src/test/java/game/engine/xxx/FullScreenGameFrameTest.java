@@ -1,4 +1,4 @@
-package game.engine;
+package game.engine.xxx;
 
 import game.engine.frame.FullScreenGameFrame;
 import game.engine.image.ImageUtils;
