@@ -27,6 +27,12 @@ import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.filechooser.FileFilter;
 
+/**
+ * Small test window for nine patch images
+ * 
+ * @author Marvin Bruns
+ *
+ */
 public class NinePatchImageObjectPreview {
 
 	static Object lock = new Object();
