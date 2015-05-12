@@ -1,4 +1,4 @@
-package game.engine;
+package game.engine.ninepatchpreview;
 
 import game.engine.stage.SwingStage;
 import game.engine.stage.scene.Scene;
