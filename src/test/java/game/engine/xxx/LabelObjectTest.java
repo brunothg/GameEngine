@@ -30,6 +30,8 @@ public class LabelObjectTest
 			public void paintScene(Graphics2D g, int width, int height, long elapsedTime)
 			{
 
+				label.setText(Math.random() + "");
+
 				g.setColor(Color.WHITE);
 				g.fillRect(0, 0, width, height);
 
