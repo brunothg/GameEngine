@@ -1,5 +1,6 @@
 package game.engine.stage.scene.object;
 
+import game.engine.image.ImageUtils;
 import game.engine.stage.scene.object.LabelSceneObject;
 import game.engine.stage.scene.object.Size;
 import game.engine.stage.scene.object.Orientation.HorizontalOrientation;
@@ -51,6 +52,11 @@ public class CachedLabelSceneObject extends LabelSceneObject
 		{
 
 			cache = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB_PRE);
+		}
+		else
+		{
+
+			ImageUtils.clearImage(cache, ImageUtils.COLOR_TRANSPARENT);
 		}
 
 		drawComponent();
