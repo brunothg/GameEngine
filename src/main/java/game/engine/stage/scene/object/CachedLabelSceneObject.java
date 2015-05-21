@@ -15,8 +15,8 @@ import java.awt.image.BufferedImage;
 
 /**
  *
- * {@link LabelSceneObject} that draws the text on a cached {@link BufferedImage}. This speeds up drawing
- * when animating text, but the quality might be less.
+ * {@link LabelSceneObject} that draws the text on a cached {@link BufferedImage}. This speeds up
+ * drawing when animating text, but the quality might be less.
  * 
  * @see LabelSceneObject
  * @author Marvin Bruns
@@ -89,7 +89,7 @@ public class CachedLabelSceneObject extends LabelSceneObject
 	public void setText(String text)
 	{
 
-		boolean redraw = !getText().endsWith(text);
+		boolean redraw = !getText().equals(text);
 
 		super.setText(text);
 
