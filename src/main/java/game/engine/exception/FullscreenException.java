@@ -1,4 +1,4 @@
-package game.engine.d2.exception;
+package game.engine.exception;
 
 public class FullscreenException extends RuntimeException {
 
