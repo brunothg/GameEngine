@@ -10,7 +10,7 @@ public class FPS {
 
 	private long fpsTime = TimeUtils.NANOSECONDS_PER_SECOND;
 
-	private int fps = 0;
+	private float fps = 0;
 	private int fpsCounter = 0;
 
 	/**
@@ -24,8 +24,9 @@ public class FPS {
 		fpsTime -= elapsedTime;
 		fpsCounter++;
 
-		if (fpsTime < 0) {
-			fps = fpsCounter;
+		if (fpsTime <= 0) {
+			fps = (float) (fpsCounter + (fpsCounter * TimeUtils
+					.Seconds(-fpsTime)));
 
 			reset();
 		}
@@ -40,7 +41,7 @@ public class FPS {
 		fpsCounter = 0;
 	}
 
-	public int getFps() {
+	public float getFps() {
 		return fps;
 	}
 }

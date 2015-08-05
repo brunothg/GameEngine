@@ -1,7 +1,6 @@
 package game.engine.d2.stage.scene;
 
-import game.engine.time.TimeUtils;
-import game.engine.time.Timer;
+import game.engine.time.FPS;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -16,9 +15,9 @@ import java.util.EventListener;
 public class FPSScene implements Scene {
 
 	private Scene scene;
-	private Timer timer;
 	private Color textColor;
 	private Font font;
+	private FPS fps;
 
 	/**
 	 * New Overlay fps scene.
@@ -28,7 +27,7 @@ public class FPSScene implements Scene {
 	 */
 	public FPSScene(Scene scene) {
 		this.scene = scene;
-		this.timer = new Timer();
+		this.fps = new FPS();
 		this.textColor = Color.BLACK;
 		this.font = new Font(Font.SANS_SERIF, Font.BOLD, 12);
 	}
@@ -36,18 +35,17 @@ public class FPSScene implements Scene {
 	@Override
 	public void paintScene(Graphics2D g, int width, int height, long elapsedTime) {
 
-		timer.update();
-
 		if (scene != null) {
 			scene.paintScene(g, width, height, elapsedTime);
 		}
 		paintFPS(g);
+
+		fps.update(elapsedTime);
 	}
 
 	private void paintFPS(Graphics2D g) {
 
-		float fps = TimeUtils.NANOSECONDS_PER_SECOND
-				/ (float) timer.elapsedTime();
+		float fps = this.fps.getFps();
 
 		if (Float.isNaN(fps) || Float.isInfinite(fps)) {
 			fps = 0;

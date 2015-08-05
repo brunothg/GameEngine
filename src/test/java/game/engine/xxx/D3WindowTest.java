@@ -1,14 +1,13 @@
 package game.engine.xxx;
 
-import java.awt.Color;
-
 import game.engine.time.FPS;
 import game.engine.time.TimeUtils;
 import game.engine.time.Timer;
 
+import java.awt.Color;
+
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
-import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
 
 public class D3WindowTest {
@@ -27,6 +26,7 @@ public class D3WindowTest {
 		// Display.setDisplayMode(new DisplayMode(800, 600));
 		Display.setFullscreen(true);
 
+		Display.setResizable(true);
 		Display.setVSyncEnabled(true);
 		Display.setTitle("3d Test");
 		Display.create();
@@ -67,7 +67,7 @@ public class D3WindowTest {
 	private static float rotation;
 	private static boolean vsync;
 
-	private static boolean gameLoop(long delta, int fps) {
+	private static boolean gameLoop(long delta, float f) throws Exception {
 
 		delta = (long) TimeUtils.Milliseconds(delta);
 
@@ -79,6 +79,8 @@ public class D3WindowTest {
 			return false;
 		if (Keyboard.isKeyDown(Keyboard.KEY_V))
 			Display.setVSyncEnabled((vsync = !vsync));
+		if (Keyboard.isKeyDown(Keyboard.KEY_F))
+			Display.setFullscreen(!Display.isFullscreen());
 
 		if (Keyboard.isKeyDown(Keyboard.KEY_LEFT))
 			x -= 0.35f * delta;
@@ -122,7 +124,7 @@ public class D3WindowTest {
 		GL11.glEnd();
 		GL11.glPopMatrix();
 
-		Display.setTitle("FPS: " + fps);
+		Display.setTitle(String.format("FPS: %.2f", f));
 
 		return true;
 	}
