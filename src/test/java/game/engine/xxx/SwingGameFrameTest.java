@@ -1,8 +1,8 @@
 package game.engine.xxx;
 
-import game.engine.frame.SwingGameFrame;
-import game.engine.stage.scene.FPSScene;
-import game.engine.stage.scene.LoadingScene;
+import game.engine.d2.frame.SwingGameFrame;
+import game.engine.d2.stage.scene.FPSScene;
+import game.engine.d2.stage.scene.LoadingScene;
 
 public class SwingGameFrameTest {
 

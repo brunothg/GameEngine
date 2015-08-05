@@ -1,9 +1,9 @@
 package game.engine.xxx;
 
-import game.engine.frame.FullScreenGameFrame;
+import game.engine.d2.frame.FullScreenGameFrame;
+import game.engine.d2.stage.scene.FPSScene;
+import game.engine.d2.stage.scene.LoadingScene;
 import game.engine.image.ImageUtils;
-import game.engine.stage.scene.FPSScene;
-import game.engine.stage.scene.LoadingScene;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;

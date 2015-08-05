@@ -1,4 +1,4 @@
-package game.engine.stage.scene;
+package game.engine.d2.stage.scene;
 
 import game.engine.time.TimeUtils;
 

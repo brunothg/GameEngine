@@ -1,9 +1,9 @@
-package game.engine.frame;
+package game.engine.d2.frame;
 
+import game.engine.d2.stage.SwingStage;
+import game.engine.d2.stage.scene.LoadingScene;
+import game.engine.d2.stage.scene.Scene;
 import game.engine.image.EmptyImage;
-import game.engine.stage.SwingStage;
-import game.engine.stage.scene.LoadingScene;
-import game.engine.stage.scene.Scene;
 import game.engine.time.Clock;
 
 import java.awt.BorderLayout;

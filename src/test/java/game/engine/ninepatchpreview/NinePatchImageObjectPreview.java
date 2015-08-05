@@ -1,9 +1,9 @@
 package game.engine.ninepatchpreview;
 
-import game.engine.stage.SwingStage;
-import game.engine.stage.scene.Scene;
-import game.engine.stage.scene.object.CachedNinePatchImageSceneObject;
-import game.engine.stage.scene.object.Point;
+import game.engine.d2.stage.SwingStage;
+import game.engine.d2.stage.scene.Scene;
+import game.engine.d2.stage.scene.object.CachedNinePatchImageSceneObject;
+import game.engine.d2.stage.scene.object.Point;
 import game.engine.time.Clock;
 
 import java.awt.BorderLayout;

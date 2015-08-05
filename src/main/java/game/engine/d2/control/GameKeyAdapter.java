@@ -1,4 +1,4 @@
-package game.engine.control;
+package game.engine.d2.control;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;

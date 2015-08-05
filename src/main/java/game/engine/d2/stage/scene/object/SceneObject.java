@@ -1,4 +1,4 @@
-package game.engine.stage.scene.object;
+package game.engine.d2.stage.scene.object;
 
 import java.awt.Color;
 import java.awt.Graphics2D;

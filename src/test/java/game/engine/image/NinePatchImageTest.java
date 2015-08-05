@@ -1,7 +1,7 @@
 package game.engine.image;
 
 import static org.junit.Assert.*;
-import game.engine.stage.scene.object.Size;
+import game.engine.d2.stage.scene.object.Size;
 
 import java.awt.Insets;
 

@@ -1,6 +1,6 @@
 package game.engine.image;
 
-import game.engine.stage.scene.object.Size;
+import game.engine.d2.stage.scene.object.Size;
 
 import java.awt.Graphics2D;
 

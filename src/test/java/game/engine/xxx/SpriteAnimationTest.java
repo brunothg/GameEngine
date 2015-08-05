@@ -1,14 +1,14 @@
 package game.engine.xxx;
 
+import game.engine.d2.stage.SwingStage;
+import game.engine.d2.stage.scene.FPSScene;
+import game.engine.d2.stage.scene.Scene;
+import game.engine.d2.stage.scene.object.Point;
+import game.engine.d2.stage.scene.object.SpriteSceneObject;
 import game.engine.image.ImageUtils;
 import game.engine.image.InternalImage;
 import game.engine.image.sprite.Sprite;
 import game.engine.image.sprite.WeakSprite;
-import game.engine.stage.SwingStage;
-import game.engine.stage.scene.FPSScene;
-import game.engine.stage.scene.Scene;
-import game.engine.stage.scene.object.SpriteSceneObject;
-import game.engine.stage.scene.object.Point;
 import game.engine.time.Clock;
 import game.engine.time.TimeUtils;
 

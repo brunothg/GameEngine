@@ -1,7 +1,7 @@
-package game.engine.stage.scene.object;
+package game.engine.d2.stage.scene.object;
 
-import game.engine.stage.scene.object.Orientation.HorizontalOrientation;
-import game.engine.stage.scene.object.Orientation.VerticalOrientation;
+import game.engine.d2.stage.scene.object.Orientation.HorizontalOrientation;
+import game.engine.d2.stage.scene.object.Orientation.VerticalOrientation;
 import game.engine.utils.Null;
 
 import java.awt.Color;
