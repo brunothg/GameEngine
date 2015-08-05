@@ -93,14 +93,14 @@ public class D3WindowTest {
 			y += 0.35f * delta;
 
 		// keep quad on the screen
-		if (x < 0)
-			x = 0;
-		if (x > 800)
-			x = 800;
-		if (y < 0)
-			y = 0;
-		if (y > 600)
-			y = 600;
+		if (x < 0 + 50)
+			x = 0 + 50;
+		if (x > 800 - 50)
+			x = 800 - 50;
+		if (y < 0 + 50)
+			y = 0 + 50;
+		if (y > 600 - 50)
+			y = 600 - 50;
 
 		// Clear The Screen And The Depth Buffer
 		GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
