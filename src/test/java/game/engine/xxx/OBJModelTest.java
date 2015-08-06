@@ -1,25 +1,40 @@
 package game.engine.xxx;
 
-import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
-import java.util.List;
-
+import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
+import static org.lwjgl.opengl.GL11.GL_DEPTH_BUFFER_BIT;
+import static org.lwjgl.opengl.GL11.GL_MODELVIEW;
+import static org.lwjgl.opengl.GL11.GL_POLYGON;
+import static org.lwjgl.opengl.GL11.GL_PROJECTION;
+import static org.lwjgl.opengl.GL11.GL_QUADS;
+import static org.lwjgl.opengl.GL11.GL_TRIANGLES;
+import static org.lwjgl.opengl.GL11.glBegin;
+import static org.lwjgl.opengl.GL11.glClear;
+import static org.lwjgl.opengl.GL11.glClearColor;
+import static org.lwjgl.opengl.GL11.glColor3d;
+import static org.lwjgl.opengl.GL11.glEnd;
+import static org.lwjgl.opengl.GL11.glLoadIdentity;
+import static org.lwjgl.opengl.GL11.glMatrixMode;
+import static org.lwjgl.opengl.GL11.glOrtho;
+import static org.lwjgl.opengl.GL11.glPopMatrix;
+import static org.lwjgl.opengl.GL11.glPushMatrix;
+import static org.lwjgl.opengl.GL11.glRotated;
+import static org.lwjgl.opengl.GL11.glVertex4d;
 import game.engine.d3.Face;
 import game.engine.d3.OBJModel;
 import game.engine.d3.OBJModelParser;
-import game.engine.d3.OBJModelParserTest;
 import game.engine.d3.OBJObject;
 import game.engine.d3.Vertex;
 import game.engine.time.FPS;
 import game.engine.time.TimeUtils;
 import game.engine.time.Timer;
 
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.util.List;
+
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL30;
-
-import static org.lwjgl.opengl.GL11.*;
 
 public class OBJModelTest {
 
@@ -36,9 +51,11 @@ public class OBJModelTest {
 
 	private static void _main(String[] args) throws Exception {
 
-		model = new OBJModelParser(new InputStreamReader(
-				OBJModelParserTest.class.getResourceAsStream("/ape.obj"),
-				StandardCharsets.UTF_8)).parse();
+		model = new OBJModelParser(
+				new InputStreamReader(
+						new URL(
+								"http://people.sc.fsu.edu/~jburkardt/data/obj/airboat.obj")
+								.openStream(), StandardCharsets.UTF_8)).parse();
 
 		// Display.setDisplayMode(new DisplayMode(800, 600));
 		Display.setFullscreen(true);
@@ -73,9 +90,13 @@ public class OBJModelTest {
 	}
 
 	private static void initGL() {
+		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
-		glOrtho(-5, 5, -5, 5, 5, -5);
+
+		int size = 10;
+		glOrtho(-size, size, -size, size, size, -size);
 		glMatrixMode(GL_MODELVIEW);
 	}
 

@@ -31,11 +31,24 @@ public class OBJModelParser {
 	private Reader reader;
 	private OBJModel model;
 
-	private OBJObject actualObject;
 	private List<Vertex> vertices = new LinkedList<Vertex>();
 
 	public OBJModelParser(Reader r) {
 		this.reader = r;
+	}
+
+	private OBJObject _actualObject;
+
+	private void setActualObject(OBJObject obj) {
+		_actualObject = obj;
+	}
+
+	private OBJObject getActualObject() {
+		if (_actualObject == null) {
+			_actualObject = new OBJObject(null);
+			model.addObject(_actualObject);
+		}
+		return _actualObject;
 	}
 
 	/**
@@ -146,21 +159,21 @@ public class OBJModelParser {
 		Normal[] vn = null; // TODO Face: Normal
 
 		Face face = new Face(v, vt, vn);
-		actualObject.addFace(face);
+		getActualObject().addFace(face);
 		LOG.debug("Create face '{}'", face);
 	}
 
 	private void createVertex(String[] params) {
 		double[] position = ArrayUtils.toDouble(params);
 		Vertex vertex = new Vertex(position);
-		actualObject.addVertex(vertex);
+		getActualObject().addVertex(vertex);
 		vertices.add(vertex);
 		LOG.debug("Create vertex '{}'", vertex);
 	}
 
 	private void createObject(String[] params) {
 		OBJObject obj = new OBJObject(params[0]);
-		actualObject = obj;
+		setActualObject(obj);
 		model.addObject(obj);
 		LOG.info("Create object '{}'", obj);
 	}
