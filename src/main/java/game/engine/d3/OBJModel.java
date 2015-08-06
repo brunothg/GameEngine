@@ -1,15 +1,14 @@
 package game.engine.d3;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
 public class OBJModel {
 
-	private Map<String, OBJObject> objects = new HashMap<String, OBJObject>();
+	private LinkedHashMap<String, OBJObject> objects = new LinkedHashMap<String, OBJObject>();
 
 	public OBJObject addObject(OBJObject obj) {
 		return objects.put(obj.getName(), obj);
@@ -30,15 +29,21 @@ public class OBJModel {
 		return objList;
 	}
 
-	public Face createFace(long[] vertices, long[] textureVertices,
-			long[] normals) {
-		// TODO createFace
-		return null;
-	}
-
 	@Override
 	public String toString() {
 		return String.format("Objects '%s'", objects.size());
 	}
-	// TODO clone
+
+	@Override
+	protected OBJModel clone() {
+
+		OBJModel objm = new OBJModel();
+
+		List<OBJObject> objs = getObjects();
+		for (OBJObject obj : objs) {
+			objm.addObject(obj.clone());
+		}
+
+		return objm;
+	}
 }

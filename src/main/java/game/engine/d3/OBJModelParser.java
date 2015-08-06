@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,6 +32,7 @@ public class OBJModelParser {
 	private OBJModel model;
 
 	private OBJObject actualObject;
+	private List<Vertex> vertices = new LinkedList<Vertex>();
 
 	public OBJModelParser(Reader r) {
 		this.reader = r;
@@ -112,29 +115,37 @@ public class OBJModelParser {
 
 	private void createFace(String[] params) {
 
-		long[] vertices = new long[params.length];
-		long[] textureVertices = null;
-		long[] normals = null;
+		int[] vertices = new int[params.length];
+		int[] textureVertices = null;
+		int[] normals = null;
 
 		for (int i = 0; i < params.length; i++) {
 			String[] point = params[i].split(FACE_ARGUMENT_SPLIT_REGEX);
 
-			vertices[i] = Long.valueOf(point[0]);
+			vertices[i] = Integer.valueOf(point[0]);
 			if (point.length > 1 || textureVertices != null) {
 				if (i == 0) {
-					textureVertices = new long[params.length];
+					textureVertices = new int[params.length];
 				}
-				textureVertices[i] = Long.valueOf(point[1]);
+				textureVertices[i] = Integer.valueOf(point[1]);
 			}
 			if (point.length > 2 || normals != null) {
 				if (i == 0) {
-					normals = new long[params.length];
+					normals = new int[params.length];
 				}
-				normals[i] = Long.valueOf(point[2]);
+				normals[i] = Integer.valueOf(point[2]);
 			}
 		}
 
-		Face face = model.createFace(vertices, textureVertices, normals);
+		Vertex[] v = new Vertex[vertices.length];
+		for (int i = 0; i < vertices.length; i++) {
+			v[i] = this.vertices.get(vertices[i] - 1);
+		}
+
+		TextureVertex[] vt = null; // TODO Face: TextureVertex
+		Normal[] vn = null; // TODO Face: Normal
+
+		Face face = new Face(v, vt, vn);
 		actualObject.addFace(face);
 		LOG.debug("Create face '{}'", face);
 	}
@@ -143,6 +154,7 @@ public class OBJModelParser {
 		double[] position = ArrayUtils.toDouble(params);
 		Vertex vertex = new Vertex(position);
 		actualObject.addVertex(vertex);
+		vertices.add(vertex);
 		LOG.debug("Create vertex '{}'", vertex);
 	}
 
