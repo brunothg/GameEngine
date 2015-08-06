@@ -8,6 +8,7 @@ public class OBJObject {
 
 	private String name;
 	private List<Vertex> vertices = new LinkedList<Vertex>();
+	private List<Face> faces = new LinkedList<Face>();
 
 	public OBJObject(String name) {
 		this.setName(name);
@@ -43,10 +44,32 @@ public class OBJObject {
 		return vertices;
 	}
 
+	public void addFace(Face face) {
+		faces.add(face);
+	}
+
+	public List<Face> getFaces() {
+		return faces;
+	}
+
 	public String toString() {
 		return String.format("Object '%s'", getName());
 	}
 
-	// TODO clone
+	protected OBJObject clone() {
+		OBJObject obj = new OBJObject(getName());
+
+		List<Vertex> vertices = this.vertices;
+		for (Vertex v : vertices) {
+			obj.addVertex(v.clone());
+		}
+
+		List<Face> faces = this.faces;
+		for (Face f : faces) {
+			obj.addFace(f.clone());
+		}
+
+		return obj;
+	};
 
 }

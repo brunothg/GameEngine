@@ -19,10 +19,12 @@ import game.engine.utils.ArrayUtils;
 public class OBJModelParser {
 
 	private static final char LINE_NEEDS_NEXT_LINE_SIGN = '\\';
+	private static final String FACE_ARGUMENT_SPLIT_REGEX = "/";
 	private static final String COMMENT_REGEX = "^#.*";
 	private static final String ARGUMENT_SPLIT_REGEX = "\\s";
 
-	private static final Logger LOG = LoggerFactory.getLogger(OBJModelParser.class);
+	private static final Logger LOG = LoggerFactory
+			.getLogger(OBJModelParser.class);
 
 	private Reader reader;
 	private OBJModel model;
@@ -109,9 +111,32 @@ public class OBJModelParser {
 	}
 
 	private void createFace(String[] params) {
-		int[] vertices = ArrayUtils.toInteger(params);
-		LOG.debug("Create face '{}'", Arrays.toString(vertices));
-		// TODO createFace
+
+		long[] vertices = new long[params.length];
+		long[] textureVertices = null;
+		long[] normals = null;
+
+		for (int i = 0; i < params.length; i++) {
+			String[] point = params[i].split(FACE_ARGUMENT_SPLIT_REGEX);
+
+			vertices[i] = Long.valueOf(point[0]);
+			if (point.length > 1 || textureVertices != null) {
+				if (i == 0) {
+					textureVertices = new long[params.length];
+				}
+				textureVertices[i] = Long.valueOf(point[1]);
+			}
+			if (point.length > 2 || normals != null) {
+				if (i == 0) {
+					normals = new long[params.length];
+				}
+				normals[i] = Long.valueOf(point[2]);
+			}
+		}
+
+		Face face = model.createFace(vertices, textureVertices, normals);
+		actualObject.addFace(face);
+		LOG.debug("Create face '{}'", face);
 	}
 
 	private void createVertex(String[] params) {

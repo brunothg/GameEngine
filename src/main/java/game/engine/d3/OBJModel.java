@@ -30,6 +30,15 @@ public class OBJModel {
 		return objList;
 	}
 
-	// TODO toString
+	public Face createFace(long[] vertices, long[] textureVertices,
+			long[] normals) {
+		// TODO createFace
+		return null;
+	}
+
+	@Override
+	public String toString() {
+		return String.format("Objects '%s'", objects.size());
+	}
 	// TODO clone
 }

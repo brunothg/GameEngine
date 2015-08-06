@@ -27,8 +27,8 @@ public class Vertex {
 	}
 
 	public Vertex(double[] pos) {
-		this((pos.length > 0) ? pos[0] : 0, (pos.length > 1) ? pos[1] : 0, (pos.length > 2) ? pos[2] : 0,
-				(pos.length > 3) ? pos[3] : 1.0);
+		this((pos.length > 0) ? pos[0] : 0, (pos.length > 1) ? pos[1] : 0,
+				(pos.length > 2) ? pos[2] : 0, (pos.length > 3) ? pos[3] : 1.0);
 	}
 
 	public double getX() {
@@ -64,12 +64,13 @@ public class Vertex {
 	}
 
 	@Override
-	protected Object clone() throws CloneNotSupportedException {
+	protected Vertex clone() {
 		return new Vertex(getX(), getY(), getZ(), getWeight());
 	}
 
 	@Override
 	public String toString() {
-		return String.format("Vertex[%s, %s, %s];W: %s", getX(), getY(), getZ(), getWeight());
+		return String.format("Vertex[%s, %s, %s];W: %s", getX(), getY(),
+				getZ(), getWeight());
 	}
 }
