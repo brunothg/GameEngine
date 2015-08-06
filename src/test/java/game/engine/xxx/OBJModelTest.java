@@ -34,11 +34,9 @@ public class OBJModelTest {
 
 	private static void _main(String[] args) throws Exception {
 
-		model = new OBJModelParser(
-				new InputStreamReader(
-						new URL(
-								"http://people.sc.fsu.edu/~jburkardt/data/obj/airboat.obj")
-								.openStream(), StandardCharsets.UTF_8)).parse();
+		model = new OBJModelParser(new InputStreamReader(
+				OBJModelTest.class.getResourceAsStream("/ape.obj"),
+				StandardCharsets.UTF_8)).parse();
 
 		Display.setDisplayMode(new DisplayMode(800, 600));
 		// Display.setFullscreen(true);
@@ -79,9 +77,30 @@ public class OBJModelTest {
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
 
-		int size = 10;
+		int size = calculateSize();
+
 		glOrtho(-size, size, -size, size, size, -size);
 		glMatrixMode(GL_MODELVIEW);
+	}
+
+	private static int calculateSize() {
+
+		int size = 0;
+
+		List<OBJObject> objects = model.getObjects();
+		for (OBJObject obj : objects) {
+			List<Face> faces = obj.getFaces();
+			for (Face face : faces) {
+				Vertex[] vertices = face.getVertices();
+				for (Vertex vertex : vertices) {
+					size = Math.max(size, (int) vertex.getX() + 1);
+					size = Math.max(size, (int) vertex.getY() + 1);
+					size = Math.max(size, (int) vertex.getZ() + 1);
+				}
+			}
+		}
+
+		return (int) (size * 1.4) + 1;
 	}
 
 	private static double rotationX;
