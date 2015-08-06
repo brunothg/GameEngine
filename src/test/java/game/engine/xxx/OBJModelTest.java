@@ -1,24 +1,6 @@
 package game.engine.xxx;
 
-import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
-import static org.lwjgl.opengl.GL11.GL_DEPTH_BUFFER_BIT;
-import static org.lwjgl.opengl.GL11.GL_MODELVIEW;
-import static org.lwjgl.opengl.GL11.GL_POLYGON;
-import static org.lwjgl.opengl.GL11.GL_PROJECTION;
-import static org.lwjgl.opengl.GL11.GL_QUADS;
-import static org.lwjgl.opengl.GL11.GL_TRIANGLES;
-import static org.lwjgl.opengl.GL11.glBegin;
-import static org.lwjgl.opengl.GL11.glClear;
-import static org.lwjgl.opengl.GL11.glClearColor;
-import static org.lwjgl.opengl.GL11.glColor3d;
-import static org.lwjgl.opengl.GL11.glEnd;
-import static org.lwjgl.opengl.GL11.glLoadIdentity;
-import static org.lwjgl.opengl.GL11.glMatrixMode;
-import static org.lwjgl.opengl.GL11.glOrtho;
-import static org.lwjgl.opengl.GL11.glPopMatrix;
-import static org.lwjgl.opengl.GL11.glPushMatrix;
-import static org.lwjgl.opengl.GL11.glRotated;
-import static org.lwjgl.opengl.GL11.glVertex4d;
+import static org.lwjgl.opengl.GL11.*;
 import game.engine.d3.Face;
 import game.engine.d3.OBJModel;
 import game.engine.d3.OBJModelParser;
@@ -35,6 +17,7 @@ import java.util.List;
 
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
+import org.lwjgl.opengl.DisplayMode;
 
 public class OBJModelTest {
 
@@ -57,8 +40,8 @@ public class OBJModelTest {
 								"http://people.sc.fsu.edu/~jburkardt/data/obj/airboat.obj")
 								.openStream(), StandardCharsets.UTF_8)).parse();
 
-		// Display.setDisplayMode(new DisplayMode(800, 600));
-		Display.setFullscreen(true);
+		Display.setDisplayMode(new DisplayMode(800, 600));
+		// Display.setFullscreen(true);
 
 		Display.setResizable(true);
 		Display.setVSyncEnabled(true);
@@ -91,6 +74,8 @@ public class OBJModelTest {
 
 	private static void initGL() {
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+		glEnable(GL_DEPTH_TEST);
+		glDepthFunc(GL_LEQUAL);
 
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
@@ -102,11 +87,16 @@ public class OBJModelTest {
 
 	private static double rotationX;
 	private static double rotationY;
+	private static boolean blink = false;
 
-	private static boolean gameLoop(long delta, float f) throws Exception {
+	private static void keyboard(long delta) {
 
-		if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE))
-			return false;
+		while (Keyboard.next()) {
+			if (!Keyboard.getEventKeyState()
+					&& Keyboard.getEventKey() == Keyboard.KEY_B) {
+				blink = !blink;
+			}
+		}
 
 		delta = (long) TimeUtils.Milliseconds(delta);
 		if (Keyboard.isKeyDown(Keyboard.KEY_LEFT)) {
@@ -122,6 +112,13 @@ public class OBJModelTest {
 		if (Keyboard.isKeyDown(Keyboard.KEY_UP)) {
 			rotationX -= 0.15f * delta;
 		}
+	}
+
+	private static boolean gameLoop(long delta, float f) throws Exception {
+
+		if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE))
+			return false;
+		keyboard(delta);
 
 		// Clear The Screen And The Depth Buffer
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -130,7 +127,7 @@ public class OBJModelTest {
 		glRotated(rotationX, 1f, 0f, 0f);
 		glRotated(rotationY, 0f, 1f, 0f);
 
-		double grey = 0.7;
+		double grey = 0.8;
 		glColor3d(grey, grey, grey);
 
 		List<OBJObject> objects = model.getObjects();
@@ -144,6 +141,10 @@ public class OBJModelTest {
 					glBegin(GL_QUADS);
 				} else {
 					glBegin(GL_POLYGON);
+				}
+				if (blink) {
+					grey = Math.max(0.1, Math.random());
+					glColor3d(grey, grey, grey);
 				}
 
 				for (Vertex vert : vertices) {
@@ -159,4 +160,5 @@ public class OBJModelTest {
 		Display.setTitle(String.format("FPS: %.2f", f));
 		return true;
 	}
+
 }
