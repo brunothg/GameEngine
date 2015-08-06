@@ -25,6 +25,9 @@ public class OBJModelParser {
 	private static final Logger LOG = LoggerFactory.getLogger(OBJModelParser.class);
 
 	private Reader reader;
+	private OBJModel model;
+
+	private OBJObject actualObject;
 
 	public OBJModelParser(Reader r) {
 		this.reader = r;
@@ -35,7 +38,8 @@ public class OBJModelParser {
 	 * 
 	 * @throws IOException
 	 */
-	public void parse() throws IOException {
+	public OBJModel parse() throws IOException {
+		model = new OBJModel();
 		BufferedReader in = new BufferedReader(reader);
 
 		String lineBuffer = "";
@@ -64,6 +68,8 @@ public class OBJModelParser {
 
 		in.close();
 		reader = null;
+
+		return model;
 	}
 
 	private void parseLine(String line) {
@@ -110,14 +116,16 @@ public class OBJModelParser {
 
 	private void createVertex(String[] params) {
 		double[] position = ArrayUtils.toDouble(params);
-		LOG.debug("Create vertex '{}'", Arrays.toString(position));
-		// TODO createVertex
+		Vertex vertex = new Vertex(position);
+		actualObject.addVertex(vertex);
+		LOG.debug("Create vertex '{}'", vertex);
 	}
 
 	private void createObject(String[] params) {
-		String name = params[0];
-		LOG.info("Create object '{}'", name);
-		// TODO createObject
+		OBJObject obj = new OBJObject(params[0]);
+		actualObject = obj;
+		model.addObject(obj);
+		LOG.info("Create object '{}'", obj);
 	}
 
 }
