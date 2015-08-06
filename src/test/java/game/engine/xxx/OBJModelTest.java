@@ -43,7 +43,6 @@ public class OBJModelTest {
 		Display.setDisplayMode(new DisplayMode(800, 600));
 		// Display.setFullscreen(true);
 
-		Display.setResizable(true);
 		Display.setVSyncEnabled(true);
 		Display.setTitle("3d Test");
 		Display.create();
