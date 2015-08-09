@@ -8,6 +8,8 @@ public class OBJObject {
 
 	private String name;
 	private List<Vertex> vertices = new LinkedList<Vertex>();
+	private List<TextureVertex> textureVertices = new LinkedList<TextureVertex>();
+	private List<Normal> normals = new LinkedList<Normal>();
 	private List<Face> faces = new LinkedList<Face>();
 
 	public OBJObject(String name) {
@@ -42,6 +44,51 @@ public class OBJObject {
 		}
 
 		return vertices;
+	}
+
+	public void addTextureVertex(TextureVertex vt) {
+		textureVertices.add(vt);
+	}
+
+	public void setTextureVertex(TextureVertex vt, int nr) {
+		textureVertices.set(nr, vt);
+	}
+
+	public TextureVertex getTextureVertex(int nr) {
+		return textureVertices.get(nr);
+	}
+
+	public List<TextureVertex> getTextureVertices() {
+		ArrayList<TextureVertex> textureVertices = new ArrayList<TextureVertex>(
+				this.vertices.size());
+
+		for (TextureVertex v : this.textureVertices) {
+			textureVertices.add(v);
+		}
+
+		return textureVertices;
+	}
+
+	public void addNormal(Normal vn) {
+		normals.add(vn);
+	}
+
+	public void setNormal(Normal vn, int nr) {
+		normals.set(nr, vn);
+	}
+
+	public Normal getNormal(int nr) {
+		return normals.get(nr);
+	}
+
+	public List<Normal> getNormals() {
+		ArrayList<Normal> normals = new ArrayList<Normal>(this.normals.size());
+
+		for (Normal v : this.normals) {
+			normals.add(v);
+		}
+
+		return normals;
 	}
 
 	public void addFace(Face face) {

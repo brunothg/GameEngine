@@ -1,6 +1,31 @@
 package game.engine.xxx;
 
-import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
+import static org.lwjgl.opengl.GL11.GL_DEPTH_BUFFER_BIT;
+import static org.lwjgl.opengl.GL11.GL_DEPTH_TEST;
+import static org.lwjgl.opengl.GL11.GL_LEQUAL;
+import static org.lwjgl.opengl.GL11.GL_MODELVIEW;
+import static org.lwjgl.opengl.GL11.GL_NICEST;
+import static org.lwjgl.opengl.GL11.GL_PERSPECTIVE_CORRECTION_HINT;
+import static org.lwjgl.opengl.GL11.GL_POLYGON;
+import static org.lwjgl.opengl.GL11.GL_PROJECTION;
+import static org.lwjgl.opengl.GL11.GL_QUADS;
+import static org.lwjgl.opengl.GL11.GL_TRIANGLES;
+import static org.lwjgl.opengl.GL11.glBegin;
+import static org.lwjgl.opengl.GL11.glClear;
+import static org.lwjgl.opengl.GL11.glClearColor;
+import static org.lwjgl.opengl.GL11.glColor3d;
+import static org.lwjgl.opengl.GL11.glDepthFunc;
+import static org.lwjgl.opengl.GL11.glEnable;
+import static org.lwjgl.opengl.GL11.glEnd;
+import static org.lwjgl.opengl.GL11.glHint;
+import static org.lwjgl.opengl.GL11.glLoadIdentity;
+import static org.lwjgl.opengl.GL11.glMatrixMode;
+import static org.lwjgl.opengl.GL11.glOrtho;
+import static org.lwjgl.opengl.GL11.glPopMatrix;
+import static org.lwjgl.opengl.GL11.glPushMatrix;
+import static org.lwjgl.opengl.GL11.glRotated;
+import static org.lwjgl.opengl.GL11.glVertex4d;
 import game.engine.d3.Face;
 import game.engine.d3.OBJModel;
 import game.engine.d3.OBJModelParser;
@@ -10,6 +35,7 @@ import game.engine.time.FPS;
 import game.engine.time.TimeUtils;
 import game.engine.time.Timer;
 
+import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
@@ -33,8 +59,8 @@ public class OBJModelTest {
 
 	private static void _main(String[] args) throws Exception {
 
-		model = new OBJModelParser(new InputStreamReader(
-				OBJModelTest.class.getResourceAsStream("/ape.obj"),
+		model = new OBJModelParser(new InputStreamReader(new FileInputStream(
+				"/home/marvin/Downloads/3dtest/skin.obj"),
 				StandardCharsets.UTF_8)).parse();
 
 		Display.setDisplayMode(new DisplayMode(800, 600));
@@ -80,6 +106,7 @@ public class OBJModelTest {
 
 		glOrtho(-size, size, -size, size, size, -size);
 		glMatrixMode(GL_MODELVIEW);
+		glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 	}
 
 	private static int calculateSize() {

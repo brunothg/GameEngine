@@ -43,8 +43,11 @@ public class Face {
 
 	@Override
 	public String toString() {
-		return String.format("Face[%s vertices]",
-				(getVertices() != null) ? getVertices().length : 0);
+		return String.format("Face[%s vertices, %s normal, %s texture]",
+				(getVertices() != null) ? getVertices().length : 0,
+				(getNormals() != null) ? getNormals().length : 0,
+				(getTextureVertices() != null) ? getTextureVertices().length
+						: 0);
 	}
 
 	@Override

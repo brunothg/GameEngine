@@ -1,5 +1,7 @@
 package game.engine.d3;
 
+import game.engine.utils.ArrayUtils;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
@@ -9,8 +11,6 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import game.engine.utils.ArrayUtils;
 
 /**
  * Read OBJ models
@@ -32,6 +32,8 @@ public class OBJModelParser {
 	private OBJModel model;
 
 	private List<Vertex> vertices = new LinkedList<Vertex>();
+	private List<TextureVertex> textureVertices = new LinkedList<TextureVertex>();
+	private List<Normal> normals = new LinkedList<Normal>();
 
 	public OBJModelParser(Reader r) {
 		this.reader = r;
@@ -117,6 +119,12 @@ public class OBJModelParser {
 		case "v":
 			createVertex(params);
 			break;
+		case "vt":
+			createTextureVertex(params);
+			break;
+		case "vn":
+			createNormal(params);
+			break;
 		case "f":
 			createFace(params);
 			break;
@@ -124,6 +132,30 @@ public class OBJModelParser {
 			LOG.warn("Unkown argument '{}'", cmd);
 			break;
 		}
+	}
+
+	private void createNormal(String[] params) {
+		double[] position = ArrayUtils.toDouble(params);
+		Normal vn = new Normal(position);
+		getActualObject().addNormal(vn);
+		normals.add(vn);
+		LOG.debug("Create normal '{}'", vn);
+	}
+
+	private void createTextureVertex(String[] params) {
+		double[] position = ArrayUtils.toDouble(params);
+		TextureVertex vt = new TextureVertex(position);
+		getActualObject().addTextureVertex(vt);
+		textureVertices.add(vt);
+		LOG.debug("Create texture vertex '{}'", vt);
+	}
+
+	private void createVertex(String[] params) {
+		double[] position = ArrayUtils.toDouble(params);
+		Vertex vertex = new Vertex(position);
+		getActualObject().addVertex(vertex);
+		vertices.add(vertex);
+		LOG.debug("Create vertex '{}'", vertex);
 	}
 
 	private void createFace(String[] params) {
@@ -136,7 +168,8 @@ public class OBJModelParser {
 			String[] point = params[i].split(FACE_ARGUMENT_SPLIT_REGEX);
 
 			vertices[i] = Integer.valueOf(point[0]);
-			if (point.length > 1 || textureVertices != null) {
+			if ((point.length > 1 && !point[1].trim().isEmpty())
+					|| textureVertices != null) {
 				if (i == 0) {
 					textureVertices = new int[params.length];
 				}
@@ -155,20 +188,25 @@ public class OBJModelParser {
 			v[i] = this.vertices.get(vertices[i] - 1);
 		}
 
-		TextureVertex[] vt = null; // TODO Face: TextureVertex
-		Normal[] vn = null; // TODO Face: Normal
+		TextureVertex[] vt = null;
+		if (textureVertices != null) {
+			vt = new TextureVertex[textureVertices.length];
+			for (int i = 0; i < textureVertices.length; i++) {
+				vt[i] = this.textureVertices.get(textureVertices[i] - 1);
+			}
+		}
+
+		Normal[] vn = null;
+		if (normals != null) {
+			vn = new Normal[normals.length];
+			for (int i = 0; i < normals.length; i++) {
+				vn[i] = this.normals.get(normals[i] - 1);
+			}
+		}
 
 		Face face = new Face(v, vt, vn);
 		getActualObject().addFace(face);
 		LOG.debug("Create face '{}'", face);
-	}
-
-	private void createVertex(String[] params) {
-		double[] position = ArrayUtils.toDouble(params);
-		Vertex vertex = new Vertex(position);
-		getActualObject().addVertex(vertex);
-		vertices.add(vertex);
-		LOG.debug("Create vertex '{}'", vertex);
 	}
 
 	private void createObject(String[] params) {
