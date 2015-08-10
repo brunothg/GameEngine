@@ -167,19 +167,26 @@ public class OBJModelParser {
 		for (int i = 0; i < params.length; i++) {
 			String[] point = params[i].split(FACE_ARGUMENT_SPLIT_REGEX);
 
-			vertices[i] = Integer.valueOf(point[0]);
+			int vertexRef = Integer.valueOf(point[0]);
+			vertices[i] = (vertexRef >= 0) ? vertexRef : this.vertices.size()
+					+ vertexRef;
+
 			if ((point.length > 1 && !point[1].trim().isEmpty())
 					|| textureVertices != null) {
 				if (i == 0) {
 					textureVertices = new int[params.length];
 				}
-				textureVertices[i] = Integer.valueOf(point[1]);
+				int textureVertexRef = Integer.valueOf(point[1]);
+				textureVertices[i] = (textureVertexRef >= 0) ? textureVertexRef
+						: this.textureVertices.size() + textureVertexRef;
 			}
 			if (point.length > 2 || normals != null) {
 				if (i == 0) {
 					normals = new int[params.length];
 				}
-				normals[i] = Integer.valueOf(point[2]);
+				int normalRef = Integer.valueOf(point[2]);
+				normals[i] = (normalRef >= 0) ? normalRef : this.normals.size()
+						+ normalRef;
 			}
 		}
 
