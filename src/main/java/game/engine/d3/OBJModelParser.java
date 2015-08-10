@@ -137,7 +137,6 @@ public class OBJModelParser {
 	private void createNormal(String[] params) {
 		double[] position = ArrayUtils.toDouble(params);
 		Normal vn = new Normal(position);
-		getActualObject().addNormal(vn);
 		normals.add(vn);
 		LOG.debug("Create normal '{}'", vn);
 	}
@@ -145,7 +144,6 @@ public class OBJModelParser {
 	private void createTextureVertex(String[] params) {
 		double[] position = ArrayUtils.toDouble(params);
 		TextureVertex vt = new TextureVertex(position);
-		getActualObject().addTextureVertex(vt);
 		textureVertices.add(vt);
 		LOG.debug("Create texture vertex '{}'", vt);
 	}
@@ -153,7 +151,6 @@ public class OBJModelParser {
 	private void createVertex(String[] params) {
 		double[] position = ArrayUtils.toDouble(params);
 		Vertex vertex = new Vertex(position);
-		getActualObject().addVertex(vertex);
 		vertices.add(vertex);
 		LOG.debug("Create vertex '{}'", vertex);
 	}
