@@ -148,7 +148,7 @@ public class OBJModelParser {
 					Arrays.toString(params));
 			return;
 		}
-		String libraryName = params[1];
+		String libraryName = params[0];
 
 		OBJMaterialParser mtlParser = new OBJMaterialParser(
 				resolver.getReader(libraryName));
