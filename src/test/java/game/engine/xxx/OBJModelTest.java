@@ -60,7 +60,7 @@ public class OBJModelTest {
 
 		model = new OBJModelParser(new InputStreamReader(
 				OBJModelTest.class.getResourceAsStream("/ape.obj"),
-				StandardCharsets.UTF_8)).parse();
+				StandardCharsets.UTF_8), null).parse();
 
 		Display.setDisplayMode(new DisplayMode(800, 600));
 		// Display.setFullscreen(true);

@@ -6,8 +6,10 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,14 +31,17 @@ public class OBJModelParser {
 			.getLogger(OBJModelParser.class);
 
 	private Reader reader;
+	private ReaderResolver resolver;
 	private OBJModel model;
 
 	private List<Vertex> vertices = new LinkedList<Vertex>();
 	private List<TextureVertex> textureVertices = new LinkedList<TextureVertex>();
 	private List<Normal> normals = new LinkedList<Normal>();
+	private Map<String, OBJMaterialLibrary> materialLibraries = new HashMap<String, OBJMaterialLibrary>();
 
-	public OBJModelParser(Reader r) {
+	public OBJModelParser(Reader r, ReaderResolver resolver) {
 		this.reader = r;
+		this.resolver = resolver;
 	}
 
 	private OBJObject _actualObject;
@@ -92,7 +97,7 @@ public class OBJModelParser {
 		return model;
 	}
 
-	private void parseLine(String line) {
+	private void parseLine(String line) throws IOException {
 
 		if (line.matches(COMMENT_REGEX)) {
 			LOG.info("Found comment '{}'", line);
@@ -103,7 +108,7 @@ public class OBJModelParser {
 		parseArguments(args);
 	}
 
-	private void parseArguments(String[] args) {
+	private void parseArguments(String[] args) throws IOException {
 		if (args == null || args.length <= 0) {
 			LOG.warn("Skipp empty argument");
 			return;
@@ -128,10 +133,27 @@ public class OBJModelParser {
 		case "f":
 			createFace(params);
 			break;
+		case "mtllib":
+			loadMaterialLibrary(params);
+			break;
 		default:
 			LOG.warn("Unkown argument '{}'", cmd);
 			break;
 		}
+	}
+
+	private void loadMaterialLibrary(String[] params) throws IOException {
+		if (resolver == null) {
+			LOG.warn("No resolver set -> skip material library '{}'",
+					Arrays.toString(params));
+			return;
+		}
+		String libraryName = params[1];
+
+		OBJMaterialParser mtlParser = new OBJMaterialParser(
+				resolver.getReader(libraryName));
+		OBJMaterialLibrary materialLibrary = mtlParser.parse();
+		this.materialLibraries.put(libraryName, materialLibrary);
 	}
 
 	private void createNormal(String[] params) {

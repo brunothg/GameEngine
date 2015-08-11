@@ -14,7 +14,7 @@ public class OBJModelParserTest {
 	public void setUp() throws Exception {
 		parser = new OBJModelParser(new InputStreamReader(
 				OBJModelParserTest.class.getResourceAsStream("/ape.obj"),
-				StandardCharsets.UTF_8));
+				StandardCharsets.UTF_8), null);
 	}
 
 	@Test

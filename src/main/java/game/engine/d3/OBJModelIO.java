@@ -6,6 +6,8 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 /**
  * Class providing IO functionality for '.obj' files
@@ -20,24 +22,52 @@ public class OBJModelIO {
 	 * 
 	 * @see #load(InputStream, Charset)
 	 * @param in
+	 * @return
 	 * @throws IOException
 	 */
-	public static void load(InputStream in) throws IOException {
-		load(in, StandardCharsets.UTF_8);
+	public static OBJModel load(InputStream in, ReaderResolver resolver)
+			throws IOException {
+		return load(in, StandardCharsets.UTF_8, resolver);
 	}
 
 	/**
 	 * @see #load(Reader)
 	 * @param in
 	 * @param cs
+	 * @return
 	 * @throws IOException
 	 */
-	public static void load(InputStream in, Charset cs) throws IOException {
-		load(new InputStreamReader(in, cs));
+	public static OBJModel load(InputStream in, Charset cs,
+			ReaderResolver resolver) throws IOException {
+		return load(new InputStreamReader(in, cs), resolver);
 	}
 
-	public static void load(Reader r) throws IOException {
-		OBJModelParser parser = new OBJModelParser(r);
-		parser.parse();
+	/**
+	 * Use default resolver depending on p
+	 * 
+	 * @see #load(InputStream, Charset, ReaderResolver)
+	 * @param p
+	 * @param cs
+	 * @return
+	 * @throws IOException
+	 */
+	public static OBJModel load(final Path p, final Charset cs)
+			throws IOException {
+
+		ReaderResolver resolver = new ReaderResolver() {
+
+			@Override
+			public Reader getReader(String s) throws IOException {
+				return new InputStreamReader(Files.newInputStream(p.getParent()
+						.resolve(s)), cs);
+			}
+		};
+		return load(Files.newInputStream(p), cs, resolver);
+	}
+
+	public static OBJModel load(Reader r, ReaderResolver resolver)
+			throws IOException {
+		OBJModelParser parser = new OBJModelParser(r, resolver);
+		return parser.parse();
 	}
 }
