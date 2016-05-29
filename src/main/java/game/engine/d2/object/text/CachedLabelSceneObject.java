@@ -1,6 +1,6 @@
 package game.engine.d2.object.text;
 
-import game.engine.d2.commons.ScaleStrategy;
+import game.engine.d2.commons.FontScaleStrategy;
 import game.engine.d2.commons.Size;
 import game.engine.d2.commons.Orientation.HorizontalOrientation;
 import game.engine.d2.commons.Orientation.VerticalOrientation;
@@ -218,7 +218,7 @@ public class CachedLabelSceneObject extends LabelSceneObject
 	}
 
 	@Override
-	public void setScaleStrategy(ScaleStrategy scaleStrategy)
+	public void setScaleStrategy(FontScaleStrategy scaleStrategy)
 	{
 		super.setScaleStrategy(scaleStrategy);
 

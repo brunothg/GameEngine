@@ -2,16 +2,15 @@ package game.engine.d2.commons;
 
 /**
  * 
- * Enum used for laying out components.
+ * Enum used for laying out components. Horizontal and vertical orientation is
+ * separated: {@link HorizontalOrientation}, {@link VerticalOrientation}.
  * 
  * @author Marvin Bruns
  *
  */
-public class Orientation
-{
+public class Orientation {
 
-	private Orientation()
-	{
+	private Orientation() {
 	}
 
 	public static enum HorizontalOrientation {

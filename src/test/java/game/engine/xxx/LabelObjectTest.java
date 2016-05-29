@@ -1,7 +1,7 @@
 package game.engine.xxx;
 
 import game.engine.d2.commons.Point;
-import game.engine.d2.commons.ScaleStrategy;
+import game.engine.d2.commons.FontScaleStrategy;
 import game.engine.d2.frame.SwingGameFrame;
 import game.engine.d2.object.text.CachedLabelSceneObject;
 import game.engine.d2.object.text.LabelSceneObject;
@@ -43,7 +43,7 @@ public class LabelObjectTest
 				label.setColor(Color.GREEN);
 				label.setOutlinePaint(Color.BLACK);
 
-				label.setScaleStrategy(ScaleStrategy.FitParent);
+				label.setScaleStrategy(FontScaleStrategy.FitParent);
 
 				label.paintOnScene(g, elapsedTime);
 			}

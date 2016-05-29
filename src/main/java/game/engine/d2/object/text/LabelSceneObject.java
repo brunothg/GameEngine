@@ -1,6 +1,6 @@
 package game.engine.d2.object.text;
 
-import game.engine.d2.commons.ScaleStrategy;
+import game.engine.d2.commons.FontScaleStrategy;
 import game.engine.d2.commons.Orientation.HorizontalOrientation;
 import game.engine.d2.commons.Orientation.VerticalOrientation;
 import game.engine.d2.object.SceneObject;
@@ -37,7 +37,7 @@ public class LabelSceneObject extends SceneObject {
 	private Paint outlinePaint = Color.BLACK;
 	private Stroke stroke;
 
-	private ScaleStrategy scaleStrategy = ScaleStrategy.FitParent;
+	private FontScaleStrategy scaleStrategy = FontScaleStrategy.FitParent;
 
 	public LabelSceneObject() {
 
@@ -338,23 +338,23 @@ public class LabelSceneObject extends SceneObject {
 		this.stroke = stroke;
 	}
 
-	public ScaleStrategy getScaleStrategy() {
+	public FontScaleStrategy getScaleStrategy() {
 		return scaleStrategy;
 	}
 
 	/**
-	 * Set the used {@link ScaleStrategy}. If the scale strategy is not
-	 * {@link ScaleStrategy#NoScale} the size of the {@link Font} is ignored.
+	 * Set the used {@link FontScaleStrategy}. If the scale strategy is not
+	 * {@link FontScaleStrategy#NoScale} the size of the {@link Font} is ignored.
 	 * 
 	 * @param scaleStrategy
 	 *            The strategy, that will be used fore scaling the text
 	 */
-	public void setScaleStrategy(ScaleStrategy scaleStrategy) {
-		if (scaleStrategy == ScaleStrategy.Auto) {
-			scaleStrategy = ScaleStrategy.FitParent;
+	public void setScaleStrategy(FontScaleStrategy scaleStrategy) {
+		if (scaleStrategy == FontScaleStrategy.Auto) {
+			scaleStrategy = FontScaleStrategy.FitParent;
 		}
 
-		this.scaleStrategy = Null.nvl(scaleStrategy, ScaleStrategy.FitParent);
+		this.scaleStrategy = Null.nvl(scaleStrategy, FontScaleStrategy.FitParent);
 	}
 
 	public int getFontFlags() {
