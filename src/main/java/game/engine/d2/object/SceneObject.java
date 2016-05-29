@@ -9,6 +9,7 @@ import java.awt.image.ColorModel;
 import java.awt.image.WritableRaster;
 
 import game.engine.d2.commons.Point;
+import game.engine.d2.commons.RenderingOptions;
 import game.engine.d2.commons.Size;
 
 /**
@@ -26,6 +27,8 @@ public abstract class SceneObject {
 	private Size size = new Size(0, 0);
 
 	private boolean drawBoundingBox;
+
+	private RenderingOptions renderingOptions;
 
 	public SceneObject() {
 
@@ -65,10 +68,12 @@ public abstract class SceneObject {
 
 		Graphics2D g2d = (Graphics2D) g.create(x_topLeft, y_topLeft, width,
 				height);
+		if (renderingOptions != null) {
+			renderingOptions.apply(g2d);
+		}
 		paint(g2d, elapsedTime);
 
 		if (isDrawBoundingBox()) {
-
 			g2d.setColor(Color.BLACK);
 			g2d.drawRect(0, 0, width - 1, height - 1);
 		}
@@ -237,6 +242,27 @@ public abstract class SceneObject {
 	 */
 	public void setDrawBoundingBox(boolean drawBoundingBox) {
 		this.drawBoundingBox = drawBoundingBox;
+	}
+
+	/**
+	 * Get the {@link RenderingOptions} used for painting. The are applied to
+	 * every {@link Graphics2D} object, this one is painted on.
+	 * 
+	 * @return The rendering options
+	 * @see #setRenderingOptions(RenderingOptions)
+	 */
+	public RenderingOptions getRenderingOptions() {
+		return renderingOptions;
+	}
+
+	/**
+	 * Set the {@link RenderingOptions} for painting.
+	 * 
+	 * @param renderingOptions
+	 * @see #getRenderingOptions()
+	 */
+	public void setRenderingOptions(RenderingOptions renderingOptions) {
+		this.renderingOptions = renderingOptions;
 	}
 
 	/**
@@ -469,11 +495,11 @@ public abstract class SceneObject {
 	}
 
 	/**
-	 * 
 	 * Get the {@link Rectangle} representing this object's bounds.
-	 *
+	 * 
+	 * @return This object's bounds
 	 */
-	private Rectangle getRectangle() {
+	public Rectangle getRectangle() {
 
 		Point position = getTopLeftPosition();
 
