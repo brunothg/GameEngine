@@ -1,9 +1,10 @@
-package game.engine.d2.stage.scene.object;
+package game.engine.d2.object.text;
 
-import game.engine.d2.stage.scene.object.LabelSceneObject;
-import game.engine.d2.stage.scene.object.Size;
-import game.engine.d2.stage.scene.object.Orientation.HorizontalOrientation;
-import game.engine.d2.stage.scene.object.Orientation.VerticalOrientation;
+import game.engine.d2.commons.ScaleStrategy;
+import game.engine.d2.commons.Size;
+import game.engine.d2.commons.Orientation.HorizontalOrientation;
+import game.engine.d2.commons.Orientation.VerticalOrientation;
+import game.engine.d2.object.text.LabelSceneObject;
 import game.engine.image.ImageUtils;
 
 import java.awt.Color;

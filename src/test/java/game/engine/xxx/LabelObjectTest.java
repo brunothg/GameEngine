@@ -1,12 +1,12 @@
 package game.engine.xxx;
 
+import game.engine.d2.commons.Point;
+import game.engine.d2.commons.ScaleStrategy;
 import game.engine.d2.frame.SwingGameFrame;
-import game.engine.d2.stage.scene.FPSScene;
-import game.engine.d2.stage.scene.Scene;
-import game.engine.d2.stage.scene.object.CachedLabelSceneObject;
-import game.engine.d2.stage.scene.object.LabelSceneObject;
-import game.engine.d2.stage.scene.object.Point;
-import game.engine.d2.stage.scene.object.ScaleStrategy;
+import game.engine.d2.object.text.CachedLabelSceneObject;
+import game.engine.d2.object.text.LabelSceneObject;
+import game.engine.d2.scene.FPSScene;
+import game.engine.d2.scene.Scene;
 
 import java.awt.BasicStroke;
 import java.awt.Color;

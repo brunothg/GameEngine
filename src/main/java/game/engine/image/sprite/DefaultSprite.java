@@ -1,6 +1,6 @@
 package game.engine.image.sprite;
 
-import game.engine.d2.stage.scene.object.Size;
+import game.engine.d2.commons.Size;
 import game.engine.image.Image;
 import game.engine.image.ImageUtils;
 

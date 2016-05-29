@@ -1,7 +1,5 @@
 package game.engine.image;
 
-import game.engine.d2.stage.scene.object.Size;
-
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Insets;
@@ -9,6 +7,8 @@ import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.util.LinkedList;
 import java.util.List;
+
+import game.engine.d2.commons.Size;
 
 /**
  * 

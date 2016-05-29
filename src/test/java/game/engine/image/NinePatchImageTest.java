@@ -1,12 +1,13 @@
 package game.engine.image;
 
 import static org.junit.Assert.*;
-import game.engine.d2.stage.scene.object.Size;
 
 import java.awt.Insets;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import game.engine.d2.commons.Size;
 
 public class NinePatchImageTest {
 

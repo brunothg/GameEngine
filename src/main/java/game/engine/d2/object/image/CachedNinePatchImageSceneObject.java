@@ -1,5 +1,7 @@
-package game.engine.d2.stage.scene.object;
+package game.engine.d2.object.image;
 
+import game.engine.d2.commons.Size;
+import game.engine.d2.object.SceneObject;
 import game.engine.image.NinePatchImage;
 
 import java.awt.Graphics2D;

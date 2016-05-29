@@ -1,8 +1,8 @@
 package game.engine.image;
 
-import game.engine.d2.stage.scene.object.Size;
-
 import java.awt.Graphics2D;
+
+import game.engine.d2.commons.Size;
 
 public interface Image {
 

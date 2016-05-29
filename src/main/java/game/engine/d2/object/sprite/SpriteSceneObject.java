@@ -1,5 +1,8 @@
-package game.engine.d2.stage.scene.object;
+package game.engine.d2.object.sprite;
 
+import game.engine.d2.commons.Point;
+import game.engine.d2.commons.Size;
+import game.engine.d2.object.SceneObject;
 import game.engine.image.sprite.Sprite;
 
 import java.awt.Graphics2D;

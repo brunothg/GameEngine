@@ -1,9 +1,9 @@
 package game.engine.xxx;
 
+import game.engine.d2.commons.Point;
+import game.engine.d2.object.image.CachedNinePatchImageSceneObject;
+import game.engine.d2.scene.Scene;
 import game.engine.d2.stage.SwingStage;
-import game.engine.d2.stage.scene.Scene;
-import game.engine.d2.stage.scene.object.CachedNinePatchImageSceneObject;
-import game.engine.d2.stage.scene.object.Point;
 import game.engine.time.Clock;
 
 import java.awt.BorderLayout;

@@ -1,6 +1,6 @@
 package game.engine.d2.stage;
 
-import game.engine.d2.stage.scene.Scene;
+import game.engine.d2.scene.Scene;
 import game.engine.image.ImageUtils;
 
 import java.awt.Color;

@@ -1,4 +1,4 @@
-package game.engine.d2.stage.scene;
+package game.engine.d2.scene;
 
 import game.engine.time.FPS;
 

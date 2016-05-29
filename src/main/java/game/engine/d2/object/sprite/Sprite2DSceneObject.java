@@ -1,4 +1,4 @@
-package game.engine.d2.stage.scene.object;
+package game.engine.d2.object.sprite;
 
 import game.engine.image.sprite.Sprite;
 
