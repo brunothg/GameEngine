@@ -1,12 +1,12 @@
 package game.engine.d2.object.image;
 
 import game.engine.d2.commons.Point;
+import game.engine.d2.commons.RenderingOptions;
 import game.engine.d2.object.SceneObject;
 import game.engine.image.ImageUtils;
 
 import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 
 /**
@@ -22,6 +22,14 @@ public class ImageSceneObject extends SceneObject {
 	private BufferedImage image;
 
 	/**
+	 * @see #ImageSceneObject(BufferedImage)
+	 */
+	public ImageSceneObject(Image image) {
+
+		this(ImageUtils.BufferedImage(image));
+	}
+
+	/**
 	 * Create a new {@link SceneObject} that displays an image. The origin is
 	 * set to P(0,0). The size is set to the image's size.
 	 * 
@@ -31,23 +39,12 @@ public class ImageSceneObject extends SceneObject {
 	public ImageSceneObject(BufferedImage image) {
 
 		setImage(image);
-	}
-
-	/**
-	 * @see #ImageSceneObject(BufferedImage)
-	 */
-	public ImageSceneObject(Image image) {
-
-		this(ImageUtils.BufferedImage(image));
+		setRenderingOptions(new RenderingOptions().setAntiAliasing(true)
+				.setEnhancedInterpolation(null));
 	}
 
 	@Override
 	protected void paint(Graphics2D g, long elapsedTime) {
-
-		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-				RenderingHints.VALUE_ANTIALIAS_ON);
-		g.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
-				RenderingHints.VALUE_INTERPOLATION_BICUBIC);
 
 		BufferedImage image = getImage();
 

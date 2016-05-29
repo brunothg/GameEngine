@@ -248,7 +248,8 @@ public abstract class SceneObject {
 	 * Get the {@link RenderingOptions} used for painting. The are applied to
 	 * every {@link Graphics2D} object, this one is painted on.
 	 * 
-	 * @return The rendering options
+	 * @return The rendering options or null, if no rendering related
+	 *         configuration was made
 	 * @see #setRenderingOptions(RenderingOptions)
 	 */
 	public RenderingOptions getRenderingOptions() {

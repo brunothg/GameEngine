@@ -1,7 +1,5 @@
 package game.engine.d2.scene;
 
-import game.engine.time.TimeUtils;
-
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
@@ -9,13 +7,15 @@ import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.Paint;
 import java.awt.RadialGradientPaint;
-import java.awt.RenderingHints;
 import java.awt.Stroke;
 import java.awt.geom.Arc2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.EventListener;
+
+import game.engine.d2.commons.RenderingOptions;
+import game.engine.time.TimeUtils;
 
 /**
  * A simple animated loading screen. On Linux systems the high quality drawing
@@ -56,6 +56,10 @@ public class LoadingScene implements Scene {
 	private static final Color COLOR_CIRCLE_OUTER = new Color(74, 226, 251);
 	private static final Color COLOR_CIRCLE_INNER = new Color(172, 211, 239);
 
+	private static final RenderingOptions renderingOptions = new RenderingOptions()
+			.setAntiAliasing(true).setEnhancedAlphaInterpolation(true)
+			.setEnhancedRednering(true).setStrokeControl(false);
+
 	private double innerCirclePosition = 0;
 	private double outerCirclePosition = 0;
 	private double textPhase = 0;
@@ -77,8 +81,7 @@ public class LoadingScene implements Scene {
 	@Override
 	public void paintScene(Graphics2D g, int width, int height,
 			long elapsedTime) {
-
-		setRenderingHints(g);
+		renderingOptions.apply(g);
 
 		drawBackground(g, width, height);
 		drawGrid(g, width, height);
@@ -129,17 +132,6 @@ public class LoadingScene implements Scene {
 
 		g.drawString(txt, (float) (usableArea.getCenterX() - textWidth * 0.5),
 				(float) (usableArea.getCenterY() - textHeight * 0.5));
-	}
-
-	private void setRenderingHints(Graphics2D g) {
-		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-				RenderingHints.VALUE_ANTIALIAS_ON);
-		g.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION,
-				RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
-		g.setRenderingHint(RenderingHints.KEY_RENDERING,
-				RenderingHints.VALUE_RENDER_QUALITY);
-		g.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL,
-				RenderingHints.VALUE_STROKE_PURE);
 	}
 
 	private void drawInnerCircle(Graphics2D g, int width, int height,

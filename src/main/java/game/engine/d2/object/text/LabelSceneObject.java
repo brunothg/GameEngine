@@ -1,21 +1,21 @@
 package game.engine.d2.object.text;
 
-import game.engine.d2.commons.FontScaleStrategy;
-import game.engine.d2.commons.Orientation.HorizontalOrientation;
-import game.engine.d2.commons.Orientation.VerticalOrientation;
-import game.engine.d2.object.SceneObject;
-import game.engine.utils.Null;
-
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.Paint;
-import java.awt.RenderingHints;
 import java.awt.Shape;
 import java.awt.Stroke;
 import java.awt.font.GlyphVector;
 import java.awt.font.LineMetrics;
+
+import game.engine.d2.commons.FontScaleStrategy;
+import game.engine.d2.commons.Orientation.HorizontalOrientation;
+import game.engine.d2.commons.Orientation.VerticalOrientation;
+import game.engine.d2.commons.RenderingOptions;
+import game.engine.d2.object.SceneObject;
+import game.engine.utils.Null;
 
 /**
  * 
@@ -41,20 +41,18 @@ public class LabelSceneObject extends SceneObject {
 
 	public LabelSceneObject() {
 
-		this("");
+		setText(text);
 	}
 
 	public LabelSceneObject(String text) {
 
 		setText(text);
+		setRenderingOptions(
+				new RenderingOptions().setAntiAliasingForText(true));
 	}
 
 	@Override
 	protected void paint(Graphics2D g, long elapsedTime) {
-		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-				RenderingHints.VALUE_ANTIALIAS_ON);
-		g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
-				RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 
 		if (paint != null) {
 			g.setPaint(paint);
@@ -92,11 +90,13 @@ public class LabelSceneObject extends SceneObject {
 				// Size to object bounds, if text smaller -> increase font size,
 				// if text bigger -> use smaller font size
 				if ((deltaSize == null || deltaSize > 0)
-						&& (stringWidth < getWidth() && stringHeight < getHeight())) {
+						&& (stringWidth < getWidth()
+								&& stringHeight < getHeight())) {
 					// to small
 					deltaSize = +1;
 				} else if ((deltaSize == null || deltaSize < 0)
-						&& (stringWidth > getWidth() || stringHeight > getHeight())) {
+						&& (stringWidth > getWidth()
+								|| stringHeight > getHeight())) {
 					// to big
 					deltaSize = -1;
 				} else {
@@ -193,9 +193,9 @@ public class LabelSceneObject extends SceneObject {
 			break;
 		case Center:
 		default:
-			posY = lineMetrics.getAscent()
-					+ (getHeight() - (lineMetrics.getAscent() + lineMetrics
-							.getDescent())) * 0.5;
+			posY = lineMetrics.getAscent() + (getHeight()
+					- (lineMetrics.getAscent() + lineMetrics.getDescent()))
+					* 0.5;
 			break;
 		}
 
@@ -344,7 +344,8 @@ public class LabelSceneObject extends SceneObject {
 
 	/**
 	 * Set the used {@link FontScaleStrategy}. If the scale strategy is not
-	 * {@link FontScaleStrategy#NoScale} the size of the {@link Font} is ignored.
+	 * {@link FontScaleStrategy#NoScale} the size of the {@link Font} is
+	 * ignored.
 	 * 
 	 * @param scaleStrategy
 	 *            The strategy, that will be used fore scaling the text
@@ -354,7 +355,8 @@ public class LabelSceneObject extends SceneObject {
 			scaleStrategy = FontScaleStrategy.FitParent;
 		}
 
-		this.scaleStrategy = Null.nvl(scaleStrategy, FontScaleStrategy.FitParent);
+		this.scaleStrategy = Null.nvl(scaleStrategy,
+				FontScaleStrategy.FitParent);
 	}
 
 	public int getFontFlags() {
