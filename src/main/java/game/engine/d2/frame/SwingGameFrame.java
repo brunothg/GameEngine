@@ -20,37 +20,32 @@ import javax.swing.JFrame;
  * @author Marvin Bruns
  *
  */
-public class SwingGameFrame extends JFrame
-{
+public class SwingGameFrame extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 
 	private SwingStage stage;
 	private Clock clock;
 
-	public SwingGameFrame(String title, GraphicsConfiguration gc)
-	{
+	public SwingGameFrame(String title, GraphicsConfiguration gc) {
 
 		super(title, gc);
 		initialize();
 	}
 
-	public SwingGameFrame(String title)
-	{
+	public SwingGameFrame(String title) {
 
 		super(title);
 		initialize();
 	}
 
-	public SwingGameFrame()
-	{
+	public SwingGameFrame() {
 
 		super("GameEngine");
 		initialize();
 	}
 
-	private void initialize()
-	{
+	private void initialize() {
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
@@ -67,14 +62,11 @@ public class SwingGameFrame extends JFrame
 		clock.start();
 	}
 
-	private void setDefaultIcon()
-	{
-		try
-		{
-			setIconImage(ImageIO.read(SwingGameFrame.class.getResource("/game/engine/media/icon.png")));
-		}
-		catch (IOException e)
-		{
+	private void setDefaultIcon() {
+		try {
+			setIconImage(ImageIO.read(SwingGameFrame.class
+					.getResource("/game/engine/media/icon.png")));
+		} catch (IOException e) {
 			setIconImage(new EmptyImage.AlphaImage());
 		}
 	}
@@ -84,23 +76,20 @@ public class SwingGameFrame extends JFrame
 	 * 
 	 * @return Stage of this frame
 	 */
-	public SwingStage getStage()
-	{
+	public SwingStage getStage() {
 
 		return stage;
 	}
 
 	/**
-	 * Change the {@link SwingStage} that is used by this {@link SwingGameFrame}. Normally there's
-	 * no reason to change the default stage.
+	 * Change the {@link SwingStage} that is used by this {@link SwingGameFrame}
+	 * . Normally there's no reason to change the default stage.
 	 * 
 	 * @param stage
 	 */
-	public void setStage(SwingStage stage)
-	{
+	public void setStage(SwingStage stage) {
 
-		if (stage == null)
-		{
+		if (stage == null) {
 			throw new IllegalArgumentException("Null value not allowed");
 		}
 		clock.removeClockListener(this.stage);
@@ -114,8 +103,7 @@ public class SwingGameFrame extends JFrame
 	/**
 	 * @see SwingStage#setScene(Scene)
 	 */
-	public void setScene(Scene scene)
-	{
+	public void setScene(Scene scene) {
 
 		getStage().setScene(scene);
 	}
@@ -123,8 +111,7 @@ public class SwingGameFrame extends JFrame
 	/**
 	 * @see SwingStage#getScene()
 	 */
-	public Scene getScene()
-	{
+	public Scene getScene() {
 
 		return getStage().getScene();
 	}
@@ -132,8 +119,7 @@ public class SwingGameFrame extends JFrame
 	/**
 	 * @see Clock#setFramesPerSecond(int)
 	 */
-	public void setFramesPerSecond(int framesPerSecond)
-	{
+	public void setFramesPerSecond(int framesPerSecond) {
 
 		clock.setFramesPerSecond(framesPerSecond);
 	}
@@ -141,67 +127,54 @@ public class SwingGameFrame extends JFrame
 	/**
 	 * @see Clock#getFramesPerSecond()
 	 */
-	public double getFramesPerSecond()
-	{
+	public double getFramesPerSecond() {
 
 		return clock.getFramesPerSecond();
 	}
 
 	@Override
-	public void dispose()
-	{
-		try
-		{
+	public void dispose() {
+		try {
 			super.dispose();
-		}
-		catch (Exception e)
-		{
-		}
-		finally
-		{
+		} catch (Exception e) {
+		} finally {
 			clock.destroy();
 		}
 	}
 
 	@Override
-	protected void finalize() throws Throwable
-	{
-		try
-		{
+	protected void finalize() throws Throwable {
+		try {
 			clock.destroy();
-		}
-		catch (Exception e)
-		{
-		}
-		finally
-		{
+		} catch (Exception e) {
+		} finally {
 			super.finalize();
 		}
 	}
 
 	/**
-	 * Set the size of this {@link SwingGameFrame}. Setting the inner size may only work if this
-	 * frame is visible.
+	 * Set the size of this {@link SwingGameFrame}. Setting the inner size may
+	 * only work if this frame is visible.
 	 * 
-	 * @param width The width of this frame
-	 * @param height The height of this frame
-	 * @param innerSize if true the inner size of this frame is set. This is the size inside all
-	 *        decorations.
+	 * @param width
+	 *            The width of this frame
+	 * @param height
+	 *            The height of this frame
+	 * @param innerSize
+	 *            if true the inner size of this frame is set. This is the size
+	 *            inside all decorations.
 	 */
-	public void setSize(int width, int height, boolean innerSize)
-	{
+	public void setSize(int width, int height, boolean innerSize) {
 
 		setSize(width, height);
 
-		if (!innerSize)
-		{
+		if (!innerSize) {
 			return;
 		}
 
 		Insets insets = getInsets();
 
-		if (insets == null)
-		{
+		if (insets == null) {
 			return;
 		}
 
@@ -216,8 +189,7 @@ public class SwingGameFrame extends JFrame
 	 * 
 	 * @see JFrame#add(Component)
 	 */
-	public Component add(Component comp)
-	{
+	public Component add(Component comp) {
 
 		return super.add(comp);
 	}
@@ -227,8 +199,7 @@ public class SwingGameFrame extends JFrame
 	 * 
 	 * @see JFrame#add(Component, Object)
 	 */
-	public void add(Component comp, Object constraints)
-	{
+	public void add(Component comp, Object constraints) {
 
 		super.add(comp, constraints);
 	}
@@ -238,8 +209,7 @@ public class SwingGameFrame extends JFrame
 	 * 
 	 * @see JFrame#remove(Component)
 	 */
-	public void remove(Component comp)
-	{
+	public void remove(Component comp) {
 
 		super.remove(comp);
 	}
@@ -249,8 +219,7 @@ public class SwingGameFrame extends JFrame
 	 * 
 	 * @see JFrame#remove(int)
 	 */
-	public void remove(int index)
-	{
+	public void remove(int index) {
 
 		super.remove(index);
 	}

@@ -19,7 +19,8 @@ public interface Scene {
 	 * @param elapsedTime
 	 *            Time since the last painting
 	 */
-	public void paintScene(Graphics2D g, int width, int height, long elapsedTime);
+	public void paintScene(Graphics2D g, int width, int height,
+			long elapsedTime);
 
 	/**
 	 * Should return all {@link EventListener}s that this scene want to

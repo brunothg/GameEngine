@@ -32,7 +32,8 @@ public class NullGraphics extends Graphics2D {
 	}
 
 	@Override
-	public boolean drawImage(Image img, AffineTransform xform, ImageObserver obs) {
+	public boolean drawImage(Image img, AffineTransform xform,
+			ImageObserver obs) {
 		return true;
 	}
 
@@ -45,7 +46,8 @@ public class NullGraphics extends Graphics2D {
 	}
 
 	@Override
-	public void drawRenderableImage(RenderableImage img, AffineTransform xform) {
+	public void drawRenderableImage(RenderableImage img,
+			AffineTransform xform) {
 	}
 
 	@Override
@@ -262,13 +264,13 @@ public class NullGraphics extends Graphics2D {
 	}
 
 	@Override
-	public void drawRoundRect(int x, int y, int width, int height,
-			int arcWidth, int arcHeight) {
+	public void drawRoundRect(int x, int y, int width, int height, int arcWidth,
+			int arcHeight) {
 	}
 
 	@Override
-	public void fillRoundRect(int x, int y, int width, int height,
-			int arcWidth, int arcHeight) {
+	public void fillRoundRect(int x, int y, int width, int height, int arcWidth,
+			int arcHeight) {
 	}
 
 	@Override

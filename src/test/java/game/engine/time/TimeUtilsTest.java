@@ -19,8 +19,8 @@ public class TimeUtilsTest {
 	public void secondInMilli() throws Exception {
 
 		int second = 57568;
-		double milliseconds = TimeUtils.Milliseconds(TimeUtils
-				.NanosecondsOfSeconds(second));
+		double milliseconds = TimeUtils
+				.Milliseconds(TimeUtils.NanosecondsOfSeconds(second));
 
 		assertEquals(57568000, (int) milliseconds);
 	}

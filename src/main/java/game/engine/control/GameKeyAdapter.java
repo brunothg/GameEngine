@@ -11,23 +11,20 @@ import java.util.Set;
  * @author Marvin Bruns
  *
  */
-public class GameKeyAdapter extends KeyAdapter
-{
+public class GameKeyAdapter extends KeyAdapter {
 
 	private Set<Integer> keys = new HashSet<Integer>();
 	private Set<Integer> extendedKeys = new HashSet<Integer>();
 
 	@Override
-	public void keyPressed(KeyEvent e)
-	{
+	public void keyPressed(KeyEvent e) {
 
 		keys.add(e.getKeyCode());
 		extendedKeys.add(e.getExtendedKeyCode());
 	}
 
 	@Override
-	public void keyReleased(KeyEvent e)
-	{
+	public void keyReleased(KeyEvent e) {
 
 		keys.remove(e.getKeyCode());
 		extendedKeys.remove(e.getExtendedKeyCode());
@@ -38,8 +35,7 @@ public class GameKeyAdapter extends KeyAdapter
 	 * 
 	 * @see #isShift(boolean)
 	 */
-	public boolean isShift()
-	{
+	public boolean isShift() {
 
 		return isShift(false);
 	}
@@ -47,13 +43,12 @@ public class GameKeyAdapter extends KeyAdapter
 	/**
 	 * Check if shift is down
 	 * 
-	 * @return true if {@link KeyEvent#getKeyCode()} - {@link KeyEvent#VK_SHIFT} is down
+	 * @return true if {@link KeyEvent#getKeyCode()} - {@link KeyEvent#VK_SHIFT}
+	 *         is down
 	 */
-	public boolean isShift(boolean extended)
-	{
+	public boolean isShift(boolean extended) {
 
-		if (extended)
-		{
+		if (extended) {
 
 			return isExtendedKeyDown(KeyEvent.VK_SHIFT);
 		}
@@ -66,8 +61,7 @@ public class GameKeyAdapter extends KeyAdapter
 	 * 
 	 * @see #isAlt(boolean)
 	 */
-	public boolean isAlt()
-	{
+	public boolean isAlt() {
 
 		return isAlt(false);
 	}
@@ -75,13 +69,12 @@ public class GameKeyAdapter extends KeyAdapter
 	/**
 	 * Check if alt is down
 	 * 
-	 * @return true if {@link KeyEvent#getKeyCode()} - {@link KeyEvent#VK_ALT} is down
+	 * @return true if {@link KeyEvent#getKeyCode()} - {@link KeyEvent#VK_ALT}
+	 *         is down
 	 */
-	public boolean isAlt(boolean extended)
-	{
+	public boolean isAlt(boolean extended) {
 
-		if (extended)
-		{
+		if (extended) {
 
 			return isExtendedKeyDown(KeyEvent.VK_ALT);
 		}
@@ -94,8 +87,7 @@ public class GameKeyAdapter extends KeyAdapter
 	 * 
 	 * @see #isAltGr(boolean)
 	 */
-	public boolean isAltGr()
-	{
+	public boolean isAltGr() {
 
 		return isAltGr(false);
 	}
@@ -103,13 +95,12 @@ public class GameKeyAdapter extends KeyAdapter
 	/**
 	 * Check if alt_gr is down
 	 * 
-	 * @return true if {@link KeyEvent#getKeyCode()} - {@link KeyEvent#VK_ALT_GRAPH} is down
+	 * @return true if {@link KeyEvent#getKeyCode()} -
+	 *         {@link KeyEvent#VK_ALT_GRAPH} is down
 	 */
-	public boolean isAltGr(boolean extended)
-	{
+	public boolean isAltGr(boolean extended) {
 
-		if (extended)
-		{
+		if (extended) {
 
 			return isExtendedKeyDown(KeyEvent.VK_ALT_GRAPH);
 		}
@@ -122,8 +113,7 @@ public class GameKeyAdapter extends KeyAdapter
 	 * 
 	 * @see #isCtrl(boolean)
 	 */
-	public boolean isCtrl()
-	{
+	public boolean isCtrl() {
 
 		return isCtrl(false);
 	}
@@ -131,13 +121,12 @@ public class GameKeyAdapter extends KeyAdapter
 	/**
 	 * Check if ctrl is down
 	 * 
-	 * @return true if {@link KeyEvent#getKeyCode()} - {@link KeyEvent#VK_CONTROL} is down
+	 * @return true if {@link KeyEvent#getKeyCode()} -
+	 *         {@link KeyEvent#VK_CONTROL} is down
 	 */
-	public boolean isCtrl(boolean extended)
-	{
+	public boolean isCtrl(boolean extended) {
 
-		if (extended)
-		{
+		if (extended) {
 
 			return isExtendedKeyDown(KeyEvent.VK_CONTROL);
 		}
@@ -148,11 +137,11 @@ public class GameKeyAdapter extends KeyAdapter
 	/**
 	 * Check, if a key is currently down
 	 * 
-	 * @param keyCode Value of {@link KeyEvent #getKeyCode()}
+	 * @param keyCode
+	 *            Value of {@link KeyEvent #getKeyCode()}
 	 * @return true if key is currently pressed
 	 */
-	public boolean isKeyDown(int keyCode)
-	{
+	public boolean isKeyDown(int keyCode) {
 
 		return keys.contains(keyCode);
 	}
@@ -160,11 +149,11 @@ public class GameKeyAdapter extends KeyAdapter
 	/**
 	 * Check, if a key is currently up
 	 * 
-	 * @param keyCode Value of {@link KeyEvent #getKeyCode()}
+	 * @param keyCode
+	 *            Value of {@link KeyEvent #getKeyCode()}
 	 * @return true if key isn't currently pressed
 	 */
-	public boolean isKeyUp(int keyCode)
-	{
+	public boolean isKeyUp(int keyCode) {
 
 		return !isKeyDown(keyCode);
 	}
@@ -172,11 +161,11 @@ public class GameKeyAdapter extends KeyAdapter
 	/**
 	 * Check, if a key is currently down
 	 * 
-	 * @param keyCode Value of {@link KeyEvent #getExtendedKeyCode()}
+	 * @param keyCode
+	 *            Value of {@link KeyEvent #getExtendedKeyCode()}
 	 * @return true if key is currently pressed
 	 */
-	public boolean isExtendedKeyDown(int keyCode)
-	{
+	public boolean isExtendedKeyDown(int keyCode) {
 
 		return extendedKeys.contains(keyCode);
 	}
@@ -184,11 +173,11 @@ public class GameKeyAdapter extends KeyAdapter
 	/**
 	 * Check, if a key is currently up
 	 * 
-	 * @param keyCode Value of {@link KeyEvent #getExtendedKeyCode()}
+	 * @param keyCode
+	 *            Value of {@link KeyEvent #getExtendedKeyCode()}
 	 * @return true if key isn't currently pressed
 	 */
-	public boolean isExtendedKeyUp(int keyCode)
-	{
+	public boolean isExtendedKeyUp(int keyCode) {
 
 		return !isExtendedKeyDown(keyCode);
 	}

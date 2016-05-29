@@ -33,7 +33,8 @@ public class FPSScene implements Scene {
 	}
 
 	@Override
-	public void paintScene(Graphics2D g, int width, int height, long elapsedTime) {
+	public void paintScene(Graphics2D g, int width, int height,
+			long elapsedTime) {
 
 		if (scene != null) {
 			scene.paintScene(g, width, height, elapsedTime);
@@ -53,8 +54,8 @@ public class FPSScene implements Scene {
 
 		g.setColor(textColor);
 		g.setFont(font);
-		g.drawString(String.format("%.2f FPS", fps), 2, 2 + g.getFontMetrics()
-				.getHeight());
+		g.drawString(String.format("%.2f FPS", fps), 2,
+				2 + g.getFontMetrics().getHeight());
 	}
 
 	public Color getTextColor() {

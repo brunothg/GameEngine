@@ -237,8 +237,8 @@ public class SwingStage extends JPanel implements Stage {
 
 		synchronized (offScreenLock) {
 
-			return offScreen == null
-					|| (offScreen.getWidth() != width || offScreen.getHeight() != height);
+			return offScreen == null || (offScreen.getWidth() != width
+					|| offScreen.getHeight() != height);
 		}
 	}
 }

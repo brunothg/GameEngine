@@ -25,8 +25,8 @@ public class FPS {
 		fpsCounter++;
 
 		if (fpsTime <= 0) {
-			fps = (float) (fpsCounter + (fpsCounter * TimeUtils
-					.Seconds(-fpsTime)));
+			fps = (float) (fpsCounter
+					+ (fpsCounter * TimeUtils.Seconds(-fpsTime)));
 
 			reset();
 		}

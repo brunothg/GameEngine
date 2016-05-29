@@ -17,14 +17,15 @@ public class SpriteTileTest {
 
 		InternalImage.setRootFolder("/game/engine/images/");
 
-		Sprite sprite = new WeakSprite(ImageUtils.BufferedImage(InternalImage
-				.load("tile.png")), 32, 32);
+		Sprite sprite = new WeakSprite(
+				ImageUtils.BufferedImage(InternalImage.load("tile.png")), 32,
+				32);
 		Sprite sprite2 = sprite.getSubSprite(1, 1, sprite.getColumns() - 1, 1);
 
 		JFrame disp1 = new JFrame("Sprite");
 		disp1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		disp1.setLayout(new GridLayout(sprite.getRows(), sprite.getColumns(),
-				10, 10));
+		disp1.setLayout(
+				new GridLayout(sprite.getRows(), sprite.getColumns(), 10, 10));
 		disp1.setSize(500, 500);
 		disp1.setLocationRelativeTo(null);
 

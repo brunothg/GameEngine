@@ -61,8 +61,8 @@ public class ImageUtils {
 	 *            {@link BufferedImage#TYPE_INT_ARGB} etc.
 	 * @return the img as BufferedImage
 	 */
-	public static BufferedImage BufferedImage(Image img,
-			ImageObserver observer, int type) {
+	public static BufferedImage BufferedImage(Image img, ImageObserver observer,
+			int type) {
 
 		if (img instanceof BufferedImage) {
 			return (BufferedImage) img;
@@ -359,8 +359,8 @@ public class ImageUtils {
 
 				Object pixel = raster.getDataElements(x, y, null);
 
-				double value = ((model.getRed(pixel) + model.getGreen(pixel) + model
-						.getBlue(pixel)) / 3.0) / 255.0;
+				double value = ((model.getRed(pixel) + model.getGreen(pixel)
+						+ model.getBlue(pixel)) / 3.0) / 255.0;
 
 				if (value == Double.NaN || value == Double.NEGATIVE_INFINITY
 						|| value == Double.POSITIVE_INFINITY) {
@@ -410,9 +410,9 @@ public class ImageUtils {
 				continue;
 			}
 
-			g2d.drawImage(frames[i], frameWidth * i, 0, frameWidth * i
-					+ frameWidth, frameHeight, 0, 0, frames[i].getWidth(),
-					frames[i].getHeight(), null);
+			g2d.drawImage(frames[i], frameWidth * i, 0,
+					frameWidth * i + frameWidth, frameHeight, 0, 0,
+					frames[i].getWidth(), frames[i].getHeight(), null);
 		}
 
 		g2d.dispose();

@@ -38,8 +38,8 @@ public class BufferedSprite implements Sprite {
 		for (int x = 0; x < tiles.length; x++) {
 			for (int y = 0; y < tiles[x].length; y++) {
 
-				tiles[x][y] = ImageUtils.copy(image.getSubimage(x * width, y
-						* height, width, height));
+				tiles[x][y] = ImageUtils.copy(image.getSubimage(x * width,
+						y * height, width, height));
 			}
 		}
 	}

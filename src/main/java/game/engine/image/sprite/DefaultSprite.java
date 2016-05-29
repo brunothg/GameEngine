@@ -57,8 +57,8 @@ public class DefaultSprite implements Sprite, Image {
 		int srcX = x * (getTileWidth());
 		int srcY = y * (getTileHeight());
 
-		g.drawImage(image, 0, 0, width, height, srcX, srcY, srcX
-				+ getTileWidth(), srcY + getTileHeight(), null);
+		g.drawImage(image, 0, 0, width, height, srcX, srcY,
+				srcX + getTileWidth(), srcY + getTileHeight(), null);
 	}
 
 	@Override
@@ -71,8 +71,8 @@ public class DefaultSprite implements Sprite, Image {
 	@Override
 	public BufferedImage getTile(int x, int y) {
 
-		BufferedImage tile = image.getSubimage(x * getTileWidth(), y
-				* getTileHeight(), getTileWidth(), getTileHeight());
+		BufferedImage tile = image.getSubimage(x * getTileWidth(),
+				y * getTileHeight(), getTileWidth(), getTileHeight());
 
 		return ImageUtils.copy(tile);
 	}

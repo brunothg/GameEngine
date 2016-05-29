@@ -39,8 +39,8 @@ public class InvertedSprite implements Sprite {
 	public InvertedSprite(DefaultSprite sprite, boolean X, boolean Y,
 			boolean mirror) {
 
-		this(sprite, (mirror) ? false : X, (mirror) ? false : Y, (mirror) ? X
-				: false, (mirror) ? Y : false);
+		this(sprite, (mirror) ? false : X, (mirror) ? false : Y,
+				(mirror) ? X : false, (mirror) ? Y : false);
 	}
 
 	/**

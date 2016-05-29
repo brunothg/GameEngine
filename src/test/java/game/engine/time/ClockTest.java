@@ -15,13 +15,13 @@ public class ClockTest {
 			@Override
 			public void tick(long frames, long coveredTime) {
 
-				double fps = Math.round(1 / (double) TimeUtils.Seconds(timer
-						.update()));
+				double fps = Math
+						.round(1 / (double) TimeUtils.Seconds(timer.update()));
 
-				System.out
-						.printf("FPS --> %.2f Secs --> %.2f Frames --> %d(%.2f secs) \n",
-								fps, TimeUtils.Seconds(coveredTime), frames,
-								TimeUtils.Seconds(coveredTime));
+				System.out.printf(
+						"FPS --> %.2f Secs --> %.2f Frames --> %d(%.2f secs) \n",
+						fps, TimeUtils.Seconds(coveredTime), frames,
+						TimeUtils.Seconds(coveredTime));
 			}
 		});
 

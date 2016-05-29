@@ -38,8 +38,8 @@ public class SpriteAnimationTest {
 
 		final Sprite sprite;
 
-		sprite = new WeakSprite(ImageUtils.BufferedImage(InternalImage
-				.load("animatedSprite.png")), 64, 64);
+		sprite = new WeakSprite(ImageUtils.BufferedImage(
+				InternalImage.load("animatedSprite.png")), 64, 64);
 
 		// sprite = new WeakSprite(
 		// ImageIO.read(new URL(
@@ -61,8 +61,8 @@ public class SpriteAnimationTest {
 		disp1.setLocationRelativeTo(null);
 
 		JPanel spriteP = new JPanel();
-		spriteP.setLayout(new GridLayout(sprite.getRows(), sprite.getColumns(),
-				10, 10));
+		spriteP.setLayout(
+				new GridLayout(sprite.getRows(), sprite.getColumns(), 10, 10));
 		disp1.add(new JScrollPane(spriteP), BorderLayout.CENTER);
 
 		for (int y = 0; y < sprite.getRows(); y++) {
@@ -106,8 +106,8 @@ public class SpriteAnimationTest {
 		disp1.add(new JScrollPane(rowselect), BorderLayout.EAST);
 
 		SwingStage stage = new SwingStage();
-		stage.setMinimumSize(new Dimension(animation.getWidth() + 10, animation
-				.getHeight() + 10));
+		stage.setMinimumSize(new Dimension(animation.getWidth() + 10,
+				animation.getHeight() + 10));
 		stage.setPreferredSize(stage.getMinimumSize());
 		disp1.add(stage, BorderLayout.WEST);
 
@@ -121,9 +121,9 @@ public class SpriteAnimationTest {
 				g.fillRect(0, 0, width, height);
 
 				synchronized (animation) {
-					animation.setTopLeftPosition(new Point((width / 2)
-							- (animation.getWidth() / 2), (height / 2)
-							- (animation.getHeight() / 2)));
+					animation.setTopLeftPosition(new Point(
+							(width / 2) - (animation.getWidth() / 2),
+							(height / 2) - (animation.getHeight() / 2)));
 					animation.paintOnScene(g, elapsedTime);
 				}
 			}

@@ -40,7 +40,8 @@ public class FullScreenGameFrame {
 	private GraphicsDevice gd;
 	private DisplayMode dm;
 
-	private AtomicBoolean isInFullScreenExclusiveMode = new AtomicBoolean(false);
+	private AtomicBoolean isInFullScreenExclusiveMode = new AtomicBoolean(
+			false);
 
 	private DisplayMode previousDisplayMode;
 
@@ -92,7 +93,8 @@ public class FullScreenGameFrame {
 	 * @see #FullScreenGameFrame(GraphicsDevice, GraphicsConfiguration,
 	 *      DisplayMode, String)
 	 */
-	public FullScreenGameFrame(GraphicsDevice gd, DisplayMode dm, String title) {
+	public FullScreenGameFrame(GraphicsDevice gd, DisplayMode dm,
+			String title) {
 
 		this(gd, gd.getDefaultConfiguration(), dm, title);
 	}
@@ -170,7 +172,8 @@ public class FullScreenGameFrame {
 
 		this.dm = dm;
 
-		if (isInFullScreenExclusiveMode.get() && gd.isDisplayChangeSupported()) {
+		if (isInFullScreenExclusiveMode.get()
+				&& gd.isDisplayChangeSupported()) {
 
 			gd.setDisplayMode(dm);
 

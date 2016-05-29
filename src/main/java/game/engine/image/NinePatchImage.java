@@ -117,19 +117,21 @@ public class NinePatchImage implements Image {
 		return new Insets(top, left, bottom, right);
 	}
 
-	private int getInset(BufferedImage src, boolean horizontal, boolean positive) {
+	private int getInset(BufferedImage src, boolean horizontal,
+			boolean positive) {
 		int inset = 0;
 
 		int size = (horizontal) ? src.getWidth() : src.getHeight();
 		int start = (positive) ? 1 : size - 2;
 
 		int count = 0;
-		for (int pos = start; ((positive) ? pos < size - 1 : pos > 0); pos = ((positive) ? pos + 1
-				: pos - 1)) {
+		for (int pos = start; ((positive) ? pos < size - 1
+				: pos > 0); pos = ((positive) ? pos + 1 : pos - 1)) {
 
-			Color c = new Color(src.getRGB((horizontal) ? pos
-					: src.getWidth() - 1, (horizontal) ? src.getHeight() - 1
-					: pos), true);
+			Color c = new Color(
+					src.getRGB((horizontal) ? pos : src.getWidth() - 1,
+							(horizontal) ? src.getHeight() - 1 : pos),
+					true);
 
 			if (c.equals(Color.BLACK)) {
 
@@ -152,15 +154,16 @@ public class NinePatchImage implements Image {
 		int size = ((horizontal) ? src.getWidth() : src.getHeight());
 		for (int pos = 1; pos < size - 1; pos++) {
 
-			Color c = new Color(src.getRGB((horizontal) ? pos : 0,
-					(horizontal) ? 0 : pos), true);
+			Color c = new Color(
+					src.getRGB((horizontal) ? pos : 0, (horizontal) ? 0 : pos),
+					true);
 			if (!c.equals(Color.BLACK) || pos == size - 2) {
 				if (start != -1) {
 
 					Patch p;
 					{
-						Patch last = (patches.size() > 1) ? patches.get(patches
-								.size() - 1) : null;
+						Patch last = (patches.size() > 1)
+								? patches.get(patches.size() - 1) : null;
 
 						p = new Patch();
 						p.start = (last != null) ? last.end : 1;
@@ -299,8 +302,7 @@ public class NinePatchImage implements Image {
 				double _width = hSizes[x];
 
 				BufferedImage img = stretchRegions[y][x].img;
-				g.drawImage(img, (int) Math.round(posX),
-						(int) Math.round(posY),
+				g.drawImage(img, (int) Math.round(posX), (int) Math.round(posY),
 						(int) Math.round(posX + (_width)),
 						(int) Math.round(posY + (_height)), 0, 0,
 						img.getWidth(), img.getHeight(), null);

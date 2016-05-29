@@ -4,20 +4,19 @@ package game.engine.utils;
  * 
  * Utility class for null value handling
  */
-public class Null
-{
+public class Null {
 
 	/**
 	 * Check if there is a null value. If there's a null value replace it.
 	 * 
-	 * @param test Checked value
-	 * @param replace Replace value
+	 * @param test
+	 *            Checked value
+	 * @param replace
+	 *            Replace value
 	 */
-	public static <T> T nvl(T test, T replace)
-	{
+	public static <T> T nvl(T test, T replace) {
 
-		if (test == null)
-		{
+		if (test == null) {
 
 			return replace;
 		}
@@ -30,14 +29,11 @@ public class Null
 	 * 
 	 * @return true if at least one null value could be found
 	 */
-	public static boolean isAnyNull(Object... objs)
-	{
+	public static boolean isAnyNull(Object... objs) {
 
-		for (int i = 0; i < objs.length; i++)
-		{
+		for (int i = 0; i < objs.length; i++) {
 
-			if (objs[i] == null)
-			{
+			if (objs[i] == null) {
 
 				return true;
 			}
@@ -51,14 +47,11 @@ public class Null
 	 * 
 	 * @return true if at least one null or empty string value could be found
 	 */
-	public static boolean isAnyEmpty(String... strings)
-	{
+	public static boolean isAnyEmpty(String... strings) {
 
-		for (int i = 0; i < strings.length; i++)
-		{
+		for (int i = 0; i < strings.length; i++) {
 
-			if (strings[i] == null || strings[i].isEmpty())
-			{
+			if (strings[i] == null || strings[i].isEmpty()) {
 
 				return true;
 			}
@@ -72,14 +65,11 @@ public class Null
 	 * 
 	 * @return true if all values are null values
 	 */
-	public static boolean isNull(Object... objs)
-	{
+	public static boolean isNull(Object... objs) {
 
-		for (int i = 0; i < objs.length; i++)
-		{
+		for (int i = 0; i < objs.length; i++) {
 
-			if (objs[i] != null)
-			{
+			if (objs[i] != null) {
 
 				return false;
 			}
@@ -93,14 +83,11 @@ public class Null
 	 * 
 	 * @return true if no value is a null value
 	 */
-	public static boolean isNotNull(Object... objs)
-	{
+	public static boolean isNotNull(Object... objs) {
 
-		for (int i = 0; i < objs.length; i++)
-		{
+		for (int i = 0; i < objs.length; i++) {
 
-			if (objs[i] == null)
-			{
+			if (objs[i] == null) {
 
 				return false;
 			}

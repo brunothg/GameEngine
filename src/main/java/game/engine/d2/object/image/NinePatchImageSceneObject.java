@@ -11,53 +11,48 @@ import java.awt.image.BufferedImage;
 
 /**
  * 
- * This class fetches a {@link NinePatchImage} and puts it in the {@link SceneObject} context.
+ * This class fetches a {@link NinePatchImage} and puts it in the
+ * {@link SceneObject} context.
  * 
  * @author Marvin Bruns
  *
  */
-public class NinePatchImageSceneObject extends SceneObject
-{
+public class NinePatchImageSceneObject extends SceneObject {
 
 	NinePatchImage image;
 
-	public NinePatchImageSceneObject(BufferedImage image)
-	{
+	public NinePatchImageSceneObject(BufferedImage image) {
 
 		this.image = new NinePatchImage(image);
 	}
 
-	public NinePatchImageSceneObject(NinePatchImage image)
-	{
+	public NinePatchImageSceneObject(NinePatchImage image) {
 
 		this.image = image;
 	}
 
-	public NinePatchImageSceneObject(Image image)
-	{
+	public NinePatchImageSceneObject(Image image) {
 
 		this(ImageUtils.BufferedImage(image));
 	}
 
 	@Override
-	protected void paint(Graphics2D g, long elapsedTime)
-	{
+	protected void paint(Graphics2D g, long elapsedTime) {
 
 		image.draw(g, getWidth(), getHeight());
 	}
 
 	/**
 	 * @see NinePatchImage#setQuality(int)
-	 * @param quality The interpolation quality
+	 * @param quality
+	 *            The interpolation quality
 	 */
-	public void setQuality(int quality)
-	{
+	public void setQuality(int quality) {
 
 		image.setQuality(quality);
 	}
 
-	public Insets getInsets()
-	{
+	public Insets getInsets() {
 
 		return image.getInsets();
 	}
