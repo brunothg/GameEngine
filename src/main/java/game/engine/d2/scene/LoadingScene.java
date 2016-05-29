@@ -75,7 +75,8 @@ public class LoadingScene implements Scene {
 	}
 
 	@Override
-	public void paintScene(Graphics2D g, int width, int height, long elapsedTime) {
+	public void paintScene(Graphics2D g, int width, int height,
+			long elapsedTime) {
 
 		setRenderingHints(g);
 
@@ -91,7 +92,8 @@ public class LoadingScene implements Scene {
 		drawText(g, width, height, elapsedTime);
 	}
 
-	private void drawText(Graphics2D g, int width, int height, long elapsedTime) {
+	private void drawText(Graphics2D g, int width, int height,
+			long elapsedTime) {
 
 		textPhase += (TEXT_SPEED * TimeUtils.Seconds(elapsedTime));
 		textPhase = textPhase % 4;
@@ -107,14 +109,16 @@ public class LoadingScene implements Scene {
 		size -= TEXT_DISTANCE * 2;
 		size = (float) Math.sqrt(Math.pow(size, 2) * 0.5);
 
-		Rectangle2D usableArea = new Rectangle2D.Double(center.getX() - size
-				* 0.5, center.getY() - size * 0.5, size, size);
+		// The free area inside the rotating circles, that can be used for text
+		// drawing.
+		Rectangle2D usableArea = new Rectangle2D.Double(
+				center.getX() - size * 0.5, center.getY() - size * 0.5, size,
+				size);
 
 		g.setColor(TEXT_COLOR);
 
 		int fontSize = (int) Math.min(usableArea.getWidth(),
-				usableArea.getHeight())
-				/ (TEXT.length());
+				usableArea.getHeight()) / (TEXT.length());
 		g.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, fontSize));
 
 		FontMetrics metrics = g.getFontMetrics();
@@ -125,7 +129,6 @@ public class LoadingScene implements Scene {
 
 		g.drawString(txt, (float) (usableArea.getCenterX() - textWidth * 0.5),
 				(float) (usableArea.getCenterY() - textHeight * 0.5));
-		// g.draw(usableArea);
 	}
 
 	private void setRenderingHints(Graphics2D g) {
@@ -151,8 +154,9 @@ public class LoadingScene implements Scene {
 		double start = innerCirclePosition;
 		double extent = 360 * CIRCLE_LENGTH_INNER;
 
-		Arc2D circle = new Arc2D.Double(width * 0.5 - size * 0.5, height * 0.5
-				- size * 0.5, size, size, start, extent, Arc2D.OPEN);
+		Arc2D circle = new Arc2D.Double(width * 0.5 - size * 0.5,
+				height * 0.5 - size * 0.5, size, size, start, extent,
+				Arc2D.OPEN);
 
 		Stroke strokeB = g.getStroke();
 		g.setStroke(new BasicStroke(CIRCLE_THICKNESS_INNER,
@@ -176,8 +180,9 @@ public class LoadingScene implements Scene {
 		double start = outerCirclePosition;
 		double extent = 360 * CIRCLE_LENGTH_OUTER;
 
-		Arc2D circle = new Arc2D.Double(width * 0.5 - size * 0.5, height * 0.5
-				- size * 0.5, size, size, start, extent, Arc2D.OPEN);
+		Arc2D circle = new Arc2D.Double(width * 0.5 - size * 0.5,
+				height * 0.5 - size * 0.5, size, size, start, extent,
+				Arc2D.OPEN);
 
 		Stroke strokeB = g.getStroke();
 		g.setStroke(new BasicStroke(CIRCLE_THICKNESS_OUTER,
@@ -212,8 +217,8 @@ public class LoadingScene implements Scene {
 			float[] fractions = new float[] { SHADOW_FRACTION_INNER,
 					SHADOW_FRACTION_OUTER };
 
-			RadialGradientPaint shadowGradient = new RadialGradientPaint(
-					center, (float) Math.min(width, height), fractions, colors);
+			RadialGradientPaint shadowGradient = new RadialGradientPaint(center,
+					(float) Math.min(width, height), fractions, colors);
 
 			Paint paintB = g.getPaint();
 			g.setPaint(shadowGradient);
