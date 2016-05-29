@@ -14,7 +14,7 @@ import game.engine.exception.IncompatibleValueException;
 
 /**
  * A class holding several rendering settings, that can be used for configuring
- * {@link Graphics2D} objects.
+ * {@link Graphics2D} objects. Most methods can be used like a builder class.
  * 
  * @author Marvin Bruns
  *
@@ -86,6 +86,10 @@ public class RenderingOptions extends HashMap<RenderingHints.Key, Object> {
 	 * Set the rendering state for {@link Key}. Only values accepted by this
 	 * {@link Key} are allowed.
 	 * 
+	 * @param key
+	 *            The rendering option, that should be configured
+	 * @param value
+	 *            The configuration value for the given option
 	 * @see Key#isCompatibleValue(Object)
 	 */
 	public Object put(Key key, Object value) {
@@ -98,6 +102,21 @@ public class RenderingOptions extends HashMap<RenderingHints.Key, Object> {
 	}
 
 	/**
+	 * Set the rendering option.
+	 * 
+	 * @param key
+	 *            The rendering option, that should be configured
+	 * @param value
+	 *            The configuration value for the given option
+	 * @return Actual {@link RenderingOptions}
+	 * @see #put(Key, Object)
+	 */
+	public RenderingOptions set(Key key, Object value) {
+		put(key, value);
+		return this;
+	}
+
+	/**
 	 * Sets the anti aliasing option. If null is passed, the default behavior
 	 * will be activated.
 	 * 
@@ -105,7 +124,7 @@ public class RenderingOptions extends HashMap<RenderingHints.Key, Object> {
 	 *            The anti aliasing status used.
 	 * @see RenderingHints#KEY_ANTIALIASING
 	 */
-	public void setAntiAliasing(Boolean on) {
+	public RenderingOptions setAntiAliasing(Boolean on) {
 		Object value;
 		if (on == null) {
 			value = RenderingHints.VALUE_ANTIALIAS_DEFAULT;
@@ -115,6 +134,8 @@ public class RenderingOptions extends HashMap<RenderingHints.Key, Object> {
 			value = RenderingHints.VALUE_ANTIALIAS_OFF;
 		}
 		put(RenderingHints.KEY_ANTIALIASING, value);
+
+		return this;
 	}
 
 	/**
@@ -126,7 +147,7 @@ public class RenderingOptions extends HashMap<RenderingHints.Key, Object> {
 	 *            The anti aliasing status used.
 	 * @see RenderingHints#KEY_TEXT_ANTIALIASING
 	 */
-	public void setAntiAliasingForText(Boolean on) {
+	public RenderingOptions setAntiAliasingForText(Boolean on) {
 		Object value;
 		if (on == null) {
 			value = RenderingHints.VALUE_TEXT_ANTIALIAS_DEFAULT;
@@ -136,6 +157,8 @@ public class RenderingOptions extends HashMap<RenderingHints.Key, Object> {
 			value = RenderingHints.VALUE_TEXT_ANTIALIAS_OFF;
 		}
 		put(RenderingHints.KEY_TEXT_ANTIALIASING, value);
+
+		return this;
 	}
 
 	/**
@@ -146,7 +169,7 @@ public class RenderingOptions extends HashMap<RenderingHints.Key, Object> {
 	 *            The fractional metrics status used.
 	 * @see RenderingHints#KEY_FRACTIONALMETRICS
 	 */
-	public void setFractionalMetrics(Boolean on) {
+	public RenderingOptions setFractionalMetrics(Boolean on) {
 		Object value;
 		if (on == null) {
 			value = RenderingHints.VALUE_FRACTIONALMETRICS_DEFAULT;
@@ -156,6 +179,8 @@ public class RenderingOptions extends HashMap<RenderingHints.Key, Object> {
 			value = RenderingHints.VALUE_FRACTIONALMETRICS_OFF;
 		}
 		put(RenderingHints.KEY_FRACTIONALMETRICS, value);
+
+		return this;
 	}
 
 	/**
@@ -166,7 +191,7 @@ public class RenderingOptions extends HashMap<RenderingHints.Key, Object> {
 	 *            The stroke control status used.
 	 * @see RenderingHints#KEY_STROKE_CONTROL
 	 */
-	public void setStrokeControl(Boolean on) {
+	public RenderingOptions setStrokeControl(Boolean on) {
 		Object value;
 		if (on == null) {
 			value = RenderingHints.VALUE_STROKE_DEFAULT;
@@ -176,6 +201,8 @@ public class RenderingOptions extends HashMap<RenderingHints.Key, Object> {
 			value = RenderingHints.VALUE_STROKE_PURE;
 		}
 		put(RenderingHints.KEY_STROKE_CONTROL, value);
+
+		return this;
 	}
 
 	/**
@@ -186,7 +213,7 @@ public class RenderingOptions extends HashMap<RenderingHints.Key, Object> {
 	 *            The dithering status used.
 	 * @see RenderingHints#KEY_DITHERING
 	 */
-	public void setDithering(Boolean on) {
+	public RenderingOptions setDithering(Boolean on) {
 		Object value;
 		if (on == null) {
 			value = RenderingHints.VALUE_DITHER_DEFAULT;
@@ -196,6 +223,8 @@ public class RenderingOptions extends HashMap<RenderingHints.Key, Object> {
 			value = RenderingHints.VALUE_DITHER_DISABLE;
 		}
 		put(RenderingHints.KEY_DITHERING, value);
+
+		return this;
 	}
 
 	/**
@@ -207,7 +236,7 @@ public class RenderingOptions extends HashMap<RenderingHints.Key, Object> {
 	 *            The enhanced status status used.
 	 * @see RenderingHints#KEY_COLOR_RENDERING
 	 */
-	public void setEnhancedColorRednering(Boolean on) {
+	public RenderingOptions setEnhancedColorRednering(Boolean on) {
 		Object value;
 		if (on == null) {
 			value = RenderingHints.VALUE_COLOR_RENDER_DEFAULT;
@@ -217,6 +246,8 @@ public class RenderingOptions extends HashMap<RenderingHints.Key, Object> {
 			value = RenderingHints.VALUE_COLOR_RENDER_SPEED;
 		}
 		put(RenderingHints.KEY_COLOR_RENDERING, value);
+
+		return this;
 	}
 
 	/**
@@ -228,7 +259,7 @@ public class RenderingOptions extends HashMap<RenderingHints.Key, Object> {
 	 *            The enhanced status status used.
 	 * @see RenderingHints#KEY_RENDERING
 	 */
-	public void setEnhancedRednering(Boolean on) {
+	public RenderingOptions setEnhancedRednering(Boolean on) {
 		Object value;
 		if (on == null) {
 			value = RenderingHints.VALUE_RENDER_DEFAULT;
@@ -238,6 +269,8 @@ public class RenderingOptions extends HashMap<RenderingHints.Key, Object> {
 			value = RenderingHints.VALUE_RENDER_SPEED;
 		}
 		put(RenderingHints.KEY_RENDERING, value);
+
+		return this;
 	}
 
 	/**
@@ -249,7 +282,7 @@ public class RenderingOptions extends HashMap<RenderingHints.Key, Object> {
 	 *            The enhanced status status used.
 	 * @see RenderingHints#KEY_INTERPOLATION
 	 */
-	public void setEnhancedInterpolation(Boolean on) {
+	public RenderingOptions setEnhancedInterpolation(Boolean on) {
 		Object value;
 		if (on == null) {
 			value = RenderingHints.VALUE_INTERPOLATION_BILINEAR;
@@ -259,6 +292,8 @@ public class RenderingOptions extends HashMap<RenderingHints.Key, Object> {
 			value = RenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR;
 		}
 		put(RenderingHints.KEY_INTERPOLATION, value);
+
+		return this;
 	}
 
 	/**
@@ -270,7 +305,7 @@ public class RenderingOptions extends HashMap<RenderingHints.Key, Object> {
 	 *            The enhanced status status used.
 	 * @see RenderingHints#KEY_ALPHA_INTERPOLATION
 	 */
-	public void setEnhancedAlphaInterpolation(Boolean on) {
+	public RenderingOptions setEnhancedAlphaInterpolation(Boolean on) {
 		Object value;
 		if (on == null) {
 			value = RenderingHints.VALUE_ALPHA_INTERPOLATION_DEFAULT;
@@ -280,6 +315,8 @@ public class RenderingOptions extends HashMap<RenderingHints.Key, Object> {
 			value = RenderingHints.VALUE_ALPHA_INTERPOLATION_SPEED;
 		}
 		put(RenderingHints.KEY_ALPHA_INTERPOLATION, value);
+
+		return this;
 	}
 
 	/**
@@ -289,12 +326,14 @@ public class RenderingOptions extends HashMap<RenderingHints.Key, Object> {
 	 *            The used contrast level
 	 * @see RenderingHints#KEY_TEXT_LCD_CONTRAST
 	 */
-	public void setTextLcdContrast(int contrast) {
+	public RenderingOptions setTextLcdContrast(int contrast) {
 		if (!RenderingHints.KEY_TEXT_LCD_CONTRAST.isCompatibleValue(contrast)) {
 			throw new IncompatibleValueException(
 					"Contrast level not compatible -> " + contrast);
 		}
 		put(RenderingHints.KEY_TEXT_LCD_CONTRAST, contrast);
+
+		return this;
 	}
 
 	/**
@@ -305,8 +344,8 @@ public class RenderingOptions extends HashMap<RenderingHints.Key, Object> {
 	 *            The {@link Graphics} object used for configuration purpose
 	 * @see #apply(Graphics,boolean)
 	 */
-	public void apply(Graphics g) {
-		apply(g, false);
+	public RenderingOptions apply(Graphics g) {
+		return apply(g, false);
 	}
 
 	/**
@@ -320,10 +359,12 @@ public class RenderingOptions extends HashMap<RenderingHints.Key, Object> {
 	 *            If true, all options set before will be discarded
 	 * @see #apply(Graphics2D,boolean)
 	 */
-	public void apply(Graphics g, boolean overwrite) {
+	public RenderingOptions apply(Graphics g, boolean overwrite) {
 		if (g instanceof Graphics2D) {
-			apply((Graphics2D) g, overwrite);
+			return apply((Graphics2D) g, overwrite);
 		}
+
+		return this;
 	}
 
 	/**
@@ -335,11 +376,14 @@ public class RenderingOptions extends HashMap<RenderingHints.Key, Object> {
 	 * @param overwrite
 	 *            If true, all options set before will be discarded
 	 */
-	public void apply(Graphics2D g, boolean overwrite) {
+	public RenderingOptions apply(Graphics2D g, boolean overwrite) {
 		if (overwrite) {
 			g.setRenderingHints(RenderingOptions.this);
 		} else {
 			g.addRenderingHints(RenderingOptions.this);
 		}
+
+		return this;
 	}
+
 }
