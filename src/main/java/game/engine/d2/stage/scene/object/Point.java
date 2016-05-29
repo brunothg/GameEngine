@@ -37,4 +37,29 @@ public class Point {
 	public void setY(int y) {
 		this.y = y;
 	}
+
+	public double getVerticalDistanceTo(Point p) {
+		double vDistance = 0;
+
+		vDistance = Math.abs(getY() - p.getY());
+
+		return vDistance;
+	}
+
+	public double getHorizontalDistanceTo(Point p) {
+		double hDistance = 0;
+
+		hDistance = Math.abs(getX() - p.getX());
+
+		return hDistance;
+	}
+
+	public double getDistanceTo(Point p) {
+		double distance = 0;
+
+		distance = Math.sqrt(Math.pow(getHorizontalDistanceTo(p), 2)
+				+ Math.pow(getVerticalDistanceTo(p), 2));
+
+		return distance;
+	}
 }
