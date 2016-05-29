@@ -5,6 +5,7 @@ import java.awt.event.KeyEvent;
 import java.util.HashSet;
 import java.util.Set;
 
+//TODO Keep status for frame
 /**
  * {@link KeyAdapter} that tracks key positions.
  * 
