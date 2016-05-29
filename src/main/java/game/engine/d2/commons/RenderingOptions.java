@@ -355,13 +355,13 @@ public class RenderingOptions extends HashMap<RenderingHints.Key, Object> {
 	 * 
 	 * @param g
 	 *            The {@link Graphics} object used for configuration purpose
-	 * @param overwrite
+	 * @param fullyReplace
 	 *            If true, all options set before will be discarded
 	 * @see #apply(Graphics2D,boolean)
 	 */
-	public RenderingOptions apply(Graphics g, boolean overwrite) {
+	public RenderingOptions apply(Graphics g, boolean fullyReplace) {
 		if (g instanceof Graphics2D) {
-			return apply((Graphics2D) g, overwrite);
+			return apply((Graphics2D) g, fullyReplace);
 		}
 
 		return this;
@@ -373,11 +373,11 @@ public class RenderingOptions extends HashMap<RenderingHints.Key, Object> {
 	 * 
 	 * @param g
 	 *            The {@link Graphics} object used for configuration purpose
-	 * @param overwrite
+	 * @param fullyReplace
 	 *            If true, all options set before will be discarded
 	 */
-	public RenderingOptions apply(Graphics2D g, boolean overwrite) {
-		if (overwrite) {
+	public RenderingOptions apply(Graphics2D g, boolean fullyReplace) {
+		if (fullyReplace) {
 			g.setRenderingHints(RenderingOptions.this);
 		} else {
 			g.addRenderingHints(RenderingOptions.this);

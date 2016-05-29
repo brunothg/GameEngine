@@ -74,6 +74,7 @@ public class CachedLabelSceneObject extends LabelSceneObject {
 	private void drawComponent() {
 
 		Graphics2D g2d = cache.createGraphics();
+		getRenderingOptions().apply(g2d);
 
 		super.paint(g2d, 0);
 		g2d.dispose();

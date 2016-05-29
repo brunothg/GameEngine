@@ -47,8 +47,8 @@ public class LabelSceneObject extends SceneObject {
 	public LabelSceneObject(String text) {
 
 		setText(text);
-		setRenderingOptions(
-				new RenderingOptions().setAntiAliasingForText(true));
+		setRenderingOptions(new RenderingOptions().setAntiAliasingForText(true)
+				.setAntiAliasing(true));
 	}
 
 	@Override

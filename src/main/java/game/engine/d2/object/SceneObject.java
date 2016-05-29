@@ -50,7 +50,7 @@ public abstract class SceneObject {
 	protected abstract void paint(Graphics2D g, long elapsedTime);
 
 	/**
-	 * Paints this SceneObject.
+	 * Paints this SceneObject and applies the actual {@link RenderingOptions}.
 	 * 
 	 * @param g
 	 *            Graphics Object for painting
