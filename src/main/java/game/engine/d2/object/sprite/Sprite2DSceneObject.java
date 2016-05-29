@@ -23,7 +23,7 @@ public class Sprite2DSceneObject extends SpriteSceneObject {
 	/**
 	 * 
 	 * Recalculates the current visible frame depending on the elapsed time.
-	 * Sprite restarts if it reaches end an the last frame has a time > 0.
+	 * Sprite restarts if it reaches end an the last frame has a time &gt; 0.
 	 */
 	protected void recalculateFrame(long elapsedTime) {
 

@@ -236,7 +236,7 @@ public class SpriteSceneObject extends SceneObject {
 	/**
 	 * 
 	 * Recalculates the current visible frame depending on the elapsed time. Row
-	 * restarts if it reaches end an the last frame has a time > 0.
+	 * restarts if it reaches end an the last frame has a time &gt; 0.
 	 */
 	protected void recalculateFrame(long elapsedTime) {
 		timeBase += elapsedTime;

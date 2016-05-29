@@ -10,23 +10,23 @@ package game.engine.d2.commons;
 public enum FontScaleStrategy {
 
 	/**
-	 * Size to text bounds, if text smaller than container -> /, if text bigger
-	 * -> use smaller font size
+	 * Size to text bounds, if text smaller than container -&gt; /, if text
+	 * bigger -&gt; use smaller font size
 	 */
 	FitSize,
 	/**
-	 * Size to text bounds, if text smaller than container -> /, if text height
-	 * bigger -> use smaller font size
+	 * Size to text bounds, if text smaller than container -&gt; /, if text
+	 * height bigger -&gt; use smaller font size
 	 */
 	FitHeight,
 	/**
-	 * Size to object bounds, if text smaller -> increase font size, if text
-	 * bigger -> use smaller font size
+	 * Size to object bounds, if text smaller -&gt; increase font size, if text
+	 * bigger -&gt; use smaller font size
 	 */
 	FitParent,
 	/**
-	 * Size to object bounds, if text height smaller -> increase font size, if
-	 * text height bigger -> use smaller font size
+	 * Size to object bounds, if text height smaller -&gt; increase font size,
+	 * if text height bigger -&gt; use smaller font size
 	 */
 	FitParentHeight,
 	/**
