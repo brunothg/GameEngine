@@ -2,8 +2,8 @@ package game.engine.image;
 
 import java.awt.Image;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.imageio.ImageIO;
 
@@ -19,7 +19,7 @@ public class InternalImage {
 	static String root = "";
 
 	static {
-		loadedImages = new HashMap<String, Image>();
+		loadedImages = new ConcurrentHashMap<String, Image>();
 	}
 
 	/**
@@ -30,6 +30,7 @@ public class InternalImage {
 	 * @param name
 	 *            Name of the image
 	 * @see #load(String)
+	 * @return The loaded image or null, if any error occurred
 	 */
 	public static Image loadFromPath(String path, String name) {
 
@@ -41,8 +42,17 @@ public class InternalImage {
 		return null;
 	}
 
-	public static Image fullLoadFromPath(String path, String name)
-			throws IOException {
+	/**
+	 * Load an image with specific path. Ignores the root folder.
+	 * 
+	 * @param path
+	 *            Path to the folder the image is located in
+	 * @param name
+	 *            Name of the image
+	 * @return The loaded image
+	 * @throws IOException
+	 */
+	public static Image fullLoadFromPath(String path, String name) throws IOException {
 
 		if (path == null) {
 			path = "";
@@ -51,52 +61,59 @@ public class InternalImage {
 		if (!path.isEmpty() && !path.endsWith("/")) {
 			path = path + "/";
 		}
+		path = path + name;
 
 		Image ret;
-
-		synchronized (loadedImages) {
-			ret = loadedImages.get(path + name);
-		}
+		ret = loadedImages.get(path);
 
 		if (ret != null) {
 			return ret;
 		}
 
-		ret = ImageIO.read(InternalImage.class.getResource(path + name));
-
-		synchronized (loadedImages) {
-			loadedImages.put(path + name, ret);
-		}
+		ret = ImageIO.read(InternalImage.class.getResource(path));
+		loadedImages.put(path, ret);
 
 		return ret;
 	}
 
 	/**
-	 * @see #fullLoad(String)
-	 * @param s
+	 * Load image from root folder
+	 * 
+	 * @see #loadFromPath(String, String)
+	 * @param name
+	 *            Name of the image
 	 * @return Image or null if any Exception is thrown
 	 */
-	public static Image load(String s) {
-
-		return loadFromPath(getRootFolder(), s);
+	public static Image load(String name) {
+		return loadFromPath(getRootFolder(), name);
 	}
 
 	/**
-	 * Reloads the images
+	 * Reloads the image using root folder
 	 * 
-	 * @param s
-	 *            Path to image relative to root folder
+	 * @param name
+	 *            Name of the image
 	 * @return The image
 	 * @throws IOException
 	 *             if an error occurs during reading
 	 */
-	public static Image reloadFull(String s) throws IOException {
+	public static Image reloadFull(String name) throws IOException {
 
-		return reloadFullFromPath(getRootFolder(), s);
+		return reloadFullFromPath(getRootFolder(), name);
 	}
 
-	public static Image reloadFullFromPath(String path, String name)
-			throws IOException {
+	/**
+	 * Reloads the image
+	 * 
+	 * @param name
+	 *            Name of the image
+	 * @param path
+	 *            Path to the folder the image is located in
+	 * @return The image
+	 * @throws IOException
+	 *             if an error occurs during reading
+	 */
+	public static Image reloadFullFromPath(String path, String name) throws IOException {
 
 		if (path == null) {
 			path = "";
@@ -105,14 +122,10 @@ public class InternalImage {
 		if (!path.isEmpty() && !path.endsWith("/")) {
 			path = path + "/";
 		}
+		path = path + name;
 
-		Image ret;
-
-		ret = ImageIO.read(InternalImage.class.getResource(path + name));
-
-		synchronized (loadedImages) {
-			loadedImages.put(path + name, ret);
-		}
+		Image ret = ImageIO.read(InternalImage.class.getResource(path));
+		loadedImages.put(path, ret);
 
 		return ret;
 
@@ -139,15 +152,15 @@ public class InternalImage {
 	 * Load an image from given path relative to root folder. If it has been
 	 * loaded before a reference is returned.
 	 * 
-	 * @param s
-	 *            Path to image relative to root folder
+	 * @param name
+	 *            image name
 	 * @return The image
 	 * @throws IOException
 	 *             if an error occurs during reading
 	 */
-	public static Image fullLoad(String s) throws IOException {
+	public static Image fullLoad(String name) throws IOException {
 
-		return fullLoadFromPath(getRootFolder(), s);
+		return fullLoadFromPath(getRootFolder(), name);
 	}
 
 	/**
