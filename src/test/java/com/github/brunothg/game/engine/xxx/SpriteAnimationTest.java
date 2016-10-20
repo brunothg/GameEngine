@@ -36,7 +36,7 @@ public class SpriteAnimationTest
 	public static void main(String[] args) throws Exception
 	{
 
-		InternalImage.setRootFolder("/game/engine/images/");
+		InternalImage.setRootFolder("/com/github/brunothg/game/engine/images/");
 
 		final Sprite sprite;
 
