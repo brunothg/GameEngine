@@ -96,6 +96,7 @@ public class RenderingOptions extends HashMap<RenderingHints.Key, Object>
 	 * @param value The configuration value for the given option
 	 * @see Key#isCompatibleValue(Object)
 	 */
+	@Override
 	public Object put(Key key, Object value)
 	{
 		if (!key.isCompatibleValue(value))
@@ -113,7 +114,6 @@ public class RenderingOptions extends HashMap<RenderingHints.Key, Object>
 	 * @param key The rendering option, that should be configured
 	 * @param value The configuration value for the given option
 	 * @return Actual {@link RenderingOptions}
-	 * @see #put(Key, Object)
 	 */
 	public RenderingOptions set(Key key, Object value)
 	{
@@ -149,7 +149,7 @@ public class RenderingOptions extends HashMap<RenderingHints.Key, Object>
 
 	/**
 	 * Sets the anti aliasing option for text drawing. If null is passed, the default behavior will
-	 * be activated. More options may be available using {@link #put(Key, Object)} method.
+	 * be activated. More options may be available using put method.
 	 * 
 	 * @param on The anti aliasing status used.
 	 * @see RenderingHints#KEY_TEXT_ANTIALIASING
