@@ -205,7 +205,8 @@ public class InternalImage
 	 * Manually insert a image
 	 * 
 	 * @param path path of the image (Identifier)
-	 * @param img the image that was stored previously at this position
+	 * @param name the name of the image
+	 * @param img the image that should be stored
 	 * @return the image that was previously at this position
 	 */
 	public static Image storeImage(String path, String name, Image img)
