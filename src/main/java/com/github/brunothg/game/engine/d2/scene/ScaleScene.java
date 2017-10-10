@@ -98,7 +98,8 @@ public abstract class ScaleScene implements Scene {
 	protected abstract void paintFixedScene(Graphics2D g, long elapsedTime);
 
 	/**
-	 * Get the scale factor for scene width (realWidth / fixedWidth)
+	 * Get the scale factor for scene width (realWidth / fixedWidth). Only valid in
+	 * {@link #paintFixedScene(Graphics2D, long)}.
 	 * 
 	 * @return scale factor for scene width
 	 */
@@ -107,7 +108,8 @@ public abstract class ScaleScene implements Scene {
 	}
 
 	/**
-	 * Get the scale factor for scene height (realHeight / fixedHeight)
+	 * Get the scale factor for scene height (realHeight / fixedHeight). Only valid
+	 * in {@link #paintFixedScene(Graphics2D, long)}.
 	 * 
 	 * @return scale factor for scene height
 	 */
@@ -116,7 +118,8 @@ public abstract class ScaleScene implements Scene {
 	}
 
 	/**
-	 * Get the translation for scene width
+	 * Get the translation for scene width. Only valid in
+	 * {@link #paintFixedScene(Graphics2D, long)}.
 	 * 
 	 * @return translation for scene width
 	 */
@@ -125,7 +128,8 @@ public abstract class ScaleScene implements Scene {
 	}
 
 	/**
-	 * Get the translation for scene height
+	 * Get the translation for scene height. Only valid in
+	 * {@link #paintFixedScene(Graphics2D, long)}.
 	 * 
 	 * @return translation for scene height
 	 */
@@ -134,7 +138,8 @@ public abstract class ScaleScene implements Scene {
 	}
 
 	/**
-	 * Converts a global point (real size) to local point (fixed size).
+	 * Converts a global point (real size) to local point (fixed size). Only valid
+	 * in {@link #paintFixedScene(Graphics2D, long)}.
 	 * 
 	 * @param point
 	 *            Global {@link Point}
@@ -148,7 +153,8 @@ public abstract class ScaleScene implements Scene {
 	}
 
 	/**
-	 * Converts a local point (fixed size) to global point (real size).
+	 * Converts a local point (fixed size) to global point (real size). Only valid
+	 * in {@link #paintFixedScene(Graphics2D, long)}.
 	 * 
 	 * @param point
 	 *            Local {@link Point}
