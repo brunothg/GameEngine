@@ -55,7 +55,7 @@ public abstract class SceneObject {
 	 *            Graphics Object for painting
 	 * @param elapsedTime
 	 *            Elapsed time since the last call to this method
-	 * @deprecated Use {@link #paintOnScene(Graphics2D, int, int, long)} instead
+	 * @deprecated Use {@link #paintOnScene(Graphics2D, Size, long)} instead
 	 */
 	@Deprecated
 	public void paintOnScene(Graphics2D g, long elapsedTime) {
