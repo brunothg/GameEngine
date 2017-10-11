@@ -30,11 +30,9 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 
-public class SpriteAnimationTest
-{
+public class SpriteAnimationTest {
 
-	public static void main(String[] args) throws Exception
-	{
+	public static void main(String[] args) throws Exception {
 
 		InternalImage.setRootFolder("/com/github/brunothg/game/engine/images/");
 
@@ -64,10 +62,8 @@ public class SpriteAnimationTest
 		spriteP.setLayout(new GridLayout(sprite.getRows(), sprite.getColumns(), 10, 10));
 		disp1.add(new JScrollPane(spriteP), BorderLayout.CENTER);
 
-		for (int y = 0; y < sprite.getRows(); y++)
-		{
-			for (int x = 0; x < sprite.getColumns(); x++)
-			{
+		for (int y = 0; y < sprite.getRows(); y++) {
+			for (int x = 0; x < sprite.getColumns(); x++) {
 				spriteP.add(new JLabel(new ImageIcon(sprite.getTile(x, y))));
 			}
 		}
@@ -76,31 +72,25 @@ public class SpriteAnimationTest
 		rowselect.setLayout(new BoxLayout(rowselect, BoxLayout.Y_AXIS));
 
 		ButtonGroup btngrp = new ButtonGroup();
-		for (int i = 0; i < animation.getAnimationRowCount(); i++)
-		{
+		for (int i = 0; i < animation.getAnimationRowCount(); i++) {
 
 			final JRadioButton rbtn = new JRadioButton("Animation " + (i + 1));
 			btngrp.add(rbtn);
 
-			if (i == 0)
-			{
+			if (i == 0) {
 				rbtn.setSelected(true);
 			}
 
 			final int row = i;
 
-			rbtn.addActionListener(new ActionListener()
-			{
+			rbtn.addActionListener(new ActionListener() {
 
 				@Override
-				public void actionPerformed(ActionEvent e)
-				{
+				public void actionPerformed(ActionEvent e) {
 
-					if (rbtn.isSelected())
-					{
+					if (rbtn.isSelected()) {
 
-						synchronized (animation)
-						{
+						synchronized (animation) {
 							animation.setAnimationRow(row);
 						}
 					}
@@ -117,27 +107,23 @@ public class SpriteAnimationTest
 		stage.setPreferredSize(stage.getMinimumSize());
 		disp1.add(stage, BorderLayout.WEST);
 
-		stage.setScene(new FPSScene(new Scene()
-		{
+		stage.setScene(new FPSScene(new Scene() {
 
 			@Override
-			public void paintScene(Graphics2D g, int width, int height, long elapsedTime)
-			{
+			public void paintScene(Graphics2D g, int width, int height, long elapsedTime) {
 
 				g.setColor(Color.WHITE);
 				g.fillRect(0, 0, width, height);
 
-				synchronized (animation)
-				{
+				synchronized (animation) {
 					animation.setTopLeftPosition(new Point((width / 2) - (animation.getWidth() / 2),
-						(height / 2) - (animation.getHeight() / 2)));
-					animation.paintOnScene(g, elapsedTime);
+							(height / 2) - (animation.getHeight() / 2)));
+					animation.paintOnScene(g, width, height, elapsedTime);
 				}
 			}
 
 			@Override
-			public EventListener[] getEventListeners()
-			{
+			public EventListener[] getEventListeners() {
 				return null;
 			}
 		}));

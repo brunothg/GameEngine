@@ -14,21 +14,17 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.util.EventListener;
 
-public class LabelObjectTest
-{
+public class LabelObjectTest {
 
-	public static void main(String[] args)
-	{
+	public static void main(String[] args) {
 
 		SwingGameFrame gameFrame = new SwingGameFrame();
-		gameFrame.setScene(new FPSScene(new Scene()
-		{
+		gameFrame.setScene(new FPSScene(new Scene() {
 
 			LabelSceneObject label = new CachedLabelSceneObject("Das ist ein\n LabelObject");
 
 			@Override
-			public void paintScene(Graphics2D g, int width, int height, long elapsedTime)
-			{
+			public void paintScene(Graphics2D g, int width, int height, long elapsedTime) {
 
 				label.setText(Math.random() + "");
 
@@ -38,19 +34,18 @@ public class LabelObjectTest
 				label.setSize(width, height);
 				label.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 60));
 				label.setTopLeftPosition(new Point(0, 0));
-				label.setStroke(
-					new BasicStroke(2f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND, 1, new float[] { 4, 4, 8 }, 0));
+				label.setStroke(new BasicStroke(2f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND, 1,
+						new float[] { 4, 4, 8 }, 0));
 				label.setColor(Color.GREEN);
 				label.setOutlinePaint(Color.BLACK);
 
 				label.setScaleStrategy(FontScaleStrategy.FitParent);
 
-				label.paintOnScene(g, elapsedTime);
+				label.paintOnScene(g, width, height, elapsedTime);
 			}
 
 			@Override
-			public EventListener[] getEventListeners()
-			{
+			public EventListener[] getEventListeners() {
 				return null;
 			}
 		}));

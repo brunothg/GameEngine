@@ -33,14 +33,12 @@ import javax.swing.filechooser.FileFilter;
  * @author Marvin Bruns
  *
  */
-public class NinePatchImageObjectPreview
-{
+public class NinePatchImageObjectPreview {
 
 	static Object lock = new Object();
 	static CachedNinePatchImageSceneObject image;
 
-	public static void main(String[] args)
-	{
+	public static void main(String[] args) {
 		setLaF();
 
 		JFrame disp = new JFrame("Nine Patch - *.9.png");
@@ -68,50 +66,38 @@ public class NinePatchImageObjectPreview
 		disp.setVisible(true);
 	}
 
-	private static void setLaF()
-	{
+	private static void setLaF() {
 
-		try
-		{
+		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		}
-		catch (Exception e)
-		{
+		} catch (Exception e) {
 		}
 	}
 
-	private static ActionListener getActionListener()
-	{
+	private static ActionListener getActionListener() {
 
-		return new ActionListener()
-		{
+		return new ActionListener() {
 
 			@Override
-			public void actionPerformed(ActionEvent e)
-			{
+			public void actionPerformed(ActionEvent e) {
 
 				JFileChooser fc = new JFileChooser();
 				fc.setMultiSelectionEnabled(false);
-				fc.setFileFilter(new FileFilter()
-				{
+				fc.setFileFilter(new FileFilter() {
 
 					@Override
-					public String getDescription()
-					{
+					public String getDescription() {
 						return "Nine patch image (*.9.png)";
 					}
 
 					@Override
-					public boolean accept(File f)
-					{
+					public boolean accept(File f) {
 
-						if (!f.isFile())
-						{
+						if (!f.isFile()) {
 							return true;
 						}
 
-						if (f.getName().toLowerCase().endsWith(".9.png".toLowerCase()))
-						{
+						if (f.getName().toLowerCase().endsWith(".9.png".toLowerCase())) {
 							return true;
 						}
 
@@ -121,17 +107,13 @@ public class NinePatchImageObjectPreview
 
 				int result = fc.showOpenDialog(null);
 
-				if (result == JFileChooser.APPROVE_OPTION)
-				{
+				if (result == JFileChooser.APPROVE_OPTION) {
 
 					File file = fc.getSelectedFile();
-					try
-					{
+					try {
 						BufferedImage img = ImageIO.read(file);
 						setImage(img);
-					}
-					catch (IOException e1)
-					{
+					} catch (IOException e1) {
 
 						JOptionPane.showMessageDialog(fc, e1.getMessage(), "Error", JOptionPane.WARNING_MESSAGE);
 					}
@@ -140,22 +122,18 @@ public class NinePatchImageObjectPreview
 		};
 	}
 
-	static void setImage(Image img)
-	{
+	static void setImage(Image img) {
 
-		synchronized (lock)
-		{
+		synchronized (lock) {
 
 			image = new CachedNinePatchImageSceneObject(img);
 			image.setTopLeftPosition(new Point(0, 0));
 		}
 	}
 
-	private static Scene getScene()
-	{
+	private static Scene getScene() {
 
-		return new Scene()
-		{
+		return new Scene() {
 
 			Color bg1 = new Color(55, 55, 55);
 			Color bg2 = new Color(200, 200, 200);
@@ -163,16 +141,13 @@ public class NinePatchImageObjectPreview
 			int bgSize = 10;
 
 			@Override
-			public void paintScene(Graphics2D g, int width, int height, long elapsedTime)
-			{
+			public void paintScene(Graphics2D g, int width, int height, long elapsedTime) {
 
 				boolean colorToogle = true;
 				boolean colorToogleRow = false;
 
-				for (int y = 0; y < height; y += bgSize)
-				{
-					for (int x = 0; x < width; x += bgSize)
-					{
+				for (int y = 0; y < height; y += bgSize) {
+					for (int x = 0; x < width; x += bgSize) {
 						colorToogle = !colorToogle;
 
 						g.setColor((colorToogle) ? bg1 : bg2);
@@ -182,21 +157,18 @@ public class NinePatchImageObjectPreview
 					colorToogleRow = !colorToogleRow;
 				}
 
-				synchronized (lock)
-				{
+				synchronized (lock) {
 
-					if (image != null)
-					{
+					if (image != null) {
 
 						image.setSize(width, height);
-						image.paintOnScene(g, elapsedTime);
+						image.paintOnScene(g, width, height, elapsedTime);
 					}
 				}
 			}
 
 			@Override
-			public EventListener[] getEventListeners()
-			{
+			public EventListener[] getEventListeners() {
 				return null;
 			}
 		};

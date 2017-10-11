@@ -48,6 +48,15 @@ public class Highscore implements Iterable<HighscoreEntry>, Serializable {
 		}
 	}
 
+	/**
+	 * Get the score count
+	 * 
+	 * @return The score count
+	 */
+	public int getScoreCount() {
+		return scores.size();
+	}
+
 	@Override
 	public Iterator<HighscoreEntry> iterator() {
 		Collections.sort(scores);

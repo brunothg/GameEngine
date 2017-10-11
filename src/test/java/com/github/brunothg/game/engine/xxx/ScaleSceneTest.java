@@ -55,7 +55,7 @@ public class ScaleSceneTest {
 				txt.setText(postxt);
 				txt.setSize(300, 300);
 				txt.setPosition(0, 0);
-				txt.paintOnScene(g, elapsedTime);
+				txt.paintOnScene(g, 300, 300, elapsedTime);
 			}
 		});
 
