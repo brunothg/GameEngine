@@ -9,11 +9,9 @@ import javax.swing.event.EventListenerList;
  * @author Marvin Bruns
  *
  */
-public class Clock extends Thread
-{
+public class Clock extends Thread {
 
-	public static final int FPS_PAUSE = 0;
-	public static final int FPS_VERY_SLOW = 10;
+	public static final int FPS_VERY_SLOW = 15;
 	public static final int FPS_SLOW = 20;
 	public static final int FPS_MODERATE = 30;
 	public static final int FPS_FAST = 60;
@@ -35,14 +33,12 @@ public class Clock extends Thread
 
 	private Object pauseLock = new Object();
 
-	public Clock()
-	{
+	public Clock() {
 
 		this(FPS_MODERATE);
 	}
 
-	public Clock(int framesPerSecond)
-	{
+	public Clock(int framesPerSecond) {
 
 		super("ClockThread - " + System.nanoTime());
 
@@ -50,40 +46,29 @@ public class Clock extends Thread
 	}
 
 	@Override
-	public void run()
-	{
+	public void run() {
 
 		state = STATE_RUNNING;
 		elapsedTime = 0;
 		setTime(System.nanoTime());
 
-		while (true)
-		{
+		while (true) {
 			int state = getStatus();
 
-			if (state == STATE_PAUSED)
-			{
+			if (state == STATE_PAUSED) {
 
-				synchronized (pauseLock)
-				{
-					try
-					{
+				synchronized (pauseLock) {
+					try {
 						pauseLock.wait();
-					}
-					catch (InterruptedException e)
-					{
+					} catch (InterruptedException e) {
 						interrupt();
 					}
 				}
 
-			}
-			else if (state == STATE_RUNNING)
-			{
+			} else if (state == STATE_RUNNING) {
 
 				running();
-			}
-			else if (state == STATE_TERMINATED)
-			{
+			} else if (state == STATE_TERMINATED) {
 
 				break;
 			}
@@ -92,16 +77,14 @@ public class Clock extends Thread
 		setStatus(STATE_TERMINATED);
 	}
 
-	private void running()
-	{
+	private void running() {
 
 		double framesPerSecond;
 		long nanosecondsPerFrame;
 		long time;
 
 		// Fetch all synchronized values
-		synchronized (this)
-		{
+		synchronized (this) {
 			framesPerSecond = getFramesPerSecond();
 			nanosecondsPerFrame = getNanosecondsPerFrame();
 			time = getTime();
@@ -112,24 +95,19 @@ public class Clock extends Thread
 		elapsedTime += nanoSystemTime - time;
 
 		// As fast as possible
-		if (framesPerSecond < 0)
-		{
+		if (framesPerSecond < 0) {
 			runAsFastAsPossible(nanoSystemTime);
-		}
-		else
-		{
+		} else {
 
 			runNormalFps(nanosecondsPerFrame, nanoSystemTime);
 		}
 	}
 
-	private void runNormalFps(long nanosecondsPerFrame, long nanoSystemTime)
-	{
+	private void runNormalFps(long nanosecondsPerFrame, long nanoSystemTime) {
 		long frames = elapsedTime / nanosecondsPerFrame;
 		long coveredTime = frames * nanosecondsPerFrame;
 
-		if (frames > 0)
-		{
+		if (frames > 0) {
 			tick(frames, coveredTime);
 		}
 
@@ -141,18 +119,14 @@ public class Clock extends Thread
 		long waitTimeMillis = (long) TimeUtils.Milliseconds(waitTime);
 		int waitTimeNanos = (int) (waitTime - TimeUtils.NanosecondsOfMilliseconds(waitTimeMillis));
 
-		try
-		{
+		try {
 			sleep(waitTimeMillis, waitTimeNanos);
-		}
-		catch (InterruptedException e)
-		{
+		} catch (InterruptedException e) {
 			interrupt();
 		}
 	}
 
-	private void runAsFastAsPossible(long nanoSystemTime)
-	{
+	private void runAsFastAsPossible(long nanoSystemTime) {
 		tick(1, elapsedTime);
 
 		// Prepare for next round
@@ -163,48 +137,39 @@ public class Clock extends Thread
 	/**
 	 * Clock tick
 	 * 
-	 * @param frames Full frames covered by this tick
-	 * @param coveredTime Time covered by the full frames
+	 * @param frames
+	 *            Full frames covered by this tick
+	 * @param coveredTime
+	 *            Time covered by the full frames
 	 */
-	private void tick(long frames, long coveredTime)
-	{
+	private void tick(long frames, long coveredTime) {
 
-		synchronized (listenerList)
-		{
+		synchronized (listenerList) {
 			ClockListener[] listeners = listenerList.getListeners(ClockListener.class);
 
-			for (ClockListener cl : listeners)
-			{
+			for (ClockListener cl : listeners) {
 
-				if (cl == null)
-				{
+				if (cl == null) {
 					return;
 				}
 
-				try
-				{
+				try {
 					cl.tick(frames, coveredTime);
-				}
-				catch (Exception e)
-				{
+				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
 		}
 	}
 
-	public void addClockListener(ClockListener cl)
-	{
-		synchronized (listenerList)
-		{
+	public void addClockListener(ClockListener cl) {
+		synchronized (listenerList) {
 			listenerList.add(ClockListener.class, cl);
 		}
 	}
 
-	public void removeClockListener(ClockListener cl)
-	{
-		synchronized (listenerList)
-		{
+	public void removeClockListener(ClockListener cl) {
+		synchronized (listenerList) {
 			listenerList.remove(ClockListener.class, cl);
 		}
 	}
@@ -214,8 +179,7 @@ public class Clock extends Thread
 	 * 
 	 * @return FPS or negative value (as fast as possible)
 	 */
-	public synchronized double getFramesPerSecond()
-	{
+	public synchronized double getFramesPerSecond() {
 
 		return this.framesPerSecond;
 	}
@@ -223,12 +187,11 @@ public class Clock extends Thread
 	/**
 	 * Set the frames per second.
 	 * 
-	 * @param framesPerSecond FPS or negative(as fast as possible)
+	 * @param framesPerSecond
+	 *            FPS or negative(as fast as possible)
 	 */
-	public synchronized void setFramesPerSecond(int framesPerSecond)
-	{
-		if (framesPerSecond == 0)
-		{
+	public synchronized void setFramesPerSecond(int framesPerSecond) {
+		if (framesPerSecond == 0) {
 			throw new IllegalArgumentException("0 fps rate not allowed");
 		}
 
@@ -236,8 +199,7 @@ public class Clock extends Thread
 		this.nanosecondsPerFrame = Math.round((TimeUtils.NANOSECONDS_PER_SECOND / this.framesPerSecond));
 	}
 
-	private synchronized long getNanosecondsPerFrame()
-	{
+	private synchronized long getNanosecondsPerFrame() {
 
 		return this.nanosecondsPerFrame;
 	}
@@ -245,24 +207,20 @@ public class Clock extends Thread
 	/**
 	 * Pause or resume the clock
 	 * 
-	 * @param pause if true Clock will be paused
+	 * @param pause
+	 *            if true Clock will be paused
 	 */
-	public synchronized void setPaused(boolean pause)
-	{
+	public synchronized void setPaused(boolean pause) {
 
-		if (pause && getStatus() != STATE_PAUSED)
-		{
+		if (pause && getStatus() != STATE_PAUSED) {
 
 			setStatus(STATE_PAUSED);
 			interrupt();
-		}
-		else if (getStatus() != STATE_RUNNING)
-		{
+		} else if (getStatus() != STATE_RUNNING) {
 
 			setStatus(STATE_RUNNING);
 
-			synchronized (pauseLock)
-			{
+			synchronized (pauseLock) {
 
 				pauseLock.notifyAll();
 			}
@@ -272,36 +230,31 @@ public class Clock extends Thread
 	}
 
 	/**
-	 * Stop the clock and terminate the thread. It makes the clock unusable. A clock can not be
-	 * restarted.
+	 * Stop the clock and terminate the thread. It makes the clock unusable. A clock
+	 * can not be restarted.
 	 */
-	public synchronized void destroy()
-	{
+	public synchronized void destroy() {
 
 		setStatus(STATE_TERMINATED);
 		interrupt();
 	}
 
-	private synchronized void setTime(long nanoTime)
-	{
+	private synchronized void setTime(long nanoTime) {
 
 		this.time = nanoTime;
 	}
 
-	private synchronized long getTime()
-	{
+	private synchronized long getTime() {
 
 		return this.time;
 	}
 
-	private synchronized void setStatus(int state)
-	{
+	private synchronized void setStatus(int state) {
 
 		this.state = state;
 	}
 
-	private synchronized int getStatus()
-	{
+	private synchronized int getStatus() {
 
 		return this.state;
 	}
