@@ -1,5 +1,6 @@
 com.github.brunothg.game.engine.control
 com.github.brunothg.game.engine.d2.commons
+com.github.brunothg.game.engine.d2.commons.listener
 com.github.brunothg.game.engine.d2.frame
 com.github.brunothg.game.engine.d2.object
 com.github.brunothg.game.engine.d2.object.image
@@ -7,6 +8,7 @@ com.github.brunothg.game.engine.d2.object.sprite
 com.github.brunothg.game.engine.d2.object.text
 com.github.brunothg.game.engine.d2.scene
 com.github.brunothg.game.engine.d2.stage
+com.github.brunothg.game.engine.data.highscore
 com.github.brunothg.game.engine.exception
 com.github.brunothg.game.engine.image
 com.github.brunothg.game.engine.image.sprite
