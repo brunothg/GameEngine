@@ -22,6 +22,7 @@ public class SwingGamePanelTest {
 		gamePanel.setScene(new FPSScene(new LoadingScene(true)));
 
 		JFrame disp = new JFrame("SwingGamePanel Test");
+		disp.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		disp.setLayout(new BorderLayout());
 		disp.add(gamePanel, BorderLayout.CENTER);
 
