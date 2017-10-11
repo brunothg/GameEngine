@@ -55,9 +55,54 @@ public abstract class SceneObject {
 	 *            Graphics Object for painting
 	 * @param elapsedTime
 	 *            Elapsed time since the last call to this method
+	 * @deprecated Use {@link #paintOnScene(Graphics2D, int, int, long)} instead
 	 */
+	@Deprecated
 	public void paintOnScene(Graphics2D g, long elapsedTime) {
+		paintAbsoluteOnScene(g, elapsedTime);
+	}
 
+	/**
+	 * Paints this SceneObject and applies the actual {@link RenderingOptions}.
+	 * 
+	 * @param g
+	 *            Graphics Object for painting
+	 * @param elapsedTime
+	 *            Elapsed time since the last call to this method
+	 * @param width
+	 *            Scene width
+	 * @param height
+	 *            scene height
+	 * @see #paintOnScene(Graphics2D, Size, long)
+	 */
+	public void paintOnScene(Graphics2D g, int width, int height, long elapsedTime) {
+		paintOnScene(g, new Size(width, height), elapsedTime);
+	}
+
+	/**
+	 * Paints this SceneObject and applies the actual {@link RenderingOptions}.
+	 * 
+	 * @param g
+	 *            Graphics Object for painting
+	 * @param sceneSize
+	 *            Scene size
+	 * @param elapsedTime
+	 *            Elapsed time since the last call to this method
+	 * @see #paintOnScene(Graphics2D, Size, long)
+	 */
+	public void paintOnScene(Graphics2D g, Size sceneSize, long elapsedTime) {
+		paintAbsoluteOnScene(g, elapsedTime);
+	}
+
+	/**
+	 * Paint this SceneObject using absolute coordinates.
+	 * 
+	 * @param g
+	 *            Graphics Object for painting
+	 * @param elapsedTime
+	 *            Elapsed time since the last call to this method
+	 */
+	protected void paintAbsoluteOnScene(Graphics2D g, long elapsedTime) {
 		Point topLeftPosition = getTopLeftPosition();
 		int x_topLeft = topLeftPosition.getX();
 		int y_topLeft = topLeftPosition.getY();
@@ -65,7 +110,24 @@ public abstract class SceneObject {
 		int width = getWidth();
 		int height = getHeight();
 
-		Graphics2D g2d = (Graphics2D) g.create(x_topLeft, y_topLeft, width, height);
+		paintOnScene(g, new Point(x_topLeft, y_topLeft), new Size(width, height), elapsedTime);
+	}
+
+	/**
+	 * Paint on scene with given size and position
+	 * 
+	 * @param g
+	 *            Graphics Object for painting
+	 * @param positionTopLeft
+	 *            Top left position of object
+	 * @param size
+	 *            Absolute size of object
+	 * @param elapsedTime
+	 *            Elapsed time since the last call to this method
+	 */
+	protected void paintOnScene(Graphics2D g, Point positionTopLeft, Size size, long elapsedTime) {
+		Graphics2D g2d = (Graphics2D) g.create(positionTopLeft.getX(), positionTopLeft.getY(), size.getWidth(),
+				size.getHeight());
 		if (renderingOptions != null) {
 			renderingOptions.apply(g2d);
 		}
@@ -73,7 +135,7 @@ public abstract class SceneObject {
 
 		if (isDrawBoundingBox()) {
 			g2d.setColor(Color.BLACK);
-			g2d.drawRect(0, 0, width - 1, height - 1);
+			g2d.drawRect(0, 0, size.getWidth() - 1, size.getHeight() - 1);
 		}
 
 		g2d.dispose();
