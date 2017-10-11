@@ -1,4 +1,4 @@
-package com.github.brunothg.game.engine.d2.commons.highscore;
+package com.github.brunothg.game.engine.data.highscore;
 
 import java.io.Serializable;
 import java.util.Collections;
