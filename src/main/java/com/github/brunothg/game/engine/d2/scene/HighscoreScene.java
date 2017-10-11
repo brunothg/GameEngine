@@ -17,6 +17,12 @@ import com.github.brunothg.game.engine.data.highscore.Highscore;
 import com.github.brunothg.game.engine.data.highscore.HighscoreEntry;
 import com.github.brunothg.game.engine.utils.Null;
 
+/**
+ * A {@link Scene} for showing your {@link Highscore}.
+ * 
+ * @author Marvin Bruns
+ *
+ */
 public class HighscoreScene implements Scene {
 	Logger LOG = LoggerFactory.getLogger(HighscoreScene.class);
 
