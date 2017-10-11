@@ -29,10 +29,7 @@ public class Highscore implements Iterable<HighscoreEntry>, Serializable {
 	public void addScore(HighscoreEntry score) {
 		scores.add(score);
 
-		Collections.sort(scores);
-		if (scores.size() > getMaximumScores()) {
-			scores = scores.subList(0, getMaximumScores() - 1);
-		}
+		updateList();
 	}
 
 	public int getMaximumScores() {
@@ -42,10 +39,19 @@ public class Highscore implements Iterable<HighscoreEntry>, Serializable {
 	public void setMaximumScores(int maximumScores) {
 		this.maximumScores = maximumScores;
 
-		Collections.sort(scores);
-		if (scores.size() > getMaximumScores()) {
-			scores = scores.subList(0, getMaximumScores() - 1);
-		}
+		updateList();
+	}
+
+	/**
+	 * Get Highscore at specific positon
+	 * 
+	 * @param index
+	 *            index of wanted highscore
+	 * @return {@link HighscoreEntry}
+	 */
+	public HighscoreEntry getScore(int index) {
+		updateList();
+		return scores.get(index);
 	}
 
 	/**
@@ -55,6 +61,13 @@ public class Highscore implements Iterable<HighscoreEntry>, Serializable {
 	 */
 	public int getScoreCount() {
 		return scores.size();
+	}
+
+	protected void updateList() {
+		Collections.sort(scores);
+		if (scores.size() > getMaximumScores()) {
+			scores = scores.subList(0, getMaximumScores());
+		}
 	}
 
 	@Override
