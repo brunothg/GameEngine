@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.github.brunothg</groupId>
 	<artifactId>game-engine</artifactId>
-	<version>1.4.0</version>
+	<version>1.4.1</version>
 	<name>${project.groupId}:${project.artifactId}</name>
 	<description>Java 2D Game Engine</description>
 	<url>https://github.com/brunothg/GameEngine</url>
@@ -143,21 +143,6 @@
 
 	<dependencies>
 		<!-- Logging -->
-		<dependency>
-			<groupId>org.apache.logging.log4j</groupId>
-			<artifactId>log4j-api</artifactId>
-			<version>2.3</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.logging.log4j</groupId>
-			<artifactId>log4j-core</artifactId>
-			<version>2.3</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.logging.log4j</groupId>
-			<artifactId>log4j-slf4j-impl</artifactId>
-			<version>2.3</version>
-		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
