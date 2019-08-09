@@ -1,4 +1,4 @@
-GameEngine [![Build Status](https://travis-ci.com/brunothg/GameEngine.svg?branch=master)](https://travis-ci.com/brunothg/GameEngine)
+GameEngine
 ==========
 
 ## Apache Maven
