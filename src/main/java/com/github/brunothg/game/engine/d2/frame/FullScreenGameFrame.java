@@ -1,11 +1,5 @@
 package com.github.brunothg.game.engine.d2.frame;
 
-import com.github.brunothg.game.engine.d2.scene.LoadingScene;
-import com.github.brunothg.game.engine.d2.scene.Scene;
-import com.github.brunothg.game.engine.d2.stage.CanvasStage;
-import com.github.brunothg.game.engine.image.EmptyImage;
-import com.github.brunothg.game.engine.time.Clock;
-
 import java.awt.BorderLayout;
 import java.awt.Cursor;
 import java.awt.DisplayMode;
@@ -18,22 +12,29 @@ import java.awt.Window;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.io.Closeable;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.imageio.ImageIO;
 
+import com.github.brunothg.game.engine.d2.scene.LoadingScene;
+import com.github.brunothg.game.engine.d2.scene.Scene;
+import com.github.brunothg.game.engine.d2.stage.CanvasStage;
+import com.github.brunothg.game.engine.image.EmptyImage;
+import com.github.brunothg.game.engine.time.Clock;
+
 /**
  * 
  * Fullscreen GameFrame using {@link CanvasStage} for drawing.<br>
- * Before using this you should test it. With some JVM implementations this will fail.<br>
+ * Before using this you should test it. With some JVM implementations this will
+ * fail.<br>
  * Don't forget to build some kind of exit and dispose this frame.
  * 
  * 
  * @author Marvin Bruns
  *
  */
-public class FullScreenGameFrame
-{
+public class FullScreenGameFrame implements Closeable {
 
 	private Frame window;
 
@@ -52,8 +53,7 @@ public class FullScreenGameFrame
 	 * 
 	 * @see #FullScreenGameFrame(String)
 	 */
-	public FullScreenGameFrame()
-	{
+	public FullScreenGameFrame() {
 
 		this("GameFrame");
 	}
@@ -64,8 +64,7 @@ public class FullScreenGameFrame
 	 * @param title Frame title
 	 * @see #FullScreenGameFrame(GraphicsDevice, String)
 	 */
-	public FullScreenGameFrame(String title)
-	{
+	public FullScreenGameFrame(String title) {
 
 		this(GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice(), title);
 	}
@@ -77,8 +76,7 @@ public class FullScreenGameFrame
 	 * 
 	 * @see #FullScreenGameFrame(GraphicsDevice, DisplayMode, String)
 	 */
-	public FullScreenGameFrame(GraphicsDevice gd, String title)
-	{
+	public FullScreenGameFrame(GraphicsDevice gd, String title) {
 
 		this(gd, gd.getDisplayMode(), title);
 	}
@@ -88,23 +86,22 @@ public class FullScreenGameFrame
 	 * 
 	 * @param title Frame title
 	 * 
-	 * @see #FullScreenGameFrame(GraphicsDevice, GraphicsConfiguration, DisplayMode, String)
+	 * @see #FullScreenGameFrame(GraphicsDevice, GraphicsConfiguration, DisplayMode,
+	 *      String)
 	 */
-	public FullScreenGameFrame(GraphicsDevice gd, DisplayMode dm, String title)
-	{
+	public FullScreenGameFrame(GraphicsDevice gd, DisplayMode dm, String title) {
 
 		this(gd, gd.getDefaultConfiguration(), dm, title);
 	}
 
 	/**
 	 * 
-	 * @param gd {@link GraphicsDevice} used for rendering
-	 * @param gc {@link GraphicsConfiguration} used for {@link Window}
-	 * @param dm {@link DisplayMode} used for rendering
+	 * @param gd    {@link GraphicsDevice} used for rendering
+	 * @param gc    {@link GraphicsConfiguration} used for {@link Window}
+	 * @param dm    {@link DisplayMode} used for rendering
 	 * @param title Frame title
 	 */
-	public FullScreenGameFrame(GraphicsDevice gd, GraphicsConfiguration gc, DisplayMode dm, String title)
-	{
+	public FullScreenGameFrame(GraphicsDevice gd, GraphicsConfiguration gc, DisplayMode dm, String title) {
 
 		this.window = new Frame(title, gc);
 
@@ -114,8 +111,7 @@ public class FullScreenGameFrame
 		initialize();
 	}
 
-	private void initialize()
-	{
+	private void initialize() {
 
 		window.setLayout(new BorderLayout());
 		window.setIgnoreRepaint(true);
@@ -133,14 +129,11 @@ public class FullScreenGameFrame
 
 	}
 
-	private void setDefaultIcon()
-	{
-		try
-		{
-			window.setIconImage(ImageIO.read(FullScreenGameFrame.class.getResource("/com/github/brunothg/game/engine/media/icon.png")));
-		}
-		catch (Exception e)
-		{
+	private void setDefaultIcon() {
+		try {
+			window.setIconImage(ImageIO
+					.read(FullScreenGameFrame.class.getResource("/com/github/brunothg/game/engine/media/icon.png")));
+		} catch (Exception e) {
 			window.setIconImage(new EmptyImage.AlphaImage());
 		}
 	}
@@ -148,14 +141,12 @@ public class FullScreenGameFrame
 	/**
 	 * @see Frame#setTitle(String)
 	 */
-	public void setTitle(String title)
-	{
+	public void setTitle(String title) {
 
 		window.setTitle(title);
 	}
 
-	public void setIcon(Image image)
-	{
+	public void setIcon(Image image) {
 
 		window.setIconImage(image);
 	}
@@ -166,27 +157,22 @@ public class FullScreenGameFrame
 	 * @param dm {@link DisplayMode}
 	 * @return true if it was successful
 	 */
-	public boolean setDisplayMode(DisplayMode dm)
-	{
+	public boolean setDisplayMode(DisplayMode dm) {
 
 		this.dm = dm;
 
-		if (isInFullScreenExclusiveMode.get() && gd.isDisplayChangeSupported())
-		{
+		if (isInFullScreenExclusiveMode.get() && gd.isDisplayChangeSupported()) {
 
 			gd.setDisplayMode(dm);
 
 			return true;
 		}
 
-		try
-		{
+		try {
 			gd.setDisplayMode(dm);
 
 			return true;
-		}
-		catch (Throwable e)
-		{
+		} catch (Throwable e) {
 		}
 
 		return false;
@@ -197,8 +183,7 @@ public class FullScreenGameFrame
 	 * 
 	 * @return true if in fullscreen exclusive mode
 	 */
-	public boolean isInExclusiveFullscreenMode()
-	{
+	public boolean isInExclusiveFullscreenMode() {
 
 		return isInFullScreenExclusiveMode.get();
 	}
@@ -208,63 +193,37 @@ public class FullScreenGameFrame
 	 * 
 	 * @see Frame#dispose()
 	 */
-	public void dispose()
-	{
+	public void dispose() {
 
-		try
-		{
+		try {
 			setVisible(false);
 			window.dispose();
-		}
-		catch (Exception e)
-		{
-		}
-		finally
-		{
-
+		} catch (Exception e) {
+		} finally {
 			clock.destroy();
 		}
 	}
 
 	@Override
-	protected void finalize() throws Throwable
-	{
-
-		try
-		{
-			clock.destroy();
-		}
-		catch (Exception e)
-		{
-		}
-		finally
-		{
-
-			super.finalize();
-		}
+	public void close() {
+		dispose();
 	}
 
-	public void setVisible(boolean visible)
-	{
-		if (visible)
-		{
+	public void setVisible(boolean visible) {
+		if (visible) {
 
 			show();
-		}
-		else
-		{
+		} else {
 
 			hide();
 		}
 	}
 
-	private void show()
-	{
+	private void show() {
 
 		boolean fullScreenSupported = gd.isFullScreenSupported();
 
-		if (fullScreenSupported && !isInFullScreenExclusiveMode.get())
-		{
+		if (fullScreenSupported && !isInFullScreenExclusiveMode.get()) {
 
 			previousDisplayMode = gd.getDisplayMode();
 
@@ -275,13 +234,11 @@ public class FullScreenGameFrame
 		setDisplayMode(dm);
 	}
 
-	private void hide()
-	{
+	private void hide() {
 
 		setDisplayMode(previousDisplayMode);
 
-		if (isInFullScreenExclusiveMode.get())
-		{
+		if (isInFullScreenExclusiveMode.get()) {
 
 			previousDisplayMode = null;
 
@@ -296,23 +253,20 @@ public class FullScreenGameFrame
 	 * 
 	 * @return Stage of this frame
 	 */
-	public CanvasStage getStage()
-	{
+	public CanvasStage getStage() {
 
 		return stage;
 	}
 
 	/**
-	 * Change the {@link CanvasStage} that is used by this {@link SwingGameFrame} . Normally there's
-	 * no reason to change the default stage.
+	 * Change the {@link CanvasStage} that is used by this {@link SwingGameFrame} .
+	 * Normally there's no reason to change the default stage.
 	 * 
 	 * @param stage
 	 */
-	public void setStage(CanvasStage stage)
-	{
+	public void setStage(CanvasStage stage) {
 
-		if (stage == null)
-		{
+		if (stage == null) {
 			throw new IllegalArgumentException("Null value not allowed");
 		}
 		clock.removeClockListener(this.stage);
@@ -326,8 +280,7 @@ public class FullScreenGameFrame
 	/**
 	 * @see CanvasStage#setScene(Scene)
 	 */
-	public void setScene(Scene scene)
-	{
+	public void setScene(Scene scene) {
 
 		getStage().setScene(scene);
 	}
@@ -335,8 +288,7 @@ public class FullScreenGameFrame
 	/**
 	 * @see CanvasStage#getScene()
 	 */
-	public Scene getScene()
-	{
+	public Scene getScene() {
 
 		return getStage().getScene();
 	}
@@ -344,8 +296,7 @@ public class FullScreenGameFrame
 	/**
 	 * @see Clock#setFramesPerSecond(int)
 	 */
-	public void setFramesPerSecond(int framesPerSecond)
-	{
+	public void setFramesPerSecond(int framesPerSecond) {
 
 		clock.setFramesPerSecond(framesPerSecond);
 	}
@@ -353,8 +304,7 @@ public class FullScreenGameFrame
 	/**
 	 * @see Clock#getFramesPerSecond()
 	 */
-	public double getFramesPerSecond()
-	{
+	public double getFramesPerSecond() {
 
 		return clock.getFramesPerSecond();
 	}
@@ -362,8 +312,7 @@ public class FullScreenGameFrame
 	/**
 	 * @see Frame#setCursor(Cursor)
 	 */
-	public void setCursor(Cursor cursor)
-	{
+	public void setCursor(Cursor cursor) {
 
 		window.setCursor(cursor);
 	}
@@ -371,8 +320,7 @@ public class FullScreenGameFrame
 	/**
 	 * @see Frame#addKeyListener(KeyListener)
 	 */
-	public void addKeyListener(KeyListener l)
-	{
+	public void addKeyListener(KeyListener l) {
 
 		window.addKeyListener(l);
 	}
@@ -380,8 +328,7 @@ public class FullScreenGameFrame
 	/**
 	 * @see Frame#addMouseListener(MouseListener)
 	 */
-	public void addMouseListener(MouseListener l)
-	{
+	public void addMouseListener(MouseListener l) {
 
 		window.addMouseListener(l);
 	}
@@ -389,8 +336,7 @@ public class FullScreenGameFrame
 	/**
 	 * @see Frame#addMouseMotionListener(MouseMotionListener)
 	 */
-	public void addMouseListener(MouseMotionListener l)
-	{
+	public void addMouseListener(MouseMotionListener l) {
 
 		window.addMouseMotionListener(l);
 	}

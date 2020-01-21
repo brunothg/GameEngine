@@ -12,6 +12,8 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.EventListener;
 
 public class LabelObjectTest {
@@ -19,6 +21,12 @@ public class LabelObjectTest {
 	public static void main(String[] args) {
 
 		SwingGameFrame gameFrame = new SwingGameFrame();
+		gameFrame.addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent e) {
+				gameFrame.close();
+			}
+		});
+
 		gameFrame.setScene(new FPSScene(new Scene() {
 
 			LabelSceneObject label = new CachedLabelSceneObject("Das ist ein\n LabelObject");

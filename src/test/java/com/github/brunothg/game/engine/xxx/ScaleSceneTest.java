@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.EventListener;
 
 import com.github.brunothg.game.engine.d2.commons.GraphicScaleStrategy;
@@ -17,6 +19,12 @@ public class ScaleSceneTest {
 	public static void main(String[] args) {
 
 		SwingGameFrame gameFrame = new SwingGameFrame();
+		gameFrame.addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent e) {
+				gameFrame.close();
+			}
+		});
+
 		gameFrame.setScene(new ScaleScene(300, 300, GraphicScaleStrategy.Fit) {
 			Point mouse = new Point(0, 0);
 			LabelSceneObject txt = new LabelSceneObject("");

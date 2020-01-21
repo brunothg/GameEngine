@@ -1,6 +1,7 @@
 package com.github.brunothg.game.engine.d2.frame;
 
 import java.awt.BorderLayout;
+import java.io.Closeable;
 
 import javax.swing.JPanel;
 
@@ -15,7 +16,7 @@ import com.github.brunothg.game.engine.time.Clock;
  * @author Marvin Bruns
  *
  */
-public class SwingGamePanel extends JPanel {
+public class SwingGamePanel extends JPanel implements Closeable {
 	private static final long serialVersionUID = 1L;
 
 	private SwingStage stage;
@@ -108,12 +109,7 @@ public class SwingGamePanel extends JPanel {
 	}
 
 	@Override
-	protected void finalize() throws Throwable {
-		try {
-			clock.destroy();
-		} catch (Exception e) {
-		} finally {
-			super.finalize();
-		}
+	public void close() {
+		dispose();
 	}
 }
